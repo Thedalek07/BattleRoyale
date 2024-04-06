@@ -1,0 +1,25 @@
+name: BattleRoyale
+version: '1.0.0-SNAPSHOT'
+main: me.dalek.battleroyale.Untitled
+api-version: '1.20'
+commands:
+  revive:
+    description: Commande pour tuer un joueur
+    usage: /<command>
+    aliases: r
+  invite:
+    description: Permet d'inviter un joueur dans son équipe
+    usage: /<command>
+    aliases: i
+  accept:
+    description: Permet d'accepter une demande d'invitation
+    usage: /<command>
+    aliases: a
+  decline:
+    description: Permet de décliner les invitations
+    usage: /<command>
+    aliases: d
+  leave:
+    description: Permet de quitter une équipe
+    usage: /<command>
+    aliases: l
