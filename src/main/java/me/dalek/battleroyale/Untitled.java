@@ -6,12 +6,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.*;
+import org.bukkit.util.ChatPaginator;
+
 import java.util.HashMap;
 
 
 public final class Untitled extends JavaPlugin {
 
     public static final HashMap<Player, Player> invites = new HashMap<>();
+    public static final HashMap<String, Long> timeout = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -30,6 +33,8 @@ public final class Untitled extends JavaPlugin {
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     ScoreboardManager manager = Bukkit.getScoreboardManager();
                     Scoreboard scoreboard = manager.getNewScoreboard();
+                    Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
+                    Team myTeam = sb.getPlayerTeam(p);
 
                     // RECUPERE LA VALEUR DE LA BOSSBAR
                     BossBar timerCoffre = getServer().getBossBar(NamespacedKey.minecraft("2"));
@@ -46,6 +51,18 @@ public final class Untitled extends JavaPlugin {
                     // CREER L'OBJECTIFS
                     Objective objective = scoreboard.registerNewObjective("TimerScore", "dummy", ChatColor.BLUE + "Battle Royale" );
                     objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+                    // NOM DE L'EQUIPE
+                    Score teamName = objective.getScore(ChatColor.GOLD + "Equipe");
+                    teamName.setScore(7);
+                    if(myTeam != null){
+                        Score teamNameVal = objective.getScore(ChatColor.RED + myTeam.getName());
+                        teamNameVal.setScore(6);
+                    }else{
+                        Score teamNameVal = objective.getScore(ChatColor.RED + "Aucune");
+                        teamNameVal.setScore(6);
+                    }
+
 
                     // COORDONNEES
                     Score co = objective.getScore(ChatColor.GOLD + "Coordonnées");

@@ -15,7 +15,9 @@ import java.util.HashMap;
 
 public class commands implements CommandExecutor {
 
-
+    int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
+    int distanceMax = 100; // Distance MAX pour faire une demande d'invite
+    long timeoutInvite = 60000; // Timeout d'une invite
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
@@ -80,36 +82,44 @@ public class commands implements CommandExecutor {
                     Team myTeam = sb.getPlayerTeam(p);
                     if(r != null) { // Vérifie si l'argument est bien le nom d'un joueur
                         if(r != p){ // Vérifie que le joueur sélectionné est différent de celui qui exécute la commande
-                            if(sb.getTeam(p.getName()) == null) { // Verifie si la team existe sinon on crée une team portant le nom de joueur qui invite
-                                // Créer la team
-                                sb.registerNewTeam(p.getName());
-                                sb.getTeam(p.getName()).setAllowFriendlyFire(false);
-                            }
-                            if(sb.getTeam(p.getName()).getSize() < 3){
-                                if(p.getLocation().distanceSquared(r.getLocation()) < 100){
-                                    sb.getTeam(p.getName()).addEntry(p.getName());
+                            if(Untitled.invites.get(r) != p){
+                                if(sb.getTeam(p.getName()) == null) { // Verifie si la team existe sinon on crée une team portant le nom de joueur qui invite
+                                    // Créer la team
+                                    sb.registerNewTeam(p.getName());
+                                    sb.getTeam(p.getName()).setAllowFriendlyFire(false);
+                                }
+                                if(sb.getTeam(p.getName()).getSize() < sizeTeamMax){
+                                    if(p.getLocation().distanceSquared(r.getLocation()) < distanceMax){
+                                        //sb.getTeam(p.getName()).addEntry(p.getName());
 
-                                    // Messages indiquant la demande d'invitaiton
-                                    p.sendMessage(ChatColor.GOLD + "Invitation envoyé à " + r.getName());
-                                    r.sendMessage(ChatColor.GOLD + "Vous avez reçu une invitation de " + p.getName());
+                                        // Messages indiquant la demande d'invitaiton
+                                        p.sendMessage(ChatColor.GOLD + "Invitation envoyé à " + r.getName());
+                                        r.sendMessage(ChatColor.GOLD + "Vous avez reçu une invitation de " + p.getName());
+                                        r.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
 
-                                    // Message pour accepter la demande d'invitation
-                                    TextComponent messageAccept = new TextComponent(ChatColor.GREEN + "Accepter");
-                                    messageAccept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/accept"));
-                                    r.spigot().sendMessage(messageAccept);
+                                        // Message pour accepter la demande d'invitation
+                                        TextComponent messageAccept = new TextComponent(ChatColor.GREEN + "Accepter");
+                                        messageAccept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/accept"));
+                                        r.spigot().sendMessage(messageAccept);
 
-                                    // Message pour decliner la demande d'invitation
-                                    TextComponent messageDecline = new TextComponent(ChatColor.RED + "Refuser");
-                                    messageDecline.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/decline"));
-                                    r.spigot().sendMessage(messageDecline);
+                                        // Message pour decliner la demande d'invitation
+                                        TextComponent messageDecline = new TextComponent(ChatColor.RED + "Refuser");
+                                        messageDecline.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/decline"));
+                                        r.spigot().sendMessage(messageDecline);
 
-                                    // Ajoute le joueur qui invite dans la liste de la cible
-                                    Untitled.invites.put(r,p);
+                                        // Ajoute le joueur qui invite dans la liste de la cible
+                                        Untitled.invites.put(r,p);
+
+                                        // Enregistre le temps
+                                        Untitled.timeout.put(p.getName(), System.currentTimeMillis());
+                                    }else{
+                                        p.sendMessage(ChatColor.YELLOW + r.getName() + " est trop loin pour etre invité !");
+                                    }
                                 }else{
-                                    p.sendMessage(ChatColor.YELLOW + r.getName() + " est trop loin pour etre invité !");
+                                    p.sendMessage(ChatColor.RED + "Votre équipe est au complet !");
                                 }
                             }else{
-                                p.sendMessage(ChatColor.RED + "Votre équipe est au complet !");
+                                p.sendMessage(ChatColor.YELLOW + "Vous avez déjà envoyé une demande d'invite à " + r.getName() + " !");
                             }
                         }else{
                             p.sendMessage(ChatColor.YELLOW + "Vous ne pouvez pas vous inviter dans votre équipe !");
@@ -127,13 +137,19 @@ public class commands implements CommandExecutor {
             if (sender instanceof Player){
                 Player p = (Player) sender; // Joueur qui exécute la commande
                 if(Untitled.invites.containsKey(p)){
-                    Player team = Untitled.invites.get(p);
-                    Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
-                    sb.getTeam(team.getName()).addEntry(p.getName());
-                    // Supprime le joueur
-                    Untitled.invites.remove(p);
-                    p.sendMessage(ChatColor.GOLD + "Invitation acceptée !");
-                    team.sendMessage(ChatColor.GOLD + p.getName() + " a accepté votre invitation !");
+                    Player team = Untitled.invites.get(p); // Recupère la demande d'invite en cours
+                    if(Untitled.timeout.get(team.getName()) >= (System.currentTimeMillis() - timeoutInvite)){
+                        Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
+                        sb.getTeam(team.getName()).addEntry(p.getName()); // Mets le joueur qui tape la cmd dans la team
+                        sb.getTeam(team.getName()).addEntry(team.getName()); // Mets le joueur propriétaire de la team dans cette dernière
+                        Untitled.invites.remove(p);// Supprime le joueur
+                        p.sendMessage(ChatColor.GOLD + "Invitation acceptée !");
+                        team.sendMessage(ChatColor.GOLD + p.getName() + " a accepté votre invitation !");
+                        team.sendMessage("Timeout : " + Untitled.timeout.get(team.getName()));
+                    }else{
+                        Untitled.invites.remove(p);// Supprime le joueur
+                        p.sendMessage(ChatColor.YELLOW + "Invitation expirée !");
+                    }
                 }else{
                     p.sendMessage(ChatColor.YELLOW + "Vous n'avez pas d'invitations en attentes !");
                 }

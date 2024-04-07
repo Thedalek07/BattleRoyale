@@ -1,7 +1,7 @@
 name: BattleRoyale
 version: '1.0.0-SNAPSHOT'
 main: me.dalek.battleroyale.Untitled
-api-version: '1.20'
+api-version: '1.19'
 commands:
   revive:
     description: Commande pour tuer un joueur
