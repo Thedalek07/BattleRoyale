@@ -80,34 +80,36 @@ public class commands implements CommandExecutor {
                     Team myTeam = sb.getPlayerTeam(p);
                     if(r != null) { // Vérifie si l'argument est bien le nom d'un joueur
                         if(r != p){ // Vérifie que le joueur sélectionné est différent de celui qui exécute la commande
-                            if(p.getLocation().distanceSquared(r.getLocation()) < 100){
-                                if (sb.getTeam(p.getName()) == null) { // Verifie si la team existe sinon on crée une team portant le nom de joueur qui invite
-                                    // Créer la team
-                                    sb.registerNewTeam(p.getName());
-                                    sb.getTeam(p.getName()).setAllowFriendlyFire(false);
+                            if(sb.getTeam(p.getName()) == null) { // Verifie si la team existe sinon on crée une team portant le nom de joueur qui invite
+                                // Créer la team
+                                sb.registerNewTeam(p.getName());
+                                sb.getTeam(p.getName()).setAllowFriendlyFire(false);
+                            }
+                            if(sb.getTeam(p.getName()).getSize() < 3){
+                                if(p.getLocation().distanceSquared(r.getLocation()) < 100){
                                     sb.getTeam(p.getName()).addEntry(p.getName());
+
+                                    // Messages indiquant la demande d'invitaiton
+                                    p.sendMessage(ChatColor.GOLD + "Invitation envoyé à " + r.getName());
+                                    r.sendMessage(ChatColor.GOLD + "Vous avez reçu une invitation de " + p.getName());
+
+                                    // Message pour accepter la demande d'invitation
+                                    TextComponent messageAccept = new TextComponent(ChatColor.GREEN + "Accepter");
+                                    messageAccept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/accept"));
+                                    r.spigot().sendMessage(messageAccept);
+
+                                    // Message pour decliner la demande d'invitation
+                                    TextComponent messageDecline = new TextComponent(ChatColor.RED + "Refuser");
+                                    messageDecline.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/decline"));
+                                    r.spigot().sendMessage(messageDecline);
+
+                                    // Ajoute le joueur qui invite dans la liste de la cible
+                                    Untitled.invites.put(r,p);
+                                }else{
+                                    p.sendMessage(ChatColor.YELLOW + r.getName() + " est trop loin pour etre invité !");
                                 }
-
-                                sb.getTeam(p.getName()).addEntry(p.getName());
-
-                                // Messages indiquant la demande d'invitaiton
-                                p.sendMessage(ChatColor.GOLD + "Invitation envoyé à " + r.getName());
-                                r.sendMessage(ChatColor.GOLD + "Vous avez reçu une invitation de " + p.getName());
-
-                                // Message pour accepter la demande d'invitation
-                                TextComponent messageAccept = new TextComponent(ChatColor.GREEN + "Accepter");
-                                messageAccept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/accept"));
-                                r.spigot().sendMessage(messageAccept);
-
-                                // Message pour decliner la demande d'invitation
-                                TextComponent messageDecline = new TextComponent(ChatColor.RED + "Refuser");
-                                messageDecline.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/decline"));
-                                r.spigot().sendMessage(messageDecline);
-
-                                // Ajoute le joueur qui invite dans la liste de la cible
-                                Untitled.invites.put(r,p);
                             }else{
-                                p.sendMessage(ChatColor.YELLOW + r.getName() + " est trop loin pour etre invité !");
+                                p.sendMessage(ChatColor.RED + "Votre équipe est au complet !");
                             }
                         }else{
                             p.sendMessage(ChatColor.YELLOW + "Vous ne pouvez pas vous inviter dans votre équipe !");
