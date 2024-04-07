@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.*;
+import java.util.HashMap;
 
 
 public final class Untitled extends JavaPlugin {
@@ -13,6 +14,11 @@ public final class Untitled extends JavaPlugin {
     @Override
     public void onEnable() {
         System.out.println("Battle Royale à démarré !");
+        getCommand("revive").setExecutor(new commands());
+        getCommand("invite").setExecutor(new commands());
+        getCommand("accept").setExecutor(new commands());
+        getCommand("decline").setExecutor(new commands());
+        getCommand("leave").setExecutor(new commands());
 
         // SCOREBOARD
         BukkitScheduler scheduler = getServer().getScheduler();
@@ -62,7 +68,4 @@ public final class Untitled extends JavaPlugin {
             }
         }, 0L, 10L);
     }
-
-
-
 }
