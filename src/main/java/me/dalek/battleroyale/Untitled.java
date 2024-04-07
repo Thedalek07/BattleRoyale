@@ -11,6 +11,8 @@ import java.util.HashMap;
 
 public final class Untitled extends JavaPlugin {
 
+    public static final HashMap<Player, Player> invites = new HashMap<>();
+
     @Override
     public void onEnable() {
         System.out.println("Battle Royale à démarré !");
