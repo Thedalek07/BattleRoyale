@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.*;
-import org.bukkit.util.ChatPaginator;
 
 import java.util.HashMap;
 
@@ -18,12 +17,32 @@ public final class Untitled extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // CONSOLE
         System.out.println("Battle Royale à démarré !");
+
+        // COMMANDES
         getCommand("revive").setExecutor(new commands());
         getCommand("invite").setExecutor(new commands());
         getCommand("accept").setExecutor(new commands());
         getCommand("decline").setExecutor(new commands());
         getCommand("leave").setExecutor(new commands());
+        getCommand("msg").setExecutor(new commands());
+        getCommand("help").setExecutor(new commands());
+
+        // AUTOCOMPLETION
+        getCommand("help").setTabCompleter(new CommandesCompletions());
+        getCommand("msg").setTabCompleter(new CommandesCompletions());
+        getCommand("revive").setTabCompleter(new CommandesCompletions());
+        getCommand("invite").setTabCompleter(new CommandesCompletions());
+        getCommand("accept").setTabCompleter(new CommandesCompletions());
+        getCommand("decline").setTabCompleter(new CommandesCompletions());
+        getCommand("leave").setTabCompleter(new CommandesCompletions());
+
+        // MESSAGE INITALE
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            p.sendMessage(ChatColor.GOLD + "Plugin Battle Royale V1.0.0 - Propriété de Bioscar et Dalek");
+            p.sendMessage(ChatColor.GOLD + "Fait par The_dalek");
+        }
 
         // SCOREBOARD
         BukkitScheduler scheduler = getServer().getScheduler();
@@ -83,6 +102,7 @@ public final class Untitled extends JavaPlugin {
                     coffre_val.setScore(0);
 
                     p.setScoreboard(scoreboard);
+
                 }
             }
         }, 0L, 10L);

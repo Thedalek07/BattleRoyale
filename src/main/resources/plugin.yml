@@ -23,3 +23,9 @@ commands:
     description: Permet de quitter une équipe
     usage: /<command>
     aliases: l
+  msg:
+    description: Commande msg
+    usage: /<command>
+  help:
+    description: Permet de donner les infos sur les commandes
+    usage: /<command>

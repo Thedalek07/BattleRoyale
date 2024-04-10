@@ -11,8 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.util.HashMap;
-
 public class commands implements CommandExecutor {
 
     int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
@@ -44,8 +42,9 @@ public class commands implements CommandExecutor {
                                         p.getInventory().removeItem(new ItemStack(Material.ECHO_SHARD, 1)); // Clear une echo shard
 
                                         // SOUNDS
-                                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10, 1);
-                                        r.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10, 1);
+                                        for(Player pSound : Bukkit.getOnlinePlayers()) {
+                                            pSound.playSound(pSound.getLocation(), Sound.ITEM_TOTEM_USE, 10, 1);
+                                        }
                                     }else{
                                         p.sendMessage(ChatColor.RED + "Tu ne peux pas réssuciter un joueur en vie !");
                                         p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
@@ -145,7 +144,6 @@ public class commands implements CommandExecutor {
                         Untitled.invites.remove(p);// Supprime le joueur
                         p.sendMessage(ChatColor.GOLD + "Invitation acceptée !");
                         team.sendMessage(ChatColor.GOLD + p.getName() + " a accepté votre invitation !");
-                        team.sendMessage("Timeout : " + Untitled.timeout.get(team.getName()));
                     }else{
                         Untitled.invites.remove(p);// Supprime le joueur
                         p.sendMessage(ChatColor.YELLOW + "Invitation expirée !");
@@ -183,6 +181,68 @@ public class commands implements CommandExecutor {
                     p.sendMessage(ChatColor.RED + "Vous n'etes pas dans une équipe ! ");
                 }
 
+            }
+        }
+
+        if (command.getName().equalsIgnoreCase("msg")){
+            if (sender instanceof Player){
+                Player p = (Player) sender; // Joueur qui exécute la commande
+                if(args.length != 0){
+                    if(p.getPlayer().isOp()){
+                        Player r = Bukkit.getPlayer(args[0]); // Joueur en argument
+                        String message = ChatColor.DARK_RED + "ADMIN [" + p.getName() + "]";
+                        if(r != null){
+                            if(args[1] != null){
+                                for(int i = 1 ; i < args.length ; i++ ){
+                                    message = message + ChatColor.YELLOW + " " + args[i];
+                                }
+                                p.sendMessage(ChatColor.GOLD + "Message envoyé à " + r.getName() + " !");
+                                r.sendMessage(message);
+                            }
+                        }
+                    }else{
+                        p.sendMessage(ChatColor.RED + "Vous n'avez pas la permission d'utiliser cette commande !");
+                    }
+                }
+            }
+        }
+
+        if (command.getName().equalsIgnoreCase("help")){
+            if (sender instanceof Player){
+                Player p = (Player) sender; // Joueur qui exécute la commande
+                if(args[0] != null){
+                    switch(args[0]) {
+                        case "revive":
+                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /revive PSEUDO ou /r PSEUDO");
+                            p.sendMessage(ChatColor.GREEN + "Permet de réssuciter une personne morte !");
+                            break;
+                        case "invite":
+                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /invite PSEUDO ou /i PSEUDO");
+                            p.sendMessage(ChatColor.GREEN + "Permet d'inviter un joueur dans son équipe !");
+                            p.sendMessage(ChatColor.GREEN + "ATTENTION les invitations sont valide 60 secondes !");
+                            break;
+                        case "accept":
+                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /accept ou /a");
+                            p.sendMessage(ChatColor.GREEN + "Permet d'accepter une invitation !");
+                            break;
+                        case "decline":
+                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /decline");
+                            p.sendMessage(ChatColor.GREEN + "Permet de refuser une invitation !");
+                            break;
+                        case "leave":
+                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /leave");
+                            p.sendMessage(ChatColor.GREEN + "Permet de quitter une équipe !");
+                            p.sendMessage(ChatColor.GREEN + "Seule la personne qui quitte l'équipe est averti !");
+                            break;
+                        default:
+                    }
+                }else{
+                    // REVIVE
+                    //TextComponent messageRevive = new TextComponent(ChatColor.GREEN + "/revive ou /l");
+                    //messageRevive.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help revive"));
+                    //p.spigot().sendMessage(messageRevive);
+                    p.sendMessage("NE MARCHE PAS !!!!");
+                }
             }
         }
 
