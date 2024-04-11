@@ -1,5 +1,7 @@
 package me.dalek.battleroyale;
 
+import me.dalek.battleroyale.commandes.Commandes;
+import me.dalek.battleroyale.commandes.Completion;
 import org.bukkit.*;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
@@ -10,10 +12,11 @@ import org.bukkit.scoreboard.*;
 import java.util.HashMap;
 
 
-public final class Untitled extends JavaPlugin {
+public final class Main extends JavaPlugin {
 
     public static final HashMap<Player, Player> invites = new HashMap<>();
     public static final HashMap<String, Long> timeout = new HashMap<>();
+
 
     @Override
     public void onEnable() {
@@ -21,22 +24,22 @@ public final class Untitled extends JavaPlugin {
         System.out.println("Battle Royale à démarré !");
 
         // COMMANDES
-        getCommand("revive").setExecutor(new commands());
-        getCommand("invite").setExecutor(new commands());
-        getCommand("accept").setExecutor(new commands());
-        getCommand("decline").setExecutor(new commands());
-        getCommand("leave").setExecutor(new commands());
-        getCommand("msg").setExecutor(new commands());
-        getCommand("help").setExecutor(new commands());
+        getCommand("revive").setExecutor(new Commandes());
+        getCommand("invite").setExecutor(new Commandes());
+        getCommand("accept").setExecutor(new Commandes());
+        getCommand("decline").setExecutor(new Commandes());
+        getCommand("leave").setExecutor(new Commandes());
+        getCommand("msg").setExecutor(new Commandes());
+        getCommand("help").setExecutor(new Commandes());
 
         // AUTOCOMPLETION
-        getCommand("help").setTabCompleter(new CommandesCompletions());
-        getCommand("msg").setTabCompleter(new CommandesCompletions());
-        getCommand("revive").setTabCompleter(new CommandesCompletions());
-        getCommand("invite").setTabCompleter(new CommandesCompletions());
-        getCommand("accept").setTabCompleter(new CommandesCompletions());
-        getCommand("decline").setTabCompleter(new CommandesCompletions());
-        getCommand("leave").setTabCompleter(new CommandesCompletions());
+        getCommand("help").setTabCompleter(new Completion());
+        getCommand("msg").setTabCompleter(new Completion());
+        getCommand("revive").setTabCompleter(new Completion());
+        getCommand("invite").setTabCompleter(new Completion());
+        getCommand("accept").setTabCompleter(new Completion());
+        getCommand("decline").setTabCompleter(new Completion());
+        getCommand("leave").setTabCompleter(new Completion());
 
         // MESSAGE INITALE
         for(Player p : Bukkit.getOnlinePlayers()) {
@@ -49,6 +52,7 @@ public final class Untitled extends JavaPlugin {
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
+
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     ScoreboardManager manager = Bukkit.getScoreboardManager();
                     Scoreboard scoreboard = manager.getNewScoreboard();
@@ -96,9 +100,9 @@ public final class Untitled extends JavaPlugin {
                     border_val.setScore(2);
 
                     // COFFRES
-                    Score coffre_label = objective.getScore(ChatColor.GOLD + "Coffres");
+                    Score coffre_label = objective.getScore(ChatColor.GOLD + "Coffre 1");
                     coffre_label.setScore(1);
-                    Score coffre_val = objective.getScore(ChatColor.RED + timerCoffre.getTitle());
+                    Score coffre_val = objective.getScore(ChatColor.RED + "00:00");
                     coffre_val.setScore(0);
 
                     p.setScoreboard(scoreboard);
@@ -106,5 +110,7 @@ public final class Untitled extends JavaPlugin {
                 }
             }
         }, 0L, 10L);
+
+
     }
 }

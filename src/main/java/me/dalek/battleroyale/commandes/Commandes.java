@@ -1,5 +1,6 @@
-package me.dalek.battleroyale;
+package me.dalek.battleroyale.commandes;
 
+import me.dalek.battleroyale.Main;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -11,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-public class commands implements CommandExecutor {
+public class Commandes implements CommandExecutor {
 
     int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
     int distanceMax = 100; // Distance MAX pour faire une demande d'invite
@@ -81,7 +82,7 @@ public class commands implements CommandExecutor {
                     Team myTeam = sb.getPlayerTeam(p);
                     if(r != null) { // Vérifie si l'argument est bien le nom d'un joueur
                         if(r != p){ // Vérifie que le joueur sélectionné est différent de celui qui exécute la commande
-                            if(Untitled.invites.get(r) != p){
+                            if(Main.invites.get(r) != p){
                                 if(sb.getTeam(p.getName()) == null) { // Verifie si la team existe sinon on crée une team portant le nom de joueur qui invite
                                     // Créer la team
                                     sb.registerNewTeam(p.getName());
@@ -107,10 +108,10 @@ public class commands implements CommandExecutor {
                                         r.spigot().sendMessage(messageDecline);
 
                                         // Ajoute le joueur qui invite dans la liste de la cible
-                                        Untitled.invites.put(r,p);
+                                        Main.invites.put(r,p);
 
                                         // Enregistre le temps
-                                        Untitled.timeout.put(p.getName(), System.currentTimeMillis());
+                                        Main.timeout.put(p.getName(), System.currentTimeMillis());
                                     }else{
                                         p.sendMessage(ChatColor.YELLOW + r.getName() + " est trop loin pour etre invité !");
                                     }
@@ -135,17 +136,17 @@ public class commands implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("accept")){
             if (sender instanceof Player){
                 Player p = (Player) sender; // Joueur qui exécute la commande
-                if(Untitled.invites.containsKey(p)){
-                    Player team = Untitled.invites.get(p); // Recupère la demande d'invite en cours
-                    if(Untitled.timeout.get(team.getName()) >= (System.currentTimeMillis() - timeoutInvite)){
+                if(Main.invites.containsKey(p)){
+                    Player team = Main.invites.get(p); // Recupère la demande d'invite en cours
+                    if(Main.timeout.get(team.getName()) >= (System.currentTimeMillis() - timeoutInvite)){
                         Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
                         sb.getTeam(team.getName()).addEntry(p.getName()); // Mets le joueur qui tape la cmd dans la team
                         sb.getTeam(team.getName()).addEntry(team.getName()); // Mets le joueur propriétaire de la team dans cette dernière
-                        Untitled.invites.remove(p);// Supprime le joueur
+                        Main.invites.remove(p);// Supprime le joueur
                         p.sendMessage(ChatColor.GOLD + "Invitation acceptée !");
                         team.sendMessage(ChatColor.GOLD + p.getName() + " a accepté votre invitation !");
                     }else{
-                        Untitled.invites.remove(p);// Supprime le joueur
+                        Main.invites.remove(p);// Supprime le joueur
                         p.sendMessage(ChatColor.YELLOW + "Invitation expirée !");
                     }
                 }else{
@@ -157,11 +158,11 @@ public class commands implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("decline")){
             if (sender instanceof Player){
                 Player p = (Player) sender; // Joueur qui exécute la commande
-                if (Untitled.invites.get(p) != null){
-                    Player playerSend = Untitled.invites.get(p);
+                if (Main.invites.get(p) != null){
+                    Player playerSend = Main.invites.get(p);
                     p.sendMessage(ChatColor.RED + "Vous avez refuser l'invitation de " + playerSend.getName());
                     playerSend.sendMessage(ChatColor.RED + sender.getName() + " à refuser l'invitation !");
-                    Untitled.invites.remove(p);
+                    Main.invites.remove(p);
                 }else {
                     p.sendMessage(ChatColor.YELLOW + "Vous n'avez pas d'invitations en attentes !");
                 }
@@ -210,38 +211,74 @@ public class commands implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("help")){
             if (sender instanceof Player){
                 Player p = (Player) sender; // Joueur qui exécute la commande
-                if(args[0] != null){
+                if(args.length != 0){
+                    TextComponent messageHelp = new TextComponent(ChatColor.GREEN + "[RETOUR]");
+                    messageHelp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help"));
                     switch(args[0]) {
                         case "revive":
                             p.sendMessage(ChatColor.GREEN + "Syntaxe : /revive PSEUDO ou /r PSEUDO");
                             p.sendMessage(ChatColor.GREEN + "Permet de réssuciter une personne morte !");
+                            p.spigot().sendMessage(messageHelp);
+                            p.sendMessage(ChatColor.GREEN + "######################");
                             break;
                         case "invite":
                             p.sendMessage(ChatColor.GREEN + "Syntaxe : /invite PSEUDO ou /i PSEUDO");
                             p.sendMessage(ChatColor.GREEN + "Permet d'inviter un joueur dans son équipe !");
                             p.sendMessage(ChatColor.GREEN + "ATTENTION les invitations sont valide 60 secondes !");
+                            p.spigot().sendMessage(messageHelp);
+                            p.sendMessage(ChatColor.GREEN + "######################");
+
                             break;
                         case "accept":
                             p.sendMessage(ChatColor.GREEN + "Syntaxe : /accept ou /a");
                             p.sendMessage(ChatColor.GREEN + "Permet d'accepter une invitation !");
+                            p.spigot().sendMessage(messageHelp);
+                            p.sendMessage(ChatColor.GREEN + "######################");
                             break;
                         case "decline":
-                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /decline");
+                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /decline ou /d");
                             p.sendMessage(ChatColor.GREEN + "Permet de refuser une invitation !");
+                            p.spigot().sendMessage(messageHelp);
+                            p.sendMessage(ChatColor.GREEN + "######################");
                             break;
                         case "leave":
-                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /leave");
+                            p.sendMessage(ChatColor.GREEN + "Syntaxe : /leave ou /l");
                             p.sendMessage(ChatColor.GREEN + "Permet de quitter une équipe !");
                             p.sendMessage(ChatColor.GREEN + "Seule la personne qui quitte l'équipe est averti !");
+                            p.spigot().sendMessage(messageHelp);
+                            p.sendMessage(ChatColor.GREEN + "######################");
                             break;
                         default:
                     }
                 }else{
+                    p.sendMessage(ChatColor.GREEN + "######## AIDE ########");
+
                     // REVIVE
-                    //TextComponent messageRevive = new TextComponent(ChatColor.GREEN + "/revive ou /l");
-                    //messageRevive.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help revive"));
-                    //p.spigot().sendMessage(messageRevive);
-                    p.sendMessage("NE MARCHE PAS !!!!");
+                    TextComponent messageRevive = new TextComponent(ChatColor.GREEN + "/leave");
+                    messageRevive.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help leave"));
+                    p.spigot().sendMessage(messageRevive);
+
+                    // INVITE
+                    TextComponent messageInvite = new TextComponent(ChatColor.GREEN + "/invite");
+                    messageInvite.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help invite"));
+                    p.spigot().sendMessage(messageInvite);
+
+                    // ACCEPT
+                    TextComponent messageAccept = new TextComponent(ChatColor.GREEN + "/accept");
+                    messageAccept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help accept"));
+                    p.spigot().sendMessage(messageAccept);
+
+                    // DECLINE
+                    TextComponent messageDecline = new TextComponent(ChatColor.GREEN + "/decline");
+                    messageDecline.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help decline"));
+                    p.spigot().sendMessage(messageDecline);
+
+                    // LEAVE
+                    TextComponent messageLeave = new TextComponent(ChatColor.GREEN + "/revive");
+                    messageLeave.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help revive"));
+                    p.spigot().sendMessage(messageLeave);
+
+                    p.sendMessage(ChatColor.GREEN + "######################");
                 }
             }
         }

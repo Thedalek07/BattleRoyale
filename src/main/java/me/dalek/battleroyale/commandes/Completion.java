@@ -1,16 +1,13 @@
-package me.dalek.battleroyale;
+package me.dalek.battleroyale.commandes;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandesCompletions implements TabCompleter{
+public class Completion implements TabCompleter{
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
