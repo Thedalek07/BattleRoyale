@@ -1,7 +1,7 @@
-me\dalek\battleroyale\Main$1.class
 me\dalek\battleroyale\timer\Timer.class
+me\dalek\battleroyale\coffres\Coffres.class
 me\dalek\battleroyale\commandes\Completion.class
 me\dalek\battleroyale\Main.class
 me\dalek\battleroyale\commandes\Commandes.class
-me\dalek\battleroyale\Main$2.class
+me\dalek\battleroyale\fin\Fin.class
 me\dalek\battleroyale\scoreboard\Scoreboard.class

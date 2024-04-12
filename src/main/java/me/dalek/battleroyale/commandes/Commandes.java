@@ -13,12 +13,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.Objects;
+
 public class Commandes implements CommandExecutor {
 
     int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
     int distanceMax = 100; // Distance MAX pour faire une demande d'invite
     long timeoutInvite = 60000; // Timeout d'une invite
-    public static int tempsJeu = 90; // Temps de la partie (TIMER)
     int hauteur = 300; // hauteur du tp de début de partie
 
     @Override
@@ -79,19 +80,19 @@ public class Commandes implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("invite")){
             if (sender instanceof Player){
                 Player p = (Player) sender; // Joueur qui exécute la commande
+                assert args != null;
                 if(args.length != 0){
                     Player r = Bukkit.getPlayer(args[0]); // Joueur en argument
-                    Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
-                    Team myTeam = sb.getPlayerTeam(p);
+                    Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
                     if(r != null) { // Vérifie si l'argument est bien le nom d'un joueur
                         if(r != p){ // Vérifie que le joueur sélectionné est différent de celui qui exécute la commande
                             if(Main.invites.get(r) != p){
                                 if(sb.getTeam(p.getName()) == null) { // Verifie si la team existe sinon on crée une team portant le nom de joueur qui invite
                                     // Créer la team
                                     sb.registerNewTeam(p.getName());
-                                    sb.getTeam(p.getName()).setAllowFriendlyFire(false);
+                                    Objects.requireNonNull(sb.getTeam(p.getName())).setAllowFriendlyFire(false);
                                 }
-                                if(sb.getTeam(p.getName()).getSize() < sizeTeamMax){
+                                if(Objects.requireNonNull(sb.getTeam(p.getName())).getSize() < sizeTeamMax){
                                     if(p.getLocation().distanceSquared(r.getLocation()) < distanceMax){
                                         //sb.getTeam(p.getName()).addEntry(p.getName());
 
@@ -142,9 +143,9 @@ public class Commandes implements CommandExecutor {
                 if(Main.invites.containsKey(p)){
                     Player team = Main.invites.get(p); // Recupère la demande d'invite en cours
                     if(Main.timeout.get(team.getName()) >= (System.currentTimeMillis() - timeoutInvite)){
-                        Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
-                        sb.getTeam(team.getName()).addEntry(p.getName()); // Mets le joueur qui tape la cmd dans la team
-                        sb.getTeam(team.getName()).addEntry(team.getName()); // Mets le joueur propriétaire de la team dans cette dernière
+                        Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
+                        Objects.requireNonNull(sb.getTeam(team.getName())).addEntry(p.getName()); // Mets le joueur qui tape la cmd dans la team
+                        Objects.requireNonNull(sb.getTeam(team.getName())).addEntry(team.getName()); // Mets le joueur propriétaire de la team dans cette dernière
                         Main.invites.remove(p);// Supprime le joueur
                         p.sendMessage(ChatColor.GOLD + "Invitation acceptée !");
                         team.sendMessage(ChatColor.GOLD + p.getName() + " a accepté votre invitation !");
@@ -176,7 +177,7 @@ public class Commandes implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("leave")){
             if (sender instanceof Player){
                 Player p = (Player) sender; // Joueur qui exécute la commande
-                Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
+                Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
                 Team myTeam = sb.getPlayerTeam(p);
                 if(myTeam != null){
                     myTeam.removePlayer(p);
@@ -191,8 +192,9 @@ public class Commandes implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("msg")){
             if (sender instanceof Player){
                 Player p = (Player) sender; // Joueur qui exécute la commande
+                assert args != null;
                 if(args.length != 0){
-                    if(p.getPlayer().isOp()){
+                    if(Objects.requireNonNull(p.getPlayer()).isOp()){
                         Player r = Bukkit.getPlayer(args[0]); // Joueur en argument
                         String message = ChatColor.DARK_RED + "ADMIN [" + p.getName() + "]";
                         if(r != null){
@@ -214,6 +216,7 @@ public class Commandes implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("help")){
             if (sender instanceof Player){
                 Player p = (Player) sender; // Joueur qui exécute la commande
+                assert args != null;
                 if(args.length != 0){
                     TextComponent messageHelp = new TextComponent(ChatColor.GREEN + "[RETOUR]");
                     messageHelp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/help"));
@@ -288,7 +291,7 @@ public class Commandes implements CommandExecutor {
 
         if (command.getName().equalsIgnoreCase("run")){
             if (sender instanceof Player){
-                Timer.createTimer(tempsJeu);
+                Timer.createTimer();
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     //p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
                     //p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20000, 1));
