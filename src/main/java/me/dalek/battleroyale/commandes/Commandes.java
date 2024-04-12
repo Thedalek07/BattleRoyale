@@ -1,6 +1,7 @@
 package me.dalek.battleroyale.commandes;
 
 import me.dalek.battleroyale.Main;
+import me.dalek.battleroyale.timer.Timer;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -9,6 +10,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -17,6 +20,8 @@ public class Commandes implements CommandExecutor {
     int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
     int distanceMax = 100; // Distance MAX pour faire une demande d'invite
     long timeoutInvite = 60000; // Timeout d'une invite
+    public static int tempsJeu = 90; // Temps de la partie (TIMER)
+    int hauteur = 300; // hauteur du tp de début de partie
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
@@ -279,6 +284,16 @@ public class Commandes implements CommandExecutor {
                     p.spigot().sendMessage(messageLeave);
 
                     p.sendMessage(ChatColor.GREEN + "######################");
+                }
+            }
+        }
+
+        if (command.getName().equalsIgnoreCase("run")){
+            if (sender instanceof Player){
+                Timer.createTimer(tempsJeu);
+                for(Player p : Bukkit.getOnlinePlayers()) {
+                    //p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
+                    //p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20000, 1));
                 }
             }
         }

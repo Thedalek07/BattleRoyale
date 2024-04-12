@@ -1,4 +1,7 @@
-me\dalek\battleroyale\Untitled.class
-me\dalek\battleroyale\CommandesCompletions.class
-me\dalek\battleroyale\commands.class
-me\dalek\battleroyale\Untitled$1.class
+me\dalek\battleroyale\Main$1.class
+me\dalek\battleroyale\timer\Timer.class
+me\dalek\battleroyale\commandes\Completion.class
+me\dalek\battleroyale\Main.class
+me\dalek\battleroyale\commandes\Commandes.class
+me\dalek\battleroyale\Main$2.class
+me\dalek\battleroyale\scoreboard\Scoreboard.class

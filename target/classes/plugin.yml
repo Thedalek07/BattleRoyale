@@ -1,6 +1,6 @@
 name: BattleRoyale
 version: '1.0.0-SNAPSHOT'
-main: me.dalek.battleroyale.Untitled
+main: me.dalek.battleroyale.Main
 api-version: '1.19'
 commands:
   revive:
@@ -28,4 +28,7 @@ commands:
     usage: /<command>
   help:
     description: Permet de donner les infos sur les commandes
+    usage: /<command>
+  run:
+    description: Permet de lancer la partie
     usage: /<command>
