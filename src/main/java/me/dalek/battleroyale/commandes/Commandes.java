@@ -299,7 +299,7 @@ public class Commandes implements CommandExecutor {
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     //p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
                     //p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1));
-                    //Init.setGamerules();
+                    Init.setGamerules();
                     //Init.resetPlayer();
                     //Init.resetWorld();
                     Defis.closeDefis();

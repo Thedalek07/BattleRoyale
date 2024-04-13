@@ -3,10 +3,13 @@ package me.dalek.battleroyale;
 import me.dalek.battleroyale.commandes.Commandes;
 import me.dalek.battleroyale.commandes.Completion;
 import me.dalek.battleroyale.fin.Fin;
+import me.dalek.battleroyale.morts.Morts;
 import me.dalek.battleroyale.scoreboard.Scoreboard;
 import me.dalek.battleroyale.timer.Timer;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -23,6 +26,9 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         // CONSOLE
         System.out.println("Battle Royale à démarré !");
+
+        // DETECTE SI UN JOUEUR EST MORT
+        getServer().getPluginManager().registerEvents(new Morts(), this);
 
         // COMMANDES
         Objects.requireNonNull(getCommand("revive")).setExecutor(new Commandes());

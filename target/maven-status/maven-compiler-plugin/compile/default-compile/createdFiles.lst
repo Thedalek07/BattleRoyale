@@ -1,10 +1,12 @@
-me\dalek\battleroyale\timer\Timer.class
 me\dalek\battleroyale\coffres\Coffres.class
+me\dalek\battleroyale\worldborder\Worldborder.class
+me\dalek\battleroyale\fin\Fin.class
+me\dalek\battleroyale\timer\Timer.class
+me\dalek\battleroyale\morts\Morts.class
 me\dalek\battleroyale\commandes\Completion.class
 me\dalek\battleroyale\coffres\Defis.class
 me\dalek\battleroyale\Main.class
-me\dalek\battleroyale\worldborder\Worldborder.class
+me\dalek\battleroyale\morts\Foudre.class
 me\dalek\battleroyale\commandes\Commandes.class
-me\dalek\battleroyale\fin\Fin.class
 me\dalek\battleroyale\initialisation\Init.class
 me\dalek\battleroyale\scoreboard\Scoreboard.class

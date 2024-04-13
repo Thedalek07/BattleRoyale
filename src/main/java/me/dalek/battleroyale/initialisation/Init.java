@@ -11,9 +11,10 @@ public class Init {
     private static World world = getWorlds().get(0);
 
     public static void setGamerules(){
-
         world.setGameRuleValue("doDaylightCycle", "true");
         world.setGameRuleValue("doWeatherCycle", "true");
+        world.setGameRuleValue("showDeathMessages", "false");
+        world.setGameRuleValue("reducedDebugInfo", "true");
     }
 
     public static void resetPlayer(){
