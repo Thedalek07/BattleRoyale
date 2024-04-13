@@ -1,7 +1,9 @@
 package me.dalek.battleroyale.timer;
 
 import me.dalek.battleroyale.coffres.Coffres;
+import me.dalek.battleroyale.coffres.Defis;
 import me.dalek.battleroyale.scoreboard.Scoreboard;
+import me.dalek.battleroyale.worldborder.Worldborder;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -34,12 +36,41 @@ public class Timer  {
                 SecondesRestantes = 59;
                 MinutesRestantes--;
             }
+
+            // AFFOCHE LE TIMER
             Timer.setTitle(MinutesRestantes + ":" + SecondesRestantes);
+
+            // TIMER DES COFFRES ET DEFIS
             coffres();
-            // AJOUTS
+
+            // AFFICHAGE DU TIMER
             double scoreTimer = (MinutesRestantes*60) + SecondesRestantes;
             double valBossbar = scoreTimer / (MinutesInit*60);
             Timer.setProgress(valBossbar);
+
+            switch((int) scoreTimer){
+                case 3600:
+                    Worldborder.phase2();
+                    break;
+                case 2400:
+                    Worldborder.phase3();
+                    break;
+                case 1200:
+                    Worldborder.phase4();
+                    break;
+                case 0:
+                    Worldborder.phase5();
+                default:
+                    break;
+            }
+
+            if((MinutesRestantes != 0) && (SecondesRestantes != 0)){
+                for(Player p: Bukkit.getOnlinePlayers()) {
+                    Timer.addPlayer(p);
+                }
+            }else if ((MinutesRestantes == 0) && (SecondesRestantes == 0)){
+                Timer.removeAll();
+            }
         }
     }
 
@@ -49,7 +80,7 @@ public class Timer  {
             Coffres.coffre1();
         }
         if((MinutesRestantes == MinutesInit - intervalle*2) && (SecondesRestantes == 0)){
-            System.out.println("LES DEFIS SONT OUVERTS !");
+            Defis.openDefis();
         }
         if((MinutesRestantes == MinutesInit - intervalle*3) && (SecondesRestantes == 0)){
             Coffres.coffre2();

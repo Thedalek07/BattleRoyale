@@ -23,7 +23,7 @@ public class Scoreboard {
             org.bukkit.scoreboard.Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
             Team myTeam = sb.getPlayerTeam(p);
 
-            // RECUPERE LA VALEUR DE LA BOSSBAR
+            // RECUPERE LA VALEUR DE LA WORLDBORDER
             WorldBorder wB = Objects.requireNonNull(getServer().getWorld(p.getWorld().getName())).getWorldBorder();
             double wbSize = wB.getSize();
 

@@ -1,8 +1,10 @@
 package me.dalek.battleroyale.commandes;
 
 import me.dalek.battleroyale.Main;
+import me.dalek.battleroyale.coffres.Defis;
 import me.dalek.battleroyale.initialisation.Init;
 import me.dalek.battleroyale.timer.Timer;
+import me.dalek.battleroyale.worldborder.Worldborder;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -297,9 +299,11 @@ public class Commandes implements CommandExecutor {
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     //p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
                     //p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1));
-                    Init.setGamerules();
-                    Init.resetPlayer();
-                    Init.resetWorld();
+                    //Init.setGamerules();
+                    //Init.resetPlayer();
+                    //Init.resetWorld();
+                    Defis.closeDefis();
+                    Worldborder.phase1();
                 }
             }
         }
