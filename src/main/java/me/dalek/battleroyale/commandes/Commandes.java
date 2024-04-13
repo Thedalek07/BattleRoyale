@@ -1,6 +1,7 @@
 package me.dalek.battleroyale.commandes;
 
 import me.dalek.battleroyale.Main;
+import me.dalek.battleroyale.initialisation.Init;
 import me.dalek.battleroyale.timer.Timer;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -21,6 +22,7 @@ public class Commandes implements CommandExecutor {
     int distanceMax = 100; // Distance MAX pour faire une demande d'invite
     long timeoutInvite = 60000; // Timeout d'une invite
     int hauteur = 300; // hauteur du tp de début de partie
+    int dureeSlowFalling = 2000; // Durée de l'effet SlowFalling en début de partie
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
@@ -294,7 +296,10 @@ public class Commandes implements CommandExecutor {
                 Timer.createTimer();
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     //p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
-                    //p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20000, 1));
+                    //p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1));
+                    Init.setGamerules();
+                    Init.resetPlayer();
+                    Init.resetWorld();
                 }
             }
         }

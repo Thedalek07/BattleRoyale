@@ -36,6 +36,10 @@ public class Timer  {
             }
             Timer.setTitle(MinutesRestantes + ":" + SecondesRestantes);
             coffres();
+            // AJOUTS
+            double scoreTimer = (MinutesRestantes*60) + SecondesRestantes;
+            double valBossbar = scoreTimer / (MinutesInit*60);
+            Timer.setProgress(valBossbar);
         }
     }
 
