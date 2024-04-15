@@ -2,6 +2,7 @@ package me.dalek.battleroyale.timer;
 
 import me.dalek.battleroyale.coffres.Coffres;
 import me.dalek.battleroyale.coffres.Defis;
+import me.dalek.battleroyale.initialisation.Init;
 import me.dalek.battleroyale.scoreboard.Scoreboard;
 import me.dalek.battleroyale.worldborder.Worldborder;
 import org.bukkit.Bukkit;
@@ -14,12 +15,13 @@ import org.bukkit.entity.Player;
 
 public class Timer  {
 
-    static BossBar Timer;
-    public static Integer MinutesRestantes = 0;
-    public static Integer SecondesRestantes = 0;
-    public static Integer MinutesInit = 90;
-    public static int intervalleCoffres = 15;
+    private static BossBar Timer;
+    private static Integer MinutesRestantes = 0;
+    private static Integer SecondesRestantes = 0;
+    private static Integer MinutesInit = 90;
+    private static int intervalleCoffres = 15;
     private static int dureePvp = 2;
+    private static int dureeEffect = 5;
 
     public static void createTimer(){
         SecondesRestantes = 1;
@@ -34,54 +36,61 @@ public class Timer  {
 
     public static void decompteSeconde (){
         if(Timer != null){
-            SecondesRestantes--;
-            if(SecondesRestantes == -1){
-                SecondesRestantes = 59;
-                MinutesRestantes--;
-            }
-
-            // AFFOCHE LE TIMER
-            Timer.setTitle(MinutesRestantes + ":" + SecondesRestantes);
-
-            // TIMER DES COFFRES ET DEFIS
-            coffres();
-
-            // AFFICHAGE DU TIMER
-            double scoreTimer = (MinutesRestantes*60) + SecondesRestantes;
-            double valBossbar = scoreTimer / (MinutesInit*60);
-            Timer.setProgress(valBossbar);
-
-            // PVP DESACTIVER PENDANT X MINUTES
-            if(MinutesRestantes == MinutesInit - dureePvp && SecondesRestantes == 0){
-                Bukkit.getWorlds().get(0).setPVP(true);
-                for(Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage(ChatColor.GOLD + "Le PvP est activé");
-                    p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
+            if(MinutesRestantes >= 0 && SecondesRestantes >= 0){
+                SecondesRestantes--;
+                if(SecondesRestantes == -1){
+                    SecondesRestantes = 59;
+                    MinutesRestantes--;
                 }
-            }
 
-            switch((int) scoreTimer){
-                case 3600:
-                    Worldborder.phase2();
-                    break;
-                case 2400:
-                    Worldborder.phase3();
-                    break;
-                case 1200:
-                    Worldborder.phase4();
-                    break;
-                case 0:
-                    Worldborder.phase5();
-                default:
-                    break;
-            }
+                // AFFICHE LE TIMER
+                Timer.setTitle(MinutesRestantes + ":" + SecondesRestantes);
 
-            if((MinutesRestantes != 0) && (SecondesRestantes != 0)){
-                for(Player p: Bukkit.getOnlinePlayers()) {
-                    Timer.addPlayer(p);
+                // TIMER DES COFFRES ET DEFIS
+                coffres();
+
+                // AFFICHAGE DU TIMER
+                double scoreTimer = (MinutesRestantes*60) + SecondesRestantes;
+                double valBossbar = scoreTimer / (MinutesInit*60);
+                Timer.setProgress(valBossbar);
+
+                // PVP DESACTIVER PENDANT X MINUTES
+                if(MinutesRestantes == MinutesInit - dureePvp && SecondesRestantes == 0){
+                    Bukkit.getWorlds().get(0).setPVP(true);
+                    for(Player p : Bukkit.getOnlinePlayers()) {
+                        p.sendMessage(ChatColor.GOLD + "Le PvP est activé");
+                        p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
+                    }
                 }
-            }else if ((MinutesRestantes == 0) && (SecondesRestantes == 0)){
-                Timer.removeAll();
+
+                // REMOVE EFFECT SI LE JOUEUR TOUCHE LE SOL
+                if(MinutesRestantes >= (MinutesInit - dureeEffect)-1){
+                    Init.slowFalling();
+                }
+
+                switch((int) scoreTimer){
+                    case 3600:
+                        Worldborder.phase2();
+                        break;
+                    case 2400:
+                        Worldborder.phase3();
+                        break;
+                    case 1200:
+                        Worldborder.phase4();
+                        break;
+                    case 0:
+                        Worldborder.phase5();
+                    default:
+                        break;
+                }
+
+                if((MinutesRestantes != 0) && (SecondesRestantes != 0)){
+                    for(Player p: Bukkit.getOnlinePlayers()) {
+                        Timer.addPlayer(p);
+                    }
+                }else if ((MinutesRestantes == 0) && (SecondesRestantes == 0)){
+                    Timer.removeAll();
+                }
             }
         }
     }

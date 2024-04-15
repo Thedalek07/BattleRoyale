@@ -3,7 +3,11 @@ package me.dalek.battleroyale.initialisation;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import static org.bukkit.Bukkit.getPort;
 import static org.bukkit.Bukkit.getWorlds;
 
 public class Init {
@@ -35,5 +39,16 @@ public class Init {
         world.setStorm(false); // Met le soleil (enleve la pluie)
         Location locCoffre1 = new Location(getWorlds().get(0), 0, 88, 0); // Position du coffre 1
         locCoffre1.getBlock().setType(Material.AIR);
+    }
+
+    public static void slowFalling(){
+        for(Player p : Bukkit.getOnlinePlayers()){
+            PotionEffect effect = p.getPlayer().getPotionEffect(PotionEffectType.SLOW_FALLING);
+            if (effect != null) {
+                if(p.isOnGround()){
+                    p.removePotionEffect(PotionEffectType.SLOW_FALLING);
+                }
+            }
+        }
     }
 }
