@@ -8,8 +8,6 @@ import me.dalek.battleroyale.scoreboard.Scoreboard;
 import me.dalek.battleroyale.timer.Timer;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 

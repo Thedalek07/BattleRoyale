@@ -13,6 +13,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -297,11 +299,12 @@ public class Commandes implements CommandExecutor {
             if (sender instanceof Player){
                 Timer.createTimer();
                 for(Player p : Bukkit.getOnlinePlayers()) {
-                    //p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
-                    //p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1));
+                    System.out.println("LANCEMENT DE LA PARTIE !");
+                    p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1));
                     Init.setGamerules();
-                    //Init.resetPlayer();
-                    //Init.resetWorld();
+                    Init.resetPlayer();
+                    Init.resetWorld();
                     Defis.closeDefis();
                     Worldborder.phase1();
                 }

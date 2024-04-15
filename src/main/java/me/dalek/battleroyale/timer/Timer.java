@@ -5,6 +5,8 @@ import me.dalek.battleroyale.coffres.Defis;
 import me.dalek.battleroyale.scoreboard.Scoreboard;
 import me.dalek.battleroyale.worldborder.Worldborder;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -16,7 +18,8 @@ public class Timer  {
     public static Integer MinutesRestantes = 0;
     public static Integer SecondesRestantes = 0;
     public static Integer MinutesInit = 90;
-    public static int intervalleCoffres = 1;
+    public static int intervalleCoffres = 15;
+    private static int dureePvp = 2;
 
     public static void createTimer(){
         SecondesRestantes = 1;
@@ -47,6 +50,15 @@ public class Timer  {
             double scoreTimer = (MinutesRestantes*60) + SecondesRestantes;
             double valBossbar = scoreTimer / (MinutesInit*60);
             Timer.setProgress(valBossbar);
+
+            // PVP DESACTIVER PENDANT X MINUTES
+            if(MinutesRestantes == MinutesInit - dureePvp && SecondesRestantes == 0){
+                Bukkit.getWorlds().get(0).setPVP(true);
+                for(Player p : Bukkit.getOnlinePlayers()) {
+                    p.sendMessage(ChatColor.GOLD + "Le PvP est activé");
+                    p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
+                }
+            }
 
             switch((int) scoreTimer){
                 case 3600:

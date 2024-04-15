@@ -20,6 +20,9 @@ public class Morts implements Listener {
         // JOUEUR MORT
         Player player = event.getEntity().getPlayer();
 
+        // FOUDRE SUR JOUEUR MORT
+        Bukkit.getWorlds().get(0).strikeLightningEffect(player.getLocation());
+
         // MESSAGE DE MORT
         Bukkit.broadcastMessage(ChatColor.DARK_RED + player.getName() + " est mort(e) !");
 
@@ -34,16 +37,8 @@ public class Morts implements Listener {
             }
         }
 
-        // FOUDRE AU SPAWN
-        eclair();
-
         // SOUNDS
         sounds();
-    }
-
-    private static void eclair(){
-        Location eclair = new Location(getWorlds().get(0), 0, 100, 0); // Position du coffre 2
-        Bukkit.getWorlds().get(0).strikeLightningEffect(eclair);
     }
 
     private static void sounds(){
