@@ -36,8 +36,6 @@ public class Morts implements Listener {
                 Objects.requireNonNull(sb.getPlayerTeam(player)).removePlayer(player);
             }
         }
-
-        // SOUNDS
         sounds();
     }
 

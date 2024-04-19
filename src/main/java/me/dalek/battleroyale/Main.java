@@ -2,6 +2,7 @@ package me.dalek.battleroyale;
 
 import me.dalek.battleroyale.commandes.Commandes;
 import me.dalek.battleroyale.commandes.Completion;
+import me.dalek.battleroyale.defis.Minidefis;
 import me.dalek.battleroyale.fin.Fin;
 import me.dalek.battleroyale.morts.Morts;
 import me.dalek.battleroyale.scoreboard.Scoreboard;
@@ -64,5 +65,8 @@ public final class Main extends JavaPlugin {
 
         // FIN DE PARTIE
         scheduler.scheduleSyncRepeatingTask(this, Fin::finDePartie, 0L, 10L);
+
+        // MINI DEFI
+        scheduler.scheduleSyncRepeatingTask(this, Minidefis::getPlayer, 0L, 5L);
     }
 }

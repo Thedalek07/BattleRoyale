@@ -1,0 +1,12 @@
+Version 1.0.0
+    - Version initiale
+
+Version 1.0.1
+    - Ajout du clear de l'effet Slowfalling lorsque le joueur touche le sol. Actif durant X minutes
+
+Version 1.0.2
+    - Correction du remove du totem (ne se supprime pas si renommée)
+    - Ajout de la classe Mini-Défis
+    - Ajout des Enumérations pour les messages des commandes
+    - Optimisation du code
+

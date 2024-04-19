@@ -13,6 +13,8 @@ import static org.bukkit.Bukkit.getWorlds;
 public class Init {
 
     private static World world = getWorlds().get(0);
+    // COORDOONNES DES COFFRES
+    private static Location coCoffres = new Location(getWorlds().get(0), 0, 88, 0);
 
     public static void setGamerules(){
         world.setGameRuleValue("doDaylightCycle", "true");
@@ -37,18 +39,19 @@ public class Init {
     public static void resetWorld(){
         world.setTime(1000); // Met le jour
         world.setStorm(false); // Met le soleil (enleve la pluie)
-        Location locCoffre1 = new Location(getWorlds().get(0), 0, 88, 0); // Position du coffre 1
-        locCoffre1.getBlock().setType(Material.AIR);
+        coCoffres.getBlock().setType(Material.AIR);
     }
 
     public static void slowFalling(){
         for(Player p : Bukkit.getOnlinePlayers()){
             PotionEffect effect = p.getPlayer().getPotionEffect(PotionEffectType.SLOW_FALLING);
-            if (effect != null) {
-                if(p.isOnGround()){
-                    p.removePotionEffect(PotionEffectType.SLOW_FALLING);
-                }
+            if ((effect != null) && (p.isOnGround())) {
+                p.removePotionEffect(PotionEffectType.SLOW_FALLING);
             }
         }
+    }
+
+    public static Location coChest(){
+        return coCoffres;
     }
 }

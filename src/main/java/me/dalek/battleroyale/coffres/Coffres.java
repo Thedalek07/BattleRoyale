@@ -1,5 +1,6 @@
 package me.dalek.battleroyale.coffres;
 
+import net.md_5.bungee.api.chat.hover.content.Item;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -8,28 +9,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import static me.dalek.battleroyale.initialisation.Init.coChest;
 import static org.bukkit.Bukkit.getWorlds;
 
 public class Coffres {
     public static void coffre1(){
-        // CONSOLE
         System.out.println("COFFRE 1 SPAWN !");
-
-        // SONS
         sounds();
+        sendMessageAll(ChatColor.GOLD + "Le coffre 1 est apparu !");
 
-        // MESSAGES
-        for(Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage(ChatColor.GOLD + "Le coffre 1 est apparu !");
-        }
-
-        // COFFRE 1
-        Location locCoffre1 = new Location(getWorlds().get(0), 0, 88, 0); // Position du coffre 1
-        Block blockChest = locCoffre1.getBlock();
-        locCoffre1.getBlock().setType(Material.AIR);
-        locCoffre1.getBlock().setType(Material.CHEST);
-        Chest chest = (Chest)blockChest.getState();
-        Inventory inv = chest.getInventory();
+        Inventory inv = addChest();
 
         // INVENTAIRE DU COFFRE
         // LIGNE 1
@@ -57,44 +46,24 @@ public class Coffres {
     }
 
     public static void coffre2(){
-        // CONSOLE
         System.out.println("COFFRE 2 SPAWN !");
-
-        // SONS
         sounds();
-
-        // MESSAGES
-        for(Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage(ChatColor.GOLD + "Le coffre 2 est apparu !");
-        }
+        sendMessageAll(ChatColor.GOLD + "Le coffre 2 est apparu !");
 
         // COFFRE 2
-        Location locCoffre2 = new Location(getWorlds().get(0), 0, 88, 0); // Position du coffre 2
-        Block block = locCoffre2.getBlock();
-        locCoffre2.getBlock().setType(Material.AIR);
-        locCoffre2.getBlock().setType(Material.CHEST);
-        Chest chest = (Chest)block.getState();
-        Inventory inv = chest.getInventory();
+        Inventory inv = addChest();
 
         // INVENTAIRE DU COFFRE
         // LIGNE 1
-        ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET, 1);
-        helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        ItemStack legging = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
-        legging.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
-        chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS, 1);
-        boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+        ItemStack helmet = addEnchantement(Material.DIAMOND_HELMET, 1, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+        ItemStack legging = addEnchantement(Material.DIAMOND_LEGGINGS, 1, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+        ItemStack chestplate = addEnchantement(Material.DIAMOND_CHESTPLATE, 1, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+        ItemStack boots = addEnchantement(Material.DIAMOND_BOOTS, 1, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 
-        ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE, 1);
-        pickaxe.addUnsafeEnchantment(Enchantment.DIG_SPEED, 2);
-        ItemStack bow = new ItemStack(Material.BOW, 1);
-        bow.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
-        ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
-        sword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
-        ItemStack axe = new ItemStack(Material.DIAMOND_AXE, 1);
-        axe.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+        ItemStack pickaxe = addEnchantement(Material.DIAMOND_PICKAXE, 1, Enchantment.DIG_SPEED, 2);
+        ItemStack bow = addEnchantement(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 1);
+        ItemStack sword = addEnchantement(Material.DIAMOND_SWORD, 1, Enchantment.DAMAGE_ALL, 1);
+        ItemStack axe = addEnchantement(Material.DIAMOND_AXE, 1, Enchantment.DAMAGE_ALL, 1);
 
         inv.setItem(0, helmet);
         inv.setItem(1, legging);
@@ -123,6 +92,28 @@ public class Coffres {
         for(Player pSound : Bukkit.getOnlinePlayers()) {
             pSound.playSound(pSound.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 1);
         }
+    }
+
+    private static void sendMessageAll(String msg){
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            p.sendMessage(msg);
+        }
+    }
+
+    private static ItemStack addEnchantement(Material item, int count, Enchantment enchantement, int level){
+        ItemStack itemReturn = new ItemStack(item, count);
+        itemReturn.addUnsafeEnchantment(enchantement, level);
+        return itemReturn;
+    }
+
+    private static Inventory addChest(){
+        Location coCoffres = coChest();
+        Block blockChest = coCoffres.getBlock();
+        coCoffres.getBlock().setType(Material.AIR);
+        coCoffres.getBlock().setType(Material.CHEST);
+        Chest chest = (Chest)blockChest.getState();
+        Inventory inv = chest.getInventory();
+        return inv;
     }
 }
 

@@ -26,40 +26,19 @@ public class Completion implements TabCompleter{
             return help;
         }
 
-        if (command.getName().equalsIgnoreCase("msg")){
-            if(args.length >= 2){
-                return vide;
-            }
-        }
-
-        if (command.getName().equalsIgnoreCase("revive")){
-            if(args.length >= 2){
-                return vide;
-            }
-        }
-
-        if (command.getName().equalsIgnoreCase("invite")){
-            if(args.length >= 2){
-                return vide;
-            }
-        }
-
-        if (command.getName().equalsIgnoreCase("accept")){
-            if(args.length >= 1){
-                return vide;
-            }
-        }
-
-        if (command.getName().equalsIgnoreCase("decline")){
-            if(args.length >= 1){
-                return vide;
-            }
-        }
-
-        if (command.getName().equalsIgnoreCase("leave")){
-            if(args.length >= 1){
-                return vide;
-            }
+        switch (command.getName()){
+            case "revive": if(args.length >= 1){ return vide; }
+                break;
+            case "invite": if(args.length >= 2){ return vide; }
+                break;
+            case "accept": if(args.length >= 1){ return vide; }
+                break;
+            case "decline": if(args.length >= 1){ return vide; }
+                break;
+            case "leave": if(args.length >= 1){ return vide; }
+                break;
+            case "msg": if(args.length >= 2){ return vide; }
+                break;
         }
 
 

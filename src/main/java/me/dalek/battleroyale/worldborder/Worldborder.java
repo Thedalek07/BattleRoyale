@@ -16,27 +16,17 @@ public class Worldborder {
 
     public static void phase1(){ wB.setSize(1000); }
 
-    public static void phase2(){
-        wB.setSize(900, timeWb);
-        Bukkit.broadcastMessage(ChatColor.GOLD + "La worldborder se réduit de 100 blocks !");
-        sounds();
-    }
+    public static void phase2(){ worldBorder(900, 100); }
 
-    public static void phase3(){
-        wB.setSize(800, timeWb);
-        Bukkit.broadcastMessage(ChatColor.GOLD + "La worldborder se réduit de 100 blocks !");
-        sounds();
-    }
+    public static void phase3(){ worldBorder(800, 100); }
 
-    public static void phase4(){
-        wB.setSize(500, timeWb);
-        Bukkit.broadcastMessage(ChatColor.GOLD + "La worldborder se réduit de 300 blocks !");
-        sounds();
-    }
+    public static void phase4(){ worldBorder(500, 300); }
 
-    public static void phase5(){
-        wB.setSize(50, timeWb);
-        Bukkit.broadcastMessage(ChatColor.GOLD + "La worldborder se réduit de 450 blocks !");
+    public static void phase5(){ worldBorder(50, 450); }
+
+    private static void worldBorder(int size, int reductionBlocks){
+        wB.setSize(size, timeWb);
+        Bukkit.broadcastMessage(ChatColor.GOLD + "La worldborder se réduit de " + reductionBlocks + " blocks !");
         sounds();
     }
 
