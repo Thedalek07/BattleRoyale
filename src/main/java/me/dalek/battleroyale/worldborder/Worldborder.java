@@ -6,11 +6,16 @@ import org.bukkit.Sound;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
+import static me.dalek.battleroyale.context.Context.world;
+import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_INIVTE_ACCEPT_SENDER;
+import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_REDUCTION_WORLDBORDER;
 import static org.bukkit.Bukkit.getServer;
 
 public class Worldborder {
 
-    private static final WorldBorder wB = getServer().getWorlds().get(0).getWorldBorder();
+    private static final WorldBorder wB = world.getWorldBorder();
 
     private static int timeWb = 600; // Durée de déplacement de la WorldBorder
 
@@ -26,7 +31,7 @@ public class Worldborder {
 
     private static void worldBorder(int size, int reductionBlocks){
         wB.setSize(size, timeWb);
-        Bukkit.broadcastMessage(ChatColor.GOLD + "La worldborder se réduit de " + reductionBlocks + " blocks !");
+        Bukkit.broadcastMessage(String.format(String.valueOf(MSG_PLAYER_REDUCTION_WORLDBORDER), reductionBlocks));
         sounds();
     }
 
@@ -34,6 +39,11 @@ public class Worldborder {
         for(Player p: Bukkit.getOnlinePlayers()) {
             p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
         }
+    }
+
+    public static double getBossbarValue(){
+        double size = wB.getSize();
+        return size;
     }
 }
 

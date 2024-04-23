@@ -1,5 +1,5 @@
 name: BattleRoyale
-version: '1.0.2'
+version: '1.0.3'
 main: me.dalek.battleroyale.Main
 api-version: '1.19'
 commands:
@@ -32,5 +32,13 @@ commands:
     usage: /<command>
   run:
     description: Permet de lancer la partie
+    usage: /<command>
+    permission: op
+  pause:
+    description: Permet de mettre le timer en pause
+    usage: /<command>
+    permission: op
+  start:
+    description: Permet de relancer le timer
     usage: /<command>
     permission: op

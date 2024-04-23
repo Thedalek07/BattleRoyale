@@ -1,6 +1,5 @@
 package me.dalek.battleroyale.coffres;
 
-import net.md_5.bungee.api.chat.hover.content.Item;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -10,13 +9,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import static me.dalek.battleroyale.initialisation.Init.coChest;
-import static org.bukkit.Bukkit.getWorlds;
+import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
 
 public class Coffres {
     public static void coffre1(){
-        System.out.println("COFFRE 1 SPAWN !");
+        System.out.println(MSG_CONSOLE_COFFRE_UN);
         sounds();
-        sendMessageAll(ChatColor.GOLD + "Le coffre 1 est apparu !");
+        Bukkit.broadcastMessage(String.valueOf(MSG_PLAYER_COFFRE_UN));
 
         Inventory inv = addChest();
 
@@ -46,25 +45,25 @@ public class Coffres {
     }
 
     public static void coffre2(){
-        System.out.println("COFFRE 2 SPAWN !");
+        System.out.println(MSG_CONSOLE_COFFRE_DEUX);
         sounds();
-        sendMessageAll(ChatColor.GOLD + "Le coffre 2 est apparu !");
+        Bukkit.broadcastMessage(String.valueOf(MSG_PLAYER_COFFRE_DEUX));
 
         // COFFRE 2
         Inventory inv = addChest();
 
-        // INVENTAIRE DU COFFRE
+        // ITEMS ENCHANTES
+        ItemStack helmet = addEnchantement(Material.DIAMOND_HELMET, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+        ItemStack legging = addEnchantement(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+        ItemStack chestplate = addEnchantement(Material.DIAMOND_CHESTPLATE, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+        ItemStack boots = addEnchantement(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+
+        ItemStack pickaxe = addEnchantement(Material.DIAMOND_PICKAXE, Enchantment.DIG_SPEED, 2);
+        ItemStack bow = addEnchantement(Material.BOW, Enchantment.ARROW_DAMAGE, 1);
+        ItemStack sword = addEnchantement(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, 1);
+        ItemStack axe = addEnchantement(Material.DIAMOND_AXE, Enchantment.DAMAGE_ALL, 1);
+
         // LIGNE 1
-        ItemStack helmet = addEnchantement(Material.DIAMOND_HELMET, 1, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        ItemStack legging = addEnchantement(Material.DIAMOND_LEGGINGS, 1, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        ItemStack chestplate = addEnchantement(Material.DIAMOND_CHESTPLATE, 1, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        ItemStack boots = addEnchantement(Material.DIAMOND_BOOTS, 1, Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-
-        ItemStack pickaxe = addEnchantement(Material.DIAMOND_PICKAXE, 1, Enchantment.DIG_SPEED, 2);
-        ItemStack bow = addEnchantement(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 1);
-        ItemStack sword = addEnchantement(Material.DIAMOND_SWORD, 1, Enchantment.DAMAGE_ALL, 1);
-        ItemStack axe = addEnchantement(Material.DIAMOND_AXE, 1, Enchantment.DAMAGE_ALL, 1);
-
         inv.setItem(0, helmet);
         inv.setItem(1, legging);
         inv.setItem(4, pickaxe);
@@ -94,14 +93,8 @@ public class Coffres {
         }
     }
 
-    private static void sendMessageAll(String msg){
-        for(Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage(msg);
-        }
-    }
-
-    private static ItemStack addEnchantement(Material item, int count, Enchantment enchantement, int level){
-        ItemStack itemReturn = new ItemStack(item, count);
+    private static ItemStack addEnchantement(Material item, Enchantment enchantement, int level){
+        ItemStack itemReturn = new ItemStack(item, 1);
         itemReturn.addUnsafeEnchantment(enchantement, level);
         return itemReturn;
     }
@@ -112,8 +105,8 @@ public class Coffres {
         coCoffres.getBlock().setType(Material.AIR);
         coCoffres.getBlock().setType(Material.CHEST);
         Chest chest = (Chest)blockChest.getState();
-        Inventory inv = chest.getInventory();
-        return inv;
+        Inventory invChest = chest.getInventory();
+        return invChest;
     }
 }
 

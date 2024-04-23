@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 public class Minidefis {
 
     private static boolean epreuveActive = false;
-    private static Location coEntreeEpreuve = new Location(Bukkit.getWorlds().get(0), -3, 51, -243);
+    private static final Location coEntreeEpreuve = new Location(Bukkit.getWorlds().get(0), -3, 51, -243);
 
     public static void getPlayer(){
         for(Player p : Bukkit.getOnlinePlayers()){
-            if((p.getLocation().distance(coEntreeEpreuve) < 1) && (epreuveActive == false)){
+            if((p.getLocation().distance(coEntreeEpreuve) < 1) && (!epreuveActive)){
                 epreuveActive = true;
                 setMobs();
             }

@@ -18,8 +18,7 @@ import java.util.Objects;
 
 public final class Main extends JavaPlugin {
 
-    public static final HashMap<Player, Player> invites = new HashMap<>();
-    public static final HashMap<String, Long> timeout = new HashMap<>();
+
 
     @Override
     public void onEnable() {
@@ -38,6 +37,8 @@ public final class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("msg")).setExecutor(new Commandes());
         Objects.requireNonNull(getCommand("help")).setExecutor(new Commandes());
         Objects.requireNonNull(getCommand("run")).setExecutor(new Commandes());
+        Objects.requireNonNull(getCommand("pause")).setExecutor(new Commandes());
+        Objects.requireNonNull(getCommand("start")).setExecutor(new Commandes());
 
         // AUTOCOMPLETION
         Objects.requireNonNull(getCommand("help")).setTabCompleter(new Completion());
@@ -47,10 +48,13 @@ public final class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("accept")).setTabCompleter(new Completion());
         Objects.requireNonNull(getCommand("decline")).setTabCompleter(new Completion());
         Objects.requireNonNull(getCommand("leave")).setTabCompleter(new Completion());
+        Objects.requireNonNull(getCommand("run")).setTabCompleter(new Completion());
+        Objects.requireNonNull(getCommand("pause")).setTabCompleter(new Completion());
+        Objects.requireNonNull(getCommand("start")).setTabCompleter(new Completion());
 
         // MESSAGE INITALE
         for(Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage(ChatColor.GOLD + "Plugin Battle Royale V1.0.0 - Propriété de Bioscar et Dalek");
+            p.sendMessage(ChatColor.GOLD + "Plugin Battle Royale V1.0.3 - Propriété de Bioscar et Dalek");
             p.sendMessage(ChatColor.GOLD + "Fait par The_dalek");
         }
 

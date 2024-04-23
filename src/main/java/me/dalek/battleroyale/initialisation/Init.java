@@ -7,21 +7,19 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import static me.dalek.battleroyale.context.Context.coCoffres;
+import static me.dalek.battleroyale.context.Context.world;
 import static org.bukkit.Bukkit.getPort;
 import static org.bukkit.Bukkit.getWorlds;
 
 public class Init {
-
-    private static World world = getWorlds().get(0);
-    // COORDOONNES DES COFFRES
-    private static Location coCoffres = new Location(getWorlds().get(0), 0, 88, 0);
 
     public static void setGamerules(){
         world.setGameRuleValue("doDaylightCycle", "true");
         world.setGameRuleValue("doWeatherCycle", "true");
         world.setGameRuleValue("showDeathMessages", "false");
         world.setGameRuleValue("reducedDebugInfo", "true");
-        Bukkit.getWorlds().get(0).setPVP(false);
+        world.setPVP(false);
     }
 
     public static void resetPlayer(){

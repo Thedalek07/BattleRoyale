@@ -27,17 +27,18 @@ public class Completion implements TabCompleter{
         }
 
         switch (command.getName()){
-            case "revive": if(args.length >= 1){ return vide; }
+            case "revive":
+            case "decline":
+            case "leave":
+            case "accept":
+            case "run":
+            case "start":
+            case "pause":
+                if(args.length >= 1){ return vide; }
                 break;
-            case "invite": if(args.length >= 2){ return vide; }
-                break;
-            case "accept": if(args.length >= 1){ return vide; }
-                break;
-            case "decline": if(args.length >= 1){ return vide; }
-                break;
-            case "leave": if(args.length >= 1){ return vide; }
-                break;
-            case "msg": if(args.length >= 2){ return vide; }
+            case "invite":
+            case "msg":
+                if(args.length >= 2){ return vide; }
                 break;
         }
 

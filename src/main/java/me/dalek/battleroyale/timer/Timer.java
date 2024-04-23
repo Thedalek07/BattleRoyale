@@ -13,6 +13,8 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
+import static me.dalek.battleroyale.context.Context.world;
+
 public class Timer  {
 
     private static BossBar Timer; // Bossbar représentant le timer
@@ -22,6 +24,7 @@ public class Timer  {
     private static int intervalleCoffres = 15; // Intervalle entre chaque coffres et défis
     private static int dureePvp = 2; // Durée pendant laquelle le PvP est désactivé
     private static int dureeEffect = 5; // Durée durant laquelle le slowfalling est désactivé
+    private static boolean pause = false;
 
     public static void createTimer(){
         SecondesRestantes = 1;
@@ -36,9 +39,9 @@ public class Timer  {
 
     public static void decompteSeconde (){
         if(Timer != null){
-            if(MinutesRestantes >= 0 && SecondesRestantes >= 0){
+            if(MinutesRestantes >= 0 && SecondesRestantes >= 1 && !pause){
                 SecondesRestantes--;
-                if(SecondesRestantes == -1){
+                if(SecondesRestantes == 0){
                     SecondesRestantes = 59;
                     MinutesRestantes--;
                 }
@@ -56,7 +59,7 @@ public class Timer  {
 
                 // PVP DESACTIVER PENDANT X MINUTES
                 if(MinutesRestantes == MinutesInit - dureePvp && SecondesRestantes == 0){
-                    Bukkit.getWorlds().get(0).setPVP(true);
+                    world.setPVP(true);
                     for(Player p : Bukkit.getOnlinePlayers()) {
                         p.sendMessage(ChatColor.GOLD + "Le PvP est activé");
                         p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
@@ -91,6 +94,7 @@ public class Timer  {
                 }else if ((MinutesRestantes == 0) && (SecondesRestantes == 0)){
                     Timer.removeAll();
                     System.out.println("FIN DU TIMER");
+                    System.out.println("Valeur de la bossbar = " + valBossbar);
                 }
             }
         }
@@ -124,5 +128,13 @@ public class Timer  {
 
     public static int getIntervalleCoffres(){
         return intervalleCoffres;
+    }
+
+    public static void pause(){
+        pause = true;
+    }
+
+    public static void play(){
+        pause = false;
     }
 }

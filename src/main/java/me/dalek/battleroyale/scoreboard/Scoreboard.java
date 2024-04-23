@@ -1,6 +1,7 @@
 package me.dalek.battleroyale.scoreboard;
 
 import me.dalek.battleroyale.timer.Timer;
+import me.dalek.battleroyale.worldborder.Worldborder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.WorldBorder;
@@ -24,8 +25,7 @@ public class Scoreboard {
                 Team myTeam = sb.getPlayerTeam(p);
 
                 // RECUPERE LA VALEUR DE LA WORLDBORDER
-                WorldBorder wB = Objects.requireNonNull(getServer().getWorld(p.getWorld().getName())).getWorldBorder();
-                double wbSize = wB.getSize();
+                double wbSize = Worldborder.getBossbarValue();
 
                 // RECUPERE LES COORDONNEES
                 double val_X = p.getLocation().getX();

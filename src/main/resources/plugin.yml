@@ -34,3 +34,11 @@ commands:
     description: Permet de lancer la partie
     usage: /<command>
     permission: op
+  pause:
+    description: Permet de mettre le timer en pause
+    usage: /<command>
+    permission: op
+  start:
+    description: Permet de relancer le timer
+    usage: /<command>
+    permission: op

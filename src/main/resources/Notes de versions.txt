@@ -10,3 +10,7 @@ Version 1.0.2
     - Ajout des Enumérations pour les messages des commandes
     - Optimisation du code
 
+Version 1.0.3
+    - Ajout des commandes Pause et Play
+    - Ajout des classes Messages et Context
+    - Optimisation du code

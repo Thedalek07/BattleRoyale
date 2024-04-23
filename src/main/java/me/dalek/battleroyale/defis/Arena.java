@@ -2,6 +2,7 @@ package me.dalek.battleroyale.defis;
 
 import org.bukkit.Material;
 
+import static me.dalek.battleroyale.context.Context.world;
 import static org.bukkit.Bukkit.getWorlds;
 
 public class Arena {
@@ -36,6 +37,6 @@ public class Arena {
     }
 
     private static void setBlock(int x, int y, int z, Material block){
-        getWorlds().get(0).getBlockAt(x, y, z).setType(block);
+        world.getBlockAt(x, y, z).setType(block);
     }
 }

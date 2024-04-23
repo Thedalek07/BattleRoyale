@@ -6,13 +6,15 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
+import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
+
 public class Fin {
+    // VARIABLES
+    private static int nbPlayerSurvival = 0;
+    private static int nbPlayerSpectator = 0;
+    private static String winner = "";
 
     public static void finDePartie(){
-        // VARIABLES
-        int nbPlayerSurvival = 0;
-        int nbPlayerSpectator = 0;
-        String winner = "";
 
         for(Player p : Bukkit.getOnlinePlayers()) {
             if(p.getGameMode() == GameMode.SURVIVAL){
@@ -25,7 +27,7 @@ public class Fin {
 
         if(nbPlayerSpectator > 1 && nbPlayerSurvival == 1){
             for(Player p : Bukkit.getOnlinePlayers()) {
-                p.sendMessage(ChatColor.GOLD + winner + " a gagné !");
+                p.sendMessage(String.format(String.valueOf(MSG_PLAYER_VICTOIRE), winner));
                 p.setGameMode(GameMode.SPECTATOR);
             }
         } else if (nbPlayerSpectator > 1 && nbPlayerSurvival > 1) {
@@ -34,7 +36,7 @@ public class Fin {
                 Team myTeam = sb.getPlayerTeam(p);
                 if(myTeam.getSize() == nbPlayerSurvival){
                     for(Player win : Bukkit.getOnlinePlayers()) {
-                        win.sendMessage("L'équipe de " + myTeam.getName() + " a gagné !");
+                        win.sendMessage(String.format(String.valueOf(MSG_PLAYER_VICTOIRE_TEAM), myTeam.getName()));
                         win.setGameMode(GameMode.SPECTATOR);
                     }
                     return;

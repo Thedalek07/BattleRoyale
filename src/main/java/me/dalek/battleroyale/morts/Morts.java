@@ -10,6 +10,9 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
 
+import static me.dalek.battleroyale.context.Context.world;
+import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_INIVTE_ACCEPT_SENDER;
+import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_MORTS;
 import static org.bukkit.Bukkit.getWorld;
 import static org.bukkit.Bukkit.getWorlds;
 
@@ -21,10 +24,10 @@ public class Morts implements Listener {
         Player player = event.getEntity().getPlayer();
 
         // FOUDRE SUR JOUEUR MORT
-        Bukkit.getWorlds().get(0).strikeLightningEffect(player.getLocation());
+        world.strikeLightningEffect(player.getLocation());
 
         // MESSAGE DE MORT
-        Bukkit.broadcastMessage(ChatColor.DARK_RED + player.getName() + " est mort(e) !");
+        Bukkit.broadcastMessage(String.format(String.valueOf(MSG_PLAYER_MORTS), player.getName()));
 
         // PASSAGE EN SPECTATEUR
         player.setGameMode(GameMode.SPECTATOR);
