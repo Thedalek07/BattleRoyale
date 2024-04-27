@@ -31,6 +31,7 @@ public class Commandes implements CommandExecutor {
     private static final long timeoutInvite = 60000; // Timeout d'une invite
     private static final int hauteur = 300; // hauteur du tp de début de partie
     private static final int dureeSlowFalling = 2000; // Durée de l'effet SlowFalling en début de partie
+    private static boolean partieLancer = false;
     private static final HashMap<Player, Player> invites = new HashMap<>();
     private static final HashMap<String, Long> timeout = new HashMap<>();
 
@@ -127,10 +128,15 @@ public class Commandes implements CommandExecutor {
             Player p = (Player) sender; // Joueur qui exécute la commande
             Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
             Team myTeam = sb.getPlayerTeam(p);
-            if(myTeam != null){
+            if(myTeam != null && !myTeam.getName().equals(p.getName())){ // leave d'une team
                 myTeam.removePlayer(p);
                 p.sendMessage(String.format(String.valueOf(MSG_PLAYER_QUITTE_EQUIPE), p.getName()));
-            }else{
+            }else if(myTeam != null && myTeam.getName().equals(p.getName())){ // leave de sa propre team
+                for(OfflinePlayer offlineplayers : myTeam.getPlayers()){
+                    myTeam.removePlayer(offlineplayers);
+                }
+                myTeam.addEntry(p.getName());
+            }else {
                 send_Message(p, MSG_PLAYER_AUCUNE_EQUIPE);
             }
         }
@@ -201,6 +207,7 @@ public class Commandes implements CommandExecutor {
 
         if (command.getName().equalsIgnoreCase("run")){
                 Timer.createTimer();
+                partieLancer = true;
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     System.out.println("LANCEMENT DE LA PARTIE !");
                     p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
@@ -213,12 +220,20 @@ public class Commandes implements CommandExecutor {
                 }
         }
 
+        if ((command.getName().equalsIgnoreCase("synchro")) && (sender instanceof Player)){
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.sendTitle(ChatColor.RED + "GG", "Synchronisation video");
+                p.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+            }
+        }
+
         if (command.getName().equalsIgnoreCase("pause")){
             Timer.pause();
         }
 
         if (command.getName().equalsIgnoreCase("start")){
             Timer.play();
+            Timer.restartLoc();
         }
 
         return true;
@@ -231,6 +246,10 @@ public class Commandes implements CommandExecutor {
     private static void btnRetour(Player p){
         messageCliquable(p, ChatColor.GREEN, "[RETOUR]", "/help");
         p.sendMessage(ChatColor.GREEN + "######################");
+    }
+
+    public static boolean getPartieLancer(){
+        return partieLancer;
     }
 
     public static void messageCliquable(Player r, ChatColor color, String nom, String cmd){

@@ -1,5 +1,5 @@
 name: BattleRoyale
-version: '1.0.3'
+version: '1.0.4'
 main: me.dalek.battleroyale.Main
 api-version: '1.19'
 commands:
@@ -40,5 +40,9 @@ commands:
     permission: op
   start:
     description: Permet de relancer le timer
+    usage: /<command>
+    permission: op
+  synchro:
+    description: Synchronisation vidéo et son
     usage: /<command>
     permission: op

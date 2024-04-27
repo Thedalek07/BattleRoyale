@@ -1,9 +1,11 @@
 package me.dalek.battleroyale.messages;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public class Messages {
-    public static enum enum_Msg {
+    public enum enum_Msg {
+        MSG_PLAYER_JOIN_SERVER(ChatColor.GOLD + "Bienvenue %s sur le serveur !"),
         MSG_PLAYER_REZ(ChatColor.GREEN + "Vous avez réssucité %s !"),
         MSG_PLAYER_IN_LIFE(ChatColor.RED + "Tu ne peux pas réssuciter un joueur en vie !"),
         MSG_PLAYER_INVALIDE(ChatColor.YELLOW + "Joueur invalide !"),
@@ -38,11 +40,29 @@ public class Messages {
         MSG_PLAYER_ADMIN_ENVOYE(ChatColor.GOLD + "Message envoyé à %s !"),
         MSG_PLAYER_MORTS(ChatColor.DARK_RED + "%s est mort(e) !"),
         MSG_PLAYER_REDUCTION_WORLDBORDER(ChatColor.GOLD + "La worldborder se réduit de %d blocks !"),
+        MSG_PLAYER_PVP_ACTIF(ChatColor.GOLD + "Le PvP est activé"),
+        MSG_PLAYER_INFO_PLUGIN(ChatColor.GOLD + "Plugin Battle Royale V" + Bukkit.getServer().getPluginManager().getPlugin("BattleRoyale").getDescription().getVersion() + " Propriété de Bioscar et Dalek \nFait par The_dalek"),
         ;
 
         private final String text;
 
         enum_Msg(final String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
+
+    public enum msgConsole {
+        MSG_CONSOLE_PLUGIN_RUN("Battle Royale à démarré !"),
+        MSG_CONSOLE_ARENE_OUVERTE("L'ARENE EST OUVERTE !"),
+        ;
+        private final String text;
+
+        msgConsole(final String text) {
             this.text = text;
         }
 

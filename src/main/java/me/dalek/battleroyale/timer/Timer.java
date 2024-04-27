@@ -3,19 +3,25 @@ package me.dalek.battleroyale.timer;
 import me.dalek.battleroyale.coffres.Coffres;
 import me.dalek.battleroyale.defis.Arena;
 import me.dalek.battleroyale.initialisation.Init;
+import me.dalek.battleroyale.messages.Messages;
 import me.dalek.battleroyale.scoreboard.Scoreboard;
 import me.dalek.battleroyale.worldborder.Worldborder;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 import static me.dalek.battleroyale.context.Context.world;
 
-public class Timer  {
+public class Timer {
 
     private static BossBar Timer; // Bossbar représentant le timer
     private static Integer MinutesRestantes = 0; // nb de mintues restantes
@@ -25,6 +31,9 @@ public class Timer  {
     private static int dureePvp = 2; // Durée pendant laquelle le PvP est désactivé
     private static int dureeEffect = 5; // Durée durant laquelle le slowfalling est désactivé
     private static boolean pause = false;
+    private static boolean statutLoc = false;
+    private static final HashMap<Player, Location> position = new HashMap<>();
+    private static final HashMap<Player, Double> vie = new HashMap<>();
 
     public static void createTimer(){
         SecondesRestantes = 1;
@@ -34,7 +43,7 @@ public class Timer  {
         for(Player joueur : Bukkit.getOnlinePlayers()) {
             Timer.addPlayer(joueur);
         }
-        MinutesRestantes =  MinutesInit;
+        MinutesRestantes = MinutesInit;
     }
 
     public static void decompteSeconde (){
@@ -61,7 +70,7 @@ public class Timer  {
                 if(MinutesRestantes == MinutesInit - dureePvp && SecondesRestantes == 0){
                     world.setPVP(true);
                     for(Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendMessage(ChatColor.GOLD + "Le PvP est activé");
+                        p.sendMessage(String.valueOf(Messages.enum_Msg.MSG_PLAYER_PVP_ACTIF));
                         p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
                     }
                 }
@@ -100,6 +109,47 @@ public class Timer  {
         }
     }
 
+    public static void restartLoc(){
+        statutLoc = false;
+    }
+
+    private static void setTitle(){
+        for (Player p : Bukkit.getOnlinePlayers()){
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + "PAUSE"));
+        }
+    }
+
+    private static void setLoc(){
+        for (Player p : Bukkit.getOnlinePlayers()){
+            if(p.isOnGround()){
+                position.put(p, p.getLocation());
+                vie.put(p, p.getHealth());
+            }
+        }
+        statutLoc = true;
+    }
+
+    public static void getPause(){
+        if (pause){
+            if(!statutLoc){
+                setLoc();
+            }
+            setTitle();
+            figePlayer();
+        }
+    }
+
+
+    public static void figePlayer(){
+        for (Player p : Bukkit.getOnlinePlayers()){
+            if(position.get(p) != null && p.isOnGround()){
+                Location pLoc = position.get(p);
+                p.teleport(pLoc);
+                p.setHealth(vie.get(p));
+            }
+        }
+    }
+
     private static void coffres() {
         int intervalle = Scoreboard.getIntervalleCoffres();
         if((MinutesRestantes == MinutesInit - intervalle) && (SecondesRestantes == 0)){
@@ -112,7 +162,6 @@ public class Timer  {
             Coffres.coffre2();
         }
     }
-
 
     public static int getMinutes(){
         return MinutesRestantes;

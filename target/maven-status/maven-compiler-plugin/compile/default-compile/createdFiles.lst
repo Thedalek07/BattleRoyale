@@ -2,14 +2,17 @@ me\dalek\battleroyale\defis\Minidefis.class
 me\dalek\battleroyale\coffres\Coffres.class
 me\dalek\battleroyale\worldborder\Worldborder.class
 me\dalek\battleroyale\context\Context.class
+me\dalek\battleroyale\messages\Messages$msgConsole.class
 me\dalek\battleroyale\fin\Fin.class
 me\dalek\battleroyale\messages\Messages.class
 me\dalek\battleroyale\timer\Timer.class
 me\dalek\battleroyale\morts\Morts.class
 me\dalek\battleroyale\defis\Arena.class
 me\dalek\battleroyale\commandes\Completion.class
+me\dalek\battleroyale\initialisation\Lobby.class
 me\dalek\battleroyale\Main.class
 me\dalek\battleroyale\commandes\Commandes.class
 me\dalek\battleroyale\messages\Messages$enum_Msg.class
 me\dalek\battleroyale\initialisation\Init.class
+me\dalek\battleroyale\initialisation\PlayerJoin.class
 me\dalek\battleroyale\scoreboard\Scoreboard.class

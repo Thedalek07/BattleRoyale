@@ -1,16 +1,24 @@
-Version 1.0.0
+Version 1.0.0 - 15/04/2024
     - Version initiale
 
-Version 1.0.1
+Version 1.0.1 - 15/04/2024
     - Ajout du clear de l'effet Slowfalling lorsque le joueur touche le sol. Actif durant X minutes
 
-Version 1.0.2
+Version 1.0.2 - 19/04/2024
     - Correction du remove du totem (ne se supprime pas si renommée)
     - Ajout de la classe Mini-Défis
     - Ajout des Enumérations pour les messages des commandes
     - Optimisation du code
 
-Version 1.0.3
-    - Ajout des commandes Pause et Play
+Version 1.0.3 - 23/04/2024
+    - Ajout des commandes Pause et Start
     - Ajout des classes Messages et Context
+    - Optimisation du code
+
+Version 1.0.4
+    - Correction de la commande leave quand on quitte sa propre équipe
+    - Modification de la commande pause
+    - Ajout de la classe PlayerJoin (protection du spawn)
+    - Ajout de la classe PlayerJoin qui gère l'arrivé des joueurs sur le serveur
+    - Ajout de la commande synchro
     - Optimisation du code

@@ -3,13 +3,14 @@ package me.dalek.battleroyale.defis;
 import org.bukkit.Material;
 
 import static me.dalek.battleroyale.context.Context.world;
+import static me.dalek.battleroyale.messages.Messages.msgConsole.MSG_CONSOLE_ARENE_OUVERTE;
 import static org.bukkit.Bukkit.getWorlds;
 
 public class Arena {
 
     public static void openDefis(){
         // CONSOLE
-        System.out.println("LES DEFIS SONT OUVERTS !");
+        System.out.println(MSG_CONSOLE_ARENE_OUVERTE);
 
         // OUVERTURE DE L'ARENE
         setBlock(261, 77, -5, Material.AIR);

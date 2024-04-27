@@ -42,3 +42,7 @@ commands:
     description: Permet de relancer le timer
     usage: /<command>
     permission: op
+  synchro:
+    description: Synchronisation vidéo et son
+    usage: /<command>
+    permission: op
