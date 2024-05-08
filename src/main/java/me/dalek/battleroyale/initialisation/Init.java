@@ -1,6 +1,7 @@
 package me.dalek.battleroyale.initialisation;
 
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
@@ -13,10 +14,9 @@ import static org.bukkit.Bukkit.getPort;
 import static org.bukkit.Bukkit.getWorlds;
 
 public class Init {
-    private static final Location barrier1 = new Location(world, -25, 120, 24);
-    private static final Location barrier2 = new Location(world, 24, 120, -25);
 
     public static void setGamerules(){
+        System.out.println("[INIT] GAMERULES");
         world.setGameRuleValue("doDaylightCycle", "true");
         world.setGameRuleValue("doWeatherCycle", "true");
         world.setGameRuleValue("showDeathMessages", "false");
@@ -25,6 +25,7 @@ public class Init {
     }
 
     public static void resetPlayer(){
+        System.out.println("[INIT] PLAYER");
         for(Player p : Bukkit.getOnlinePlayers()) {
             p.setGameMode(GameMode.SURVIVAL); // Met le joueur en survie
             p.setExp(0); // Reset l'XP du joueur
@@ -37,6 +38,9 @@ public class Init {
     }
 
     public static void resetWorld(){
+        System.out.println("[INIT] WORLD");
+        world.setDifficulty(Difficulty.PEACEFUL);
+        world.setDifficulty(Difficulty.NORMAL);
         world.setTime(1000); // Met le jour
         world.setStorm(false); // Met le soleil (enleve la pluie)
         coCoffres.getBlock().setType(Material.AIR);
@@ -52,11 +56,23 @@ public class Init {
     }
 
     public static void setBarrier(){
-        for(int x = barrier1.getBlockX(); x < barrier2.getBlockX(); x++) {
-            for(int y = barrier1.getBlockY(); y < barrier2.getBlockY(); y++) {
-                for(int z = barrier1.getBlockZ(); z < barrier2.getBlockZ(); z++) {
-                    world.getBlockAt(x, y, z).setType(Material.STONE);
-                }
+        System.out.println("[BARRIER] CREATE");
+        for(int x = 24 ; x > -26 ; x--){
+            for(int z = -25 ; z < 25 ; z++){
+                Location lobBarrier = new Location(world, x , 121, z);
+                Block barrier = lobBarrier.getBlock();
+                barrier.setType(Material.BARRIER);
+            }
+        }
+    }
+
+    public static void removeBarrier(){
+        System.out.println("[BARRIER] REMOVE");
+        for(int x = 24 ; x > -26 ; x--){
+            for(int z = -25 ; z < 25 ; z++){
+                Location lobBarrier = new Location(world, x , 121, z);
+                Block barrier = lobBarrier.getBlock();
+                barrier.setType(Material.AIR);
             }
         }
     }

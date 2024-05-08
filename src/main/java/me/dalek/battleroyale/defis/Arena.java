@@ -1,10 +1,13 @@
 package me.dalek.battleroyale.defis;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.ItemStack;
 
 import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.messages.Messages.msgConsole.MSG_CONSOLE_ARENE_OUVERTE;
@@ -26,6 +29,17 @@ public class Arena {
         setBlock(261, 75, -5, Material.AIR);
         setBlock(261, 75, -4, Material.AIR);
         setBlock(261, 75, -3, Material.AIR);
+
+        setBlock(238, 72, -5, Material.AIR);
+        setBlock(238, 71, -5, Material.AIR);
+        setBlock(238, 70, -5, Material.AIR);
+        setBlock(238, 72, -4, Material.AIR);
+        setBlock(238, 71, -4, Material.AIR);
+        setBlock(238, 70, -4, Material.AIR);
+        setBlock(238, 72, -3, Material.AIR);
+        setBlock(238, 71, -3, Material.AIR);
+        setBlock(238, 70, -3, Material.AIR);
+
         spawnVindicateur();
 
         // OUVERTURE DE L'ARENE NUMERO 2
@@ -38,6 +52,18 @@ public class Arena {
         setBlock(-234, 64, -6, Material.AIR);
         setBlock(-234, 64, -5, Material.AIR);
         setBlock(-234, 64, -4, Material.AIR);
+
+        setBlock(-257, 61, -6, Material.AIR);
+        setBlock(-257, 60, -6, Material.AIR);
+        setBlock(-257, 59, -6, Material.AIR);
+        setBlock(-257, 61, -5, Material.AIR);
+        setBlock(-257, 60, -5, Material.AIR);
+        setBlock(-257, 59, -5, Material.AIR);
+        setBlock(-257, 61, -4, Material.AIR);
+        setBlock(-257, 60, -4, Material.AIR);
+        setBlock(-257, 59, -4, Material.AIR);
+        spawnMagmaCube();
+        spawnExterminate();
 
         mobsInferieurAreneUne();
     }
@@ -54,6 +80,16 @@ public class Arena {
         setBlock(261, 75, -4, Material.BARRIER);
         setBlock(261, 75, -3, Material.BARRIER);
 
+        setBlock(238, 72, -5, Material.BARRIER);
+        setBlock(238, 71, -5, Material.BARRIER);
+        setBlock(238, 70, -5, Material.BARRIER);
+        setBlock(238, 72, -4, Material.BARRIER);
+        setBlock(238, 71, -4, Material.BARRIER);
+        setBlock(238, 70, -4, Material.BARRIER);
+        setBlock(238, 72, -3, Material.BARRIER);
+        setBlock(238, 71, -3, Material.BARRIER);
+        setBlock(238, 70, -3, Material.BARRIER);
+
         // FERMETURE DE L'ARENE NUMERO 2
         setBlock(-234, 66, -6, Material.BARRIER);
         setBlock(-234, 66, -5, Material.BARRIER);
@@ -64,6 +100,16 @@ public class Arena {
         setBlock(-234, 64, -6, Material.BARRIER);
         setBlock(-234, 64, -5, Material.BARRIER);
         setBlock(-234, 64, -4, Material.BARRIER);
+
+        setBlock(-257, 61, -6, Material.BARRIER);
+        setBlock(-257, 60, -6, Material.BARRIER);
+        setBlock(-257, 59, -6, Material.BARRIER);
+        setBlock(-257, 61, -5, Material.BARRIER);
+        setBlock(-257, 60, -5, Material.BARRIER);
+        setBlock(-257, 59, -5, Material.BARRIER);
+        setBlock(-257, 61, -4, Material.BARRIER);
+        setBlock(-257, 60, -4, Material.BARRIER);
+        setBlock(-257, 59, -4, Material.BARRIER);
     }
 
     private static void setBlock(int x, int y, int z, Material block){
@@ -72,7 +118,30 @@ public class Arena {
 
     private static void spawnVindicateur(){
         for(int i = 0 ; i<5 ; i++){
-            world.spawnEntity(new Location(world, 242, 75 , -4), EntityType.VINDICATOR);
+            world.spawnEntity(new Location(world, 242, 75 , -4), EntityType.VINDICATOR).setPersistent(true);
+        }
+    }
+
+    private static void spawnExterminate(){
+        for(int i = 0 ; i<2 ; i++){
+            Zombie exterminate = (Zombie) world.spawnEntity(new Location(world, 257, 75 , -4), EntityType.ZOMBIE);
+            exterminate.setCustomName(ChatColor.DARK_RED + "Exterminate");
+            exterminate.setPersistent(true);
+            LivingEntity zombie = exterminate;
+            zombie.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+            zombie.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+            zombie.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+            zombie.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+            zombie.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+        }
+    }
+
+    private static void spawnMagmaCube(){
+        for(int i = 0 ; i<3 ; i++){
+            world.spawnEntity(new Location(world, -253, 64 , -5), EntityType.MAGMA_CUBE).setPersistent(true);
+        }
+        for(int i = 0 ; i<3 ; i++){
+            world.spawnEntity(new Location(world, -253, 64 , -5), EntityType.SLIME).setPersistent(true);
         }
     }
 
@@ -87,5 +156,6 @@ public class Arena {
         Skeleton skeleton = (Skeleton) world.spawnEntity(new Location(world, x, y, z), EntityType.SKELETON);
         LivingEntity mob = skeleton;
         mob.setInvulnerable(true);
+        mob.setPersistent(true);
     }
 }

@@ -8,6 +8,7 @@ me\dalek\battleroyale\messages\Messages.class
 me\dalek\battleroyale\timer\Timer.class
 me\dalek\battleroyale\morts\Morts.class
 me\dalek\battleroyale\defis\Arena.class
+me\dalek\battleroyale\events\Events.class
 me\dalek\battleroyale\commandes\Completion.class
 me\dalek\battleroyale\initialisation\Lobby.class
 me\dalek\battleroyale\Main.class

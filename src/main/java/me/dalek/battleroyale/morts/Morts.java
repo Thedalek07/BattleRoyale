@@ -1,5 +1,6 @@
 package me.dalek.battleroyale.morts;
 
+import me.dalek.battleroyale.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,6 +32,10 @@ public class Morts implements Listener {
 
         // PASSAGE EN SPECTATEUR
         player.setGameMode(GameMode.SPECTATOR);
+
+        // ENREGISTREMENT DE LA CAUSE DE LA MORT
+        Main.getPlugin().getConfig().set(player.getName() + "_CAUSE_MORT", event.getDeathMessage());
+        Main.getPlugin().saveConfig();
 
         // LEAVE TEAM
         for(Team team: Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard().getTeams()){

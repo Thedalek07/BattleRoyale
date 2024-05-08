@@ -4,10 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.material.Lever;
 
 import static me.dalek.battleroyale.context.Context.world;
 
@@ -65,13 +66,13 @@ public class Minidefis {
     }
 
     private static void spawnCreature(int x, int y, int z, EntityType creature){
-        world.spawnEntity(new Location(world, x, y , z), creature);
+        world.spawnEntity(new Location(world, x+0.5, y , z+0.5), creature);
     }
 
     private static void summonSkeleton(int x, int y, int z, Material itemHand){
-        Skeleton skeleton = (Skeleton) world.spawnEntity(new Location(world, x, y, z), EntityType.WITHER_SKELETON);
-        LivingEntity mob = skeleton;
+        LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, x+0.5, y, z+0.5), EntityType.WITHER_SKELETON);
         mob.getEquipment().getItemInMainHand().setType(itemHand);
+        mob.setPersistent(true);
     }
 
     public static void openMiniDefis(){
@@ -80,6 +81,26 @@ public class Minidefis {
         setBlock(4, 51, 241, Material.AIR);
         setBlock(-3, 51, -243, Material.AIR);
         setBlock(-3, 52, -243, Material.AIR);
+    }
+
+    public static void openSortie1(){
+        setBlock(5, 52, -243, Material.AIR);
+        setBlock(5, 51, -243, Material.AIR);
+    }
+
+    public static void closeSortie1(){
+        setBlock(5, 52, -243, Material.BARRIER);
+        setBlock(5, 51, -243, Material.BARRIER);
+    }
+
+    public static void openSortie2(){
+        setBlock(-4, 51, 241, Material.AIR);
+        setBlock(-4, 50, 241, Material.AIR);
+    }
+
+    public static void closeSortie2(){
+        setBlock(-4, 51, 241, Material.BARRIER);
+        setBlock(-4, 50, 241, Material.BARRIER);
     }
 
     public static void closeMiniDefis(){
@@ -92,6 +113,7 @@ public class Minidefis {
         setBlock(5, 51, -243, Material.BARRIER);
         setBlock(5, 52, -243, Material.BARRIER);
     }
+
 
     private static void setBlock(int x, int y, int z, Material block){
         world.getBlockAt(x, y, z).setType(block);

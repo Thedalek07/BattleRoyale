@@ -20,7 +20,7 @@ public class Messages {
         MSG_PLAYER_LOIN(ChatColor.YELLOW + "%s est trop loin pour être invité !"),
         MSG_PLAYER_TEAM_COMPLET(ChatColor.RED + "Votre équipe est au complet !"),
         MSG_PLAYER_INVIT_ENVOYE(ChatColor.YELLOW + "Vous avez déjà envoyé une invitation à %s !"),
-        MSG_PLAYER_INIVTE_ME(ChatColor.YELLOW + "Vous ne pouvez pas vous inviter dans votre équipe !"),
+        MSG_PLAYER_INIVTE_ME(ChatColor.YELLOW + "Vous ne pouvez pas inviter ce joueur !"),
         MSG_PLAYER_MANQUANT(ChatColor.YELLOW + "Il faut indiquer un joueur à inviter !"),
         MSG_PLAYER_INIVTE_ACCEPT(ChatColor.GOLD + "Invitation acceptée !"),
         MSG_PLAYER_INIVTE_ACCEPT_SENDER(ChatColor.GOLD + "%s a accepté votre invitation !"),

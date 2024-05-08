@@ -23,15 +23,19 @@ import org.bukkit.scoreboard.Team;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static me.dalek.battleroyale.context.Context.world;
+import static me.dalek.battleroyale.defis.Minidefis.closeSortie1;
+import static me.dalek.battleroyale.defis.Minidefis.closeSortie2;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
 
 public class Commandes implements CommandExecutor {
 
-    private static final int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
+    private static final int sizeTeamMax = 2; // Nombre de joueurs MAX par équipe.
     private static final int distanceMax = 100; // Distance MAX pour faire une demande d'invite
     private static final long timeoutInvite = 60000; // Timeout d'une invite
     private static final int hauteur = 300; // hauteur du tp de début de partie
     private static final int dureeSlowFalling = 2000; // Durée de l'effet SlowFalling en début de partie
+    private static long millisRun = 0;
     private static boolean partieLancer = false;
     private static final HashMap<Player, Player> invites = new HashMap<>();
     private static final HashMap<String, Long> timeout = new HashMap<>();
@@ -62,12 +66,12 @@ public class Commandes implements CommandExecutor {
             }else{ send_Message(p, MSG_PLAYER_ARGS_INVALIDE); } // Argument invalide
         }
 
-        if ((command.getName().equalsIgnoreCase("invite")) && (sender instanceof Player)){
+        if ((command.getName().equalsIgnoreCase("invite")) && (sender instanceof Player) && world.getPVP()){
                 Player p = (Player) sender; // Joueur qui exécute la commande
                 if((args != null) && (args.length != 0)){
                     Player r = Bukkit.getPlayer(args[0]); // Joueur en argument
                     Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
-                    if((r != null) && (r != p)) { // Vérifie si l'argument est bien le nom d'un joueur
+                    if((r != null) && (r != p) && r.getGameMode().equals(GameMode.SURVIVAL)) { // Vérifie si l'argument est bien le nom d'un joueur
                             if(invites.get(r) != p){
                                 if(sb.getTeam(p.getName()) == null) { // Verifie si la team existe sinon on crée une team portant le nom de joueur qui invite
                                     // Créer la team
@@ -218,6 +222,17 @@ public class Commandes implements CommandExecutor {
                     Arena.closeDefis();
                     Worldborder.phase1();
                     Minidefis.closeMiniDefis();
+                    initConfigPlayer(p);
+                    closeSortie1();
+                    closeSortie2();
+                    millisRun = System.currentTimeMillis();
+                    Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
+                    Team myTeam = sb.getPlayerTeam(p);
+                    for(Player player : Bukkit.getOnlinePlayers()){
+                        if(myTeam != null){ // leave d'une team
+                            myTeam.removePlayer(player);
+                        }
+                    }
                 }
         }
 
@@ -291,5 +306,10 @@ public class Commandes implements CommandExecutor {
 
     public static void potions(Player p, PotionEffectType potion, int duree, int level){
         p.addPotionEffect(new PotionEffect(potion, duree, level));
+    }
+
+    private static void initConfigPlayer(Player p){
+        Main.getPlugin().getConfig().set(p.getName() + "_CAUSE_MORT", "Aucune");
+        Main.getPlugin().saveConfig();
     }
 }

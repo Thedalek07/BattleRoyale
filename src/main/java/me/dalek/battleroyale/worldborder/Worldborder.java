@@ -19,15 +19,30 @@ public class Worldborder {
 
     private static int timeWb = 600; // Durée de déplacement de la WorldBorder
 
-    public static void phase1(){ wB.setSize(1000); }
+    public static void phase1(){
+        System.out.println("[WORLDBORDER] PHASE 1");
+        wB.setSize(1000);
+    }
 
-    public static void phase2(){ worldBorder(900, 100); }
+    public static void phase2(){
+        System.out.println("[WORLDBORDER] PHASE 2");
+        worldBorder(900, 100);
+    }
 
-    public static void phase3(){ worldBorder(800, 100); }
+    public static void phase3(){
+        System.out.println("[WORLDBORDER] PHASE 3");
+        worldBorder(800, 100);
+    }
 
-    public static void phase4(){ worldBorder(500, 300); }
+    public static void phase4(){
+        System.out.println("[WORLDBORDER] PHASE 4");
+        worldBorder(500, 300);
+    }
 
-    public static void phase5(){ worldBorder(50, 450); }
+    public static void phase5(){
+        System.out.println("[WORLDBORDER] PHASE 5");
+        worldBorder(50, 450);
+    }
 
     private static void worldBorder(int size, int reductionBlocks){
         wB.setSize(size, timeWb);

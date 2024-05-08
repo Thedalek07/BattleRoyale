@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 import static me.dalek.battleroyale.context.Context.world;
+import static me.dalek.battleroyale.initialisation.Init.setBarrier;
 
 public class Timer {
 
@@ -29,7 +30,7 @@ public class Timer {
     private static Integer SecondesRestantes = 0; // Nb de secondes restantes
     private static Integer MinutesInit = 90; // Durée du timer
     private static int intervalleCoffres = 1; // Intervalle entre chaque coffres et défis
-    private static int dureePvp = 2; // Durée pendant laquelle le PvP est désactivé
+    private static int dureePvp = 1; // Durée pendant laquelle le PvP est désactivé
     private static int dureeEffect = 5; // Durée durant laquelle le slowfalling est désactivé
     private static boolean pause = false;
     private static boolean statutLoc = false;
@@ -37,6 +38,7 @@ public class Timer {
     private static final HashMap<Player, Double> vie = new HashMap<>();
 
     public static void createTimer(){
+        System.out.println("[TIMER] CREATE");
         SecondesRestantes = 1;
         Timer = Bukkit.createBossBar(MinutesInit.toString() + ":00", BarColor.BLUE, BarStyle.SOLID);
         Timer.setVisible(true);
@@ -93,6 +95,7 @@ public class Timer {
                         break;
                     case 0:
                         Worldborder.phase5();
+                        setBarrier();
                     default:
                         break;
                 }

@@ -23,7 +23,14 @@ Version 1.0.4 27/04/2024
     - Ajout de la commande synchro
     - Optimisation du code
 
-Version 1.0.5
+Version 1.0.5 08/05/2024
     - Adaptation du scoreboard pour l'ajout des mini-défis
     - Ajout des sons et messages de notifications
 
+Version 1.0.6
+    - Correction de l'invitation pour les joueurs en spectateur
+    - Ajout des Exterminates dans l'arene 2
+    - Ajout du FriendlyFire false
+    - Ajout du Leave des équipes en début de partie
+    - Blocage de l'invitation si le joueur visé est mort
+    - Ajout des sorties des Mini-Défis

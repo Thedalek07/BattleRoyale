@@ -16,6 +16,9 @@ public class Fin {
 
     public static void finDePartie(){
 
+        nbPlayerSurvival =  0;
+        nbPlayerSpectator = 0;
+
         for(Player p : Bukkit.getOnlinePlayers()) {
             if(p.getGameMode() == GameMode.SURVIVAL){
                 nbPlayerSurvival++;
@@ -30,7 +33,7 @@ public class Fin {
                 p.sendMessage(String.format(String.valueOf(MSG_PLAYER_VICTOIRE), winner));
                 p.setGameMode(GameMode.SPECTATOR);
             }
-        } else if (nbPlayerSpectator > 1 && nbPlayerSurvival > 1) {
+        } else if (nbPlayerSpectator >= 1 && nbPlayerSurvival > 1) {
             for(Player p : Bukkit.getOnlinePlayers()) {
                 org.bukkit.scoreboard.Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
                 Team myTeam = sb.getPlayerTeam(p);
