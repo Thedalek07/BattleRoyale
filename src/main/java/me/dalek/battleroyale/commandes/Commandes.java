@@ -2,6 +2,7 @@ package me.dalek.battleroyale.commandes;
 
 import me.dalek.battleroyale.Main;
 import me.dalek.battleroyale.defis.Arena;
+import me.dalek.battleroyale.defis.Minidefis;
 import me.dalek.battleroyale.initialisation.Init;
 import me.dalek.battleroyale.messages.Messages;
 import me.dalek.battleroyale.timer.Timer;
@@ -76,8 +77,8 @@ public class Commandes implements CommandExecutor {
                                 if(Objects.requireNonNull(sb.getTeam(p.getName())).getSize() < sizeTeamMax){
                                     if(p.getLocation().distanceSquared(r.getLocation()) < distanceMax){
                                         // Messages indiquant la demande d'invitaiton
-                                        send_Message(p, MSG_PLAYER_INVIT);
-                                        send_Message(p, MSG_PLAYER_INVIT_BY);
+                                        p.sendMessage(String.format(String.valueOf(MSG_PLAYER_INVIT), r.getName()));
+                                        r.sendMessage(String.format(String.valueOf(MSG_PLAYER_INVIT_BY), p.getName()));
                                         r.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
 
                                         messageCliquable(r, ChatColor.GREEN, "Accepter", "/accept");
@@ -109,7 +110,7 @@ public class Commandes implements CommandExecutor {
                         invites.remove(p);// Supprime le joueur
                         send_Message(p, MSG_PLAYER_INVITE_EXPIRE);
                     }
-                }else{ send_Message(p, MSG_PLAYER_INIVTE_ATTENTE); }
+                }else{ send_Message(p, MSG_PLAYER_AUCUNE_INVITATION); }
         }
 
         if ((command.getName().equalsIgnoreCase("decline")) && (sender instanceof Player)){
@@ -135,7 +136,7 @@ public class Commandes implements CommandExecutor {
                 for(OfflinePlayer offlineplayers : myTeam.getPlayers()){
                     myTeam.removePlayer(offlineplayers);
                 }
-                myTeam.addEntry(p.getName());
+                send_Message(p, MSG_PLAYER_LEAVE_MY_TEAM);
             }else {
                 send_Message(p, MSG_PLAYER_AUCUNE_EQUIPE);
             }
@@ -152,7 +153,6 @@ public class Commandes implements CommandExecutor {
                             message += ChatColor.YELLOW + " " + args[i];
                         }
                         p.sendMessage(String.format(String.valueOf(MSG_PLAYER_ADMIN_ENVOYE), r.getName()));
-                        p.sendMessage(String.format(String.valueOf(MSG_PLAYER_MESSAGE_ENVOYEE), r.getName()));
                         r.sendMessage(message);
                     }
                 }else{
@@ -217,6 +217,7 @@ public class Commandes implements CommandExecutor {
                     Init.resetWorld();
                     Arena.closeDefis();
                     Worldborder.phase1();
+                    Minidefis.closeMiniDefis();
                 }
         }
 
@@ -224,6 +225,13 @@ public class Commandes implements CommandExecutor {
             for(Player p : Bukkit.getOnlinePlayers()){
                 p.sendTitle(ChatColor.RED + "GG", "Synchronisation video");
                 p.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+            }
+        }
+
+        if ((command.getName().equalsIgnoreCase("record")) && (sender instanceof Player)){
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.sendMessage(String.valueOf(MSG_PLAYER_RECORD_LANCER_TITLE));
+                messageCliquable(p, ChatColor.GREEN, "OUI", String.format(String.valueOf(MSG_PLAYER_RECORD_LANCER), p.getName()));
             }
         }
 

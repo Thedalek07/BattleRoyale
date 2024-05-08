@@ -1,5 +1,5 @@
 name: BattleRoyale
-version: '1.0.4'
+version: '1.0.5'
 main: me.dalek.battleroyale.Main
 api-version: '1.19'
 commands:
@@ -44,5 +44,9 @@ commands:
     permission: op
   synchro:
     description: Synchronisation vidéo et son
+    usage: /<command>
+    permission: op
+  record:
+    description: Sondage pour savoir si tout le monde à lancer le record.
     usage: /<command>
     permission: op

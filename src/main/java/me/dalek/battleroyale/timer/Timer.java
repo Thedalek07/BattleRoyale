@@ -2,6 +2,7 @@ package me.dalek.battleroyale.timer;
 
 import me.dalek.battleroyale.coffres.Coffres;
 import me.dalek.battleroyale.defis.Arena;
+import me.dalek.battleroyale.defis.Minidefis;
 import me.dalek.battleroyale.initialisation.Init;
 import me.dalek.battleroyale.messages.Messages;
 import me.dalek.battleroyale.scoreboard.Scoreboard;
@@ -27,7 +28,7 @@ public class Timer {
     private static Integer MinutesRestantes = 0; // nb de mintues restantes
     private static Integer SecondesRestantes = 0; // Nb de secondes restantes
     private static Integer MinutesInit = 90; // Durée du timer
-    private static int intervalleCoffres = 15; // Intervalle entre chaque coffres et défis
+    private static int intervalleCoffres = 1; // Intervalle entre chaque coffres et défis
     private static int dureePvp = 2; // Durée pendant laquelle le PvP est désactivé
     private static int dureeEffect = 5; // Durée durant laquelle le slowfalling est désactivé
     private static boolean pause = false;
@@ -48,9 +49,9 @@ public class Timer {
 
     public static void decompteSeconde (){
         if(Timer != null){
-            if(MinutesRestantes >= 0 && SecondesRestantes >= 1 && !pause){
+            if(MinutesRestantes >= 0 && SecondesRestantes >= 0 && !pause){
                 SecondesRestantes--;
-                if(SecondesRestantes == 0){
+                if(SecondesRestantes == -1){
                     SecondesRestantes = 59;
                     MinutesRestantes--;
                 }
@@ -156,10 +157,13 @@ public class Timer {
             Coffres.coffre1();
         }
         if((MinutesRestantes == MinutesInit - intervalle*2) && (SecondesRestantes == 0)){
-            Arena.openDefis();
+            Minidefis.openMiniDefis();
         }
         if((MinutesRestantes == MinutesInit - intervalle*3) && (SecondesRestantes == 0)){
             Coffres.coffre2();
+        }
+        if((MinutesRestantes == MinutesInit - intervalle*4) && (SecondesRestantes == 0)){
+            Arena.openDefis();
         }
     }
 

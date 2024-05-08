@@ -4,6 +4,7 @@ import me.dalek.battleroyale.commandes.Commandes;
 import me.dalek.battleroyale.commandes.Completion;
 import me.dalek.battleroyale.defis.Minidefis;
 import me.dalek.battleroyale.fin.Fin;
+import me.dalek.battleroyale.initialisation.Init;
 import me.dalek.battleroyale.initialisation.Lobby;
 import me.dalek.battleroyale.initialisation.PlayerJoin;
 import me.dalek.battleroyale.morts.Morts;
@@ -37,9 +38,10 @@ public final class Main extends JavaPlugin {
         init();
 
         // COMMANDES
-        String[] commandes = {"revive", "invite", "accept", "decline", "decline", "leave", "msg", "help", "run", "pause", "start", "synchro"};
+        String[] commandes = {"revive", "invite", "accept", "decline", "decline", "leave", "msg", "help", "run", "pause", "start", "synchro", "record"};
         initCommande(commandes);
         completionCmd(commandes);
+        Init.setBarrier();
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.sendMessage(String.valueOf(MSG_PLAYER_INFO_PLUGIN));

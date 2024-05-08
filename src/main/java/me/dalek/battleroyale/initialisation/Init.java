@@ -13,6 +13,8 @@ import static org.bukkit.Bukkit.getPort;
 import static org.bukkit.Bukkit.getWorlds;
 
 public class Init {
+    private static final Location barrier1 = new Location(world, -25, 120, 24);
+    private static final Location barrier2 = new Location(world, 24, 120, -25);
 
     public static void setGamerules(){
         world.setGameRuleValue("doDaylightCycle", "true");
@@ -45,6 +47,16 @@ public class Init {
             PotionEffect effect = p.getPlayer().getPotionEffect(PotionEffectType.SLOW_FALLING);
             if ((effect != null) && (p.isOnGround())) {
                 p.removePotionEffect(PotionEffectType.SLOW_FALLING);
+            }
+        }
+    }
+
+    public static void setBarrier(){
+        for(int x = barrier1.getBlockX(); x < barrier2.getBlockX(); x++) {
+            for(int y = barrier1.getBlockY(); y < barrier2.getBlockY(); y++) {
+                for(int z = barrier1.getBlockZ(); z < barrier2.getBlockZ(); z++) {
+                    world.getBlockAt(x, y, z).setType(Material.STONE);
+                }
             }
         }
     }

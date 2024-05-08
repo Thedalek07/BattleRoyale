@@ -46,3 +46,7 @@ commands:
     description: Synchronisation vidéo et son
     usage: /<command>
     permission: op
+  record:
+    description: Sondage pour savoir si tout le monde à lancer le record.
+    usage: /<command>
+    permission: op

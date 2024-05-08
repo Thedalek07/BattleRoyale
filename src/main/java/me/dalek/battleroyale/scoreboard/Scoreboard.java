@@ -65,30 +65,35 @@ public class Scoreboard {
 
                 // VALEURS D'AFFICHAGE
                 int valeursAffichage = Timer.getMinutes() - intervalle;
+                int min = Timer.getMinutes();
 
                 // AFFICHAGE DU SCOREBOARD
-                if(Timer.getMinutes() >= intervalle){
-                    Score coffre_label = objective.getScore(ChatColor.GREEN + "Coffre 1");
-                    coffre_label.setScore(1);
-                    Score coffre_val = objective.getScore(valeursAffichage + ":" + Timer.getSecondes());
-                    coffre_val.setScore(0);
+                if(min >= intervalle){
+                    String val = valeursAffichage + ":" + Timer.getSecondes();
+                    affichageDefis(objective, "Coffre 1", val);
                 }
-                if(Timer.getMinutes() >= intervalle-intervalleCoffres && Timer.getMinutes() < intervalle){
-                    Score coffre_label = objective.getScore(ChatColor.GREEN + "Défis");
-                    coffre_label.setScore(1);
-                    Score coffre_val = objective.getScore((valeursAffichage + intervalleCoffres) + ":" + Timer.getSecondes());
-                    coffre_val.setScore(0);
+                if(min >= intervalle-intervalleCoffres && min < intervalle){
+                    String val = (valeursAffichage + intervalleCoffres) + ":" + Timer.getSecondes();
+                    affichageDefis(objective, "Mini-Défis", val);
                 }
-                if(Timer.getMinutes() >= intervalle-(intervalleCoffres*2) && Timer.getMinutes() < intervalle-intervalleCoffres){
-                    Score coffre_label = objective.getScore(ChatColor.GREEN + "Coffre 2");
-                    coffre_label.setScore(1);
-                    Score coffre_val = objective.getScore((valeursAffichage + intervalleCoffres*2) + ":" + Timer.getSecondes());
-                    coffre_val.setScore(0);
+                if(min >= intervalle-(intervalleCoffres*2) && min < intervalle-intervalleCoffres){
+                    String val = (valeursAffichage + intervalleCoffres*2) + ":" + Timer.getSecondes();
+                    affichageDefis(objective, "Coffre 2", val);
                 }
-
+                if(min >= intervalle-(intervalleCoffres*3) && min < intervalle-(intervalleCoffres*2)){
+                    String val = (valeursAffichage + intervalleCoffres*3) + ":" + Timer.getSecondes();
+                    affichageDefis(objective, "Défis", val);
+                }
                 p.setScoreboard(scoreboard);
             }
         }
+    }
+
+    private static void affichageDefis(Objective objective, String title, String val){
+        Score coffre_label = objective.getScore(ChatColor.GREEN + title);
+        coffre_label.setScore(1);
+        Score coffre_val = objective.getScore(val);
+        coffre_val.setScore(0);
     }
 
     public static int getIntervalleCoffres(){

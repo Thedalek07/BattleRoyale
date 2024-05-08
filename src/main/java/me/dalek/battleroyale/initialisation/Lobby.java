@@ -10,14 +10,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class Lobby implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
-        if(event.getAction() == Action.RIGHT_CLICK_BLOCK && !Commandes.getPartieLancer()){
+        if(event.getAction() == Action.RIGHT_CLICK_BLOCK && !Commandes.getPartieLancer() && !event.getPlayer().isOp()){
             event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void OnInteractAtEntity(PlayerInteractAtEntityEvent event) {
-        if(!Commandes.getPartieLancer()){
+    public void OnInteractAtEntity(PlayerInteractAtEntityEvent event ) {
+        if(!Commandes.getPartieLancer() && !event.getPlayer().isOp()){
             event.setCancelled(true);
         }
     }

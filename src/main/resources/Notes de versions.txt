@@ -15,10 +15,15 @@ Version 1.0.3 - 23/04/2024
     - Ajout des classes Messages et Context
     - Optimisation du code
 
-Version 1.0.4
+Version 1.0.4 27/04/2024
     - Correction de la commande leave quand on quitte sa propre équipe
     - Modification de la commande pause
-    - Ajout de la classe PlayerJoin (protection du spawn)
+    - Ajout de la classe Lobby (protection du spawn)
     - Ajout de la classe PlayerJoin qui gère l'arrivé des joueurs sur le serveur
     - Ajout de la commande synchro
     - Optimisation du code
+
+Version 1.0.5
+    - Adaptation du scoreboard pour l'ajout des mini-défis
+    - Ajout des sons et messages de notifications
+

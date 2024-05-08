@@ -34,12 +34,14 @@ public class Fin {
             for(Player p : Bukkit.getOnlinePlayers()) {
                 org.bukkit.scoreboard.Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
                 Team myTeam = sb.getPlayerTeam(p);
-                if(myTeam.getSize() == nbPlayerSurvival){
-                    for(Player win : Bukkit.getOnlinePlayers()) {
-                        win.sendMessage(String.format(String.valueOf(MSG_PLAYER_VICTOIRE_TEAM), myTeam.getName()));
-                        win.setGameMode(GameMode.SPECTATOR);
+                if(myTeam != null){
+                    if(myTeam.getSize() == nbPlayerSurvival){
+                        for(Player win : Bukkit.getOnlinePlayers()) {
+                            win.sendMessage(String.format(String.valueOf(MSG_PLAYER_VICTOIRE_TEAM), myTeam.getName()));
+                            win.setGameMode(GameMode.SPECTATOR);
+                        }
+                        return;
                     }
-                    return;
                 }
             }
         }
