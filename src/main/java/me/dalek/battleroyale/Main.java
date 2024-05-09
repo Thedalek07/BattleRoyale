@@ -19,8 +19,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.util.Objects;
 
 import static me.dalek.battleroyale.context.Context.world;
-import static me.dalek.battleroyale.initialisation.Init.removeBarrier;
-import static me.dalek.battleroyale.initialisation.Init.setBarrier;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_INFO_PLUGIN;
 import static me.dalek.battleroyale.messages.Messages.msgConsole.MSG_CONSOLE_PLUGIN_RUN;
 
@@ -41,24 +39,9 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Lobby(), this);
         getServer().getPluginManager().registerEvents(new Events(), this);
 
-        removeBarrier();
-
         getConfig().options().copyDefaults(true);
 
         init();
-
-        for(Player p : Bukkit.getOnlinePlayers()){
-            if(p.isOp() && p.getName().equalsIgnoreCase("Bioscar1256")){
-                String opBioscar = ChatColor.GREEN + "[OP] " + ChatColor.WHITE + p.getName();
-                p.setPlayerListName(opBioscar);
-                p.setDisplayName(opBioscar);
-            }
-            if(p.isOp() && p.getName().equalsIgnoreCase("The_dalek")){
-                String opDalek = ChatColor.RED + "[OP] " + ChatColor.WHITE + p.getName();
-                p.setPlayerListName(opDalek);
-                p.setDisplayName(opDalek);
-            }
-        }
 
         // COMMANDES
         String[] commandes = {"revive", "invite", "accept", "decline", "decline", "leave", "msg", "help", "run", "pause", "start", "synchro", "record"};

@@ -27,10 +27,16 @@ Version 1.0.5 08/05/2024
     - Adaptation du scoreboard pour l'ajout des mini-défis
     - Ajout des sons et messages de notifications
 
-Version 1.0.6
+Version 1.0.6 08/05/2024
     - Correction de l'invitation pour les joueurs en spectateur
     - Ajout des Exterminates dans l'arene 2
     - Ajout du FriendlyFire false
     - Ajout du Leave des équipes en début de partie
     - Blocage de l'invitation si le joueur visé est mort
     - Ajout des sorties des Mini-Défis
+
+Version 1.0.7 09/05/2024
+    - Ajout du despawn des mobs dans les défis
+    - Ajout du cancel du placement de blocks en dessus de 120 blocs en fin de partie
+    - Correction de l'autocompletion de la commande Revive
+    - Ajout du glowing en fin de partie

@@ -118,7 +118,8 @@ public class Arena {
 
     private static void spawnVindicateur(){
         for(int i = 0 ; i<5 ; i++){
-            world.spawnEntity(new Location(world, 242, 75 , -4), EntityType.VINDICATOR).setPersistent(true);
+            LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, 242, 75 , -4), EntityType.VINDICATOR);
+            mob.setRemoveWhenFarAway(false);
         }
     }
 
@@ -138,10 +139,12 @@ public class Arena {
 
     private static void spawnMagmaCube(){
         for(int i = 0 ; i<3 ; i++){
-            world.spawnEntity(new Location(world, -253, 64 , -5), EntityType.MAGMA_CUBE).setPersistent(true);
+            LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, -253, 64 , -5), EntityType.MAGMA_CUBE);
+            mob.setRemoveWhenFarAway(false);
         }
         for(int i = 0 ; i<3 ; i++){
-            world.spawnEntity(new Location(world, -253, 64 , -5), EntityType.SLIME).setPersistent(true);
+            LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, -253, 64 , -5), EntityType.SLIME);
+            mob.setRemoveWhenFarAway(false);
         }
     }
 
@@ -153,9 +156,8 @@ public class Arena {
     }
 
     private static void summonSkeleton(double x, double y, double z){
-        Skeleton skeleton = (Skeleton) world.spawnEntity(new Location(world, x, y, z), EntityType.SKELETON);
-        LivingEntity mob = skeleton;
+        LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, x, y, z), EntityType.SKELETON);
         mob.setInvulnerable(true);
-        mob.setPersistent(true);
+        mob.setRemoveWhenFarAway(false);
     }
 }

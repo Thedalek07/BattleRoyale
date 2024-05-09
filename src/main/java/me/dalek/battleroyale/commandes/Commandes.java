@@ -1,6 +1,7 @@
 package me.dalek.battleroyale.commandes;
 
 import me.dalek.battleroyale.Main;
+import me.dalek.battleroyale.config.Config;
 import me.dalek.battleroyale.defis.Arena;
 import me.dalek.battleroyale.defis.Minidefis;
 import me.dalek.battleroyale.initialisation.Init;
@@ -26,17 +27,18 @@ import java.util.Objects;
 import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.defis.Minidefis.closeSortie1;
 import static me.dalek.battleroyale.defis.Minidefis.closeSortie2;
+import static me.dalek.battleroyale.initialisation.Init.resetStatisitic;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
 
 public class Commandes implements CommandExecutor {
 
-    private static final int sizeTeamMax = 2; // Nombre de joueurs MAX par équipe.
+    private static final int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
     private static final int distanceMax = 100; // Distance MAX pour faire une demande d'invite
     private static final long timeoutInvite = 60000; // Timeout d'une invite
     private static final int hauteur = 300; // hauteur du tp de début de partie
     private static final int dureeSlowFalling = 2000; // Durée de l'effet SlowFalling en début de partie
     private static long millisRun = 0;
-    private static boolean partieLancer = false;
+    public static boolean partieLancer = false;
     private static final HashMap<Player, Player> invites = new HashMap<>();
     private static final HashMap<String, Long> timeout = new HashMap<>();
 
@@ -100,7 +102,7 @@ public class Commandes implements CommandExecutor {
                 }else{ send_Message(p, MSG_PLAYER_MANQUANT); }
         }
 
-        if ((command.getName().equalsIgnoreCase("accept")) && sender instanceof Player){
+        if ((command.getName().equalsIgnoreCase("accept")) && sender instanceof Player && ((Player) sender).getGameMode().equals(GameMode.SURVIVAL)){
                 Player p = (Player) sender; // Joueur qui exécute la commande
                 if(invites.containsKey(p)){
                     Player team = invites.get(p); // Recupère la demande d'invite en cours
@@ -222,9 +224,10 @@ public class Commandes implements CommandExecutor {
                     Arena.closeDefis();
                     Worldborder.phase1();
                     Minidefis.closeMiniDefis();
-                    initConfigPlayer(p);
+                    Config.initConfigPlayer(p);
                     closeSortie1();
                     closeSortie2();
+                    resetStatisitic();
                     millisRun = System.currentTimeMillis();
                     Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
                     Team myTeam = sb.getPlayerTeam(p);
@@ -304,12 +307,12 @@ public class Commandes implements CommandExecutor {
         Objects.requireNonNull(sb.getTeam(team.getName())).addEntry(p.getName());
     }
 
+    public static long getMillisRun(){
+        return millisRun;
+    }
+
     public static void potions(Player p, PotionEffectType potion, int duree, int level){
         p.addPotionEffect(new PotionEffect(potion, duree, level));
     }
 
-    private static void initConfigPlayer(Player p){
-        Main.getPlugin().getConfig().set(p.getName() + "_CAUSE_MORT", "Aucune");
-        Main.getPlugin().saveConfig();
-    }
 }

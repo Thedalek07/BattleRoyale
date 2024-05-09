@@ -46,33 +46,25 @@ public class Init {
         coCoffres.getBlock().setType(Material.AIR);
     }
 
+    public static void resetStatisitic(){
+        for(Player p : Bukkit.getOnlinePlayers()){
+            p.setStatistic(Statistic.DEATHS, 0);
+            p.setStatistic(Statistic.SWIM_ONE_CM, 0);
+            p.setStatistic(Statistic.WALK_ONE_CM, 0);
+            p.setStatistic(Statistic.SPRINT_ONE_CM, 0);
+            p.setStatistic(Statistic.PLAYER_KILLS, 0);
+            p.setStatistic(Statistic.DAMAGE_TAKEN, 0);
+            p.setStatistic(Statistic.DAMAGE_DEALT, 0);
+            p.setStatistic(Statistic.TALKED_TO_VILLAGER, 0);
+            //p.setStatistic(Statistic.MINE_BLOCK, 0);
+        }
+    }
+
     public static void slowFalling(){
         for(Player p : Bukkit.getOnlinePlayers()){
             PotionEffect effect = p.getPlayer().getPotionEffect(PotionEffectType.SLOW_FALLING);
             if ((effect != null) && (p.isOnGround())) {
                 p.removePotionEffect(PotionEffectType.SLOW_FALLING);
-            }
-        }
-    }
-
-    public static void setBarrier(){
-        System.out.println("[BARRIER] CREATE");
-        for(int x = 24 ; x > -26 ; x--){
-            for(int z = -25 ; z < 25 ; z++){
-                Location lobBarrier = new Location(world, x , 121, z);
-                Block barrier = lobBarrier.getBlock();
-                barrier.setType(Material.BARRIER);
-            }
-        }
-    }
-
-    public static void removeBarrier(){
-        System.out.println("[BARRIER] REMOVE");
-        for(int x = 24 ; x > -26 ; x--){
-            for(int z = -25 ; z < 25 ; z++){
-                Location lobBarrier = new Location(world, x , 121, z);
-                Block barrier = lobBarrier.getBlock();
-                barrier.setType(Material.AIR);
             }
         }
     }

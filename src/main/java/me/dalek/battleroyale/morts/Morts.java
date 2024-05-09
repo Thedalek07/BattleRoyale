@@ -11,6 +11,8 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
 
+import static me.dalek.battleroyale.commandes.Commandes.getMillisRun;
+import static me.dalek.battleroyale.config.Config.saveConfigPlayer;
 import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_INIVTE_ACCEPT_SENDER;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_MORTS;
@@ -33,8 +35,19 @@ public class Morts implements Listener {
         // PASSAGE EN SPECTATEUR
         player.setGameMode(GameMode.SPECTATOR);
 
+        saveConfigPlayer(player);
+
         // ENREGISTREMENT DE LA CAUSE DE LA MORT
+        long timeMort = (System.currentTimeMillis() - getMillisRun()) / 1000;
+
+        int minAndSec = (int) (timeMort%3600);
+        int min = minAndSec/60;
+        int sec = minAndSec%60;
+
+        String timeAffichage = min + " minutes et " + sec +" secondes";
+
         Main.getPlugin().getConfig().set(player.getName() + "_CAUSE_MORT", event.getDeathMessage());
+        Main.getPlugin().getConfig().set(player.getName() + "_TIME_MORT", timeAffichage);
         Main.getPlugin().saveConfig();
 
         // LEAVE TEAM

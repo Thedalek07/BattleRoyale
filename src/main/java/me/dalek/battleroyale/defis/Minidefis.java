@@ -66,17 +66,18 @@ public class Minidefis {
     }
 
     private static void spawnCreature(int x, int y, int z, EntityType creature){
-        world.spawnEntity(new Location(world, x+0.5, y , z+0.5), creature);
+        LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, x+0.5, y , z+0.5), creature);
+        mob.setRemoveWhenFarAway(false);
     }
 
     private static void summonSkeleton(int x, int y, int z, Material itemHand){
         LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, x+0.5, y, z+0.5), EntityType.WITHER_SKELETON);
         mob.getEquipment().getItemInMainHand().setType(itemHand);
-        mob.setPersistent(true);
+        mob.setRemoveWhenFarAway(false);
     }
 
     public static void openMiniDefis(){
-        Bukkit.broadcastMessage(ChatColor.GOLD + "Les mini défis sont ouvets !");
+        Bukkit.broadcastMessage(ChatColor.GOLD + "Les mini défis sont ouverts !");
         setBlock(4, 50, 241, Material.AIR);
         setBlock(4, 51, 241, Material.AIR);
         setBlock(-3, 51, -243, Material.AIR);

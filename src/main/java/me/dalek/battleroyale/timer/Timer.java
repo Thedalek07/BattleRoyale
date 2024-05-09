@@ -9,10 +9,7 @@ import me.dalek.battleroyale.scoreboard.Scoreboard;
 import me.dalek.battleroyale.worldborder.Worldborder;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -21,7 +18,6 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 import static me.dalek.battleroyale.context.Context.world;
-import static me.dalek.battleroyale.initialisation.Init.setBarrier;
 
 public class Timer {
 
@@ -29,11 +25,12 @@ public class Timer {
     private static Integer MinutesRestantes = 0; // nb de mintues restantes
     private static Integer SecondesRestantes = 0; // Nb de secondes restantes
     private static Integer MinutesInit = 90; // Durée du timer
-    private static int intervalleCoffres = 1; // Intervalle entre chaque coffres et défis
-    private static int dureePvp = 1; // Durée pendant laquelle le PvP est désactivé
+    private static int intervalleCoffres = 15; // Intervalle entre chaque coffres et défis
+    private static int dureePvp = 2; // Durée pendant laquelle le PvP est désactivé
     private static int dureeEffect = 5; // Durée durant laquelle le slowfalling est désactivé
     private static boolean pause = false;
     private static boolean statutLoc = false;
+    private static double scoreTimer = 0;
     private static final HashMap<Player, Location> position = new HashMap<>();
     private static final HashMap<Player, Double> vie = new HashMap<>();
 
@@ -65,7 +62,7 @@ public class Timer {
                 coffres();
 
                 // AFFICHAGE DU TIMER
-                double scoreTimer = (MinutesRestantes*60) + SecondesRestantes;
+                scoreTimer = (MinutesRestantes*60) + SecondesRestantes;
                 double valBossbar = scoreTimer / (MinutesInit*60);
                 Timer.setProgress(valBossbar);
 
@@ -95,7 +92,10 @@ public class Timer {
                         break;
                     case 0:
                         Worldborder.phase5();
-                        setBarrier();
+                        for(Player p : Bukkit.getOnlinePlayers()){
+                            p.sendMessage(ChatColor.RED + "Vous ne pouvez construire à plus de 120 blocs !");
+                            p.playSound(p, Sound.UI_BUTTON_CLICK, 10, 1);
+                        }
                     default:
                         break;
                 }
@@ -106,6 +106,11 @@ public class Timer {
                     }
                 }else if ((MinutesRestantes == 0) && (SecondesRestantes == 0)){
                     Timer.removeAll();
+                    for(Player p : Bukkit.getOnlinePlayers()){
+                        if(p.getGameMode().equals(GameMode.SURVIVAL)){
+                            p.setGlowing(true);
+                        }
+                    }
                     System.out.println("FIN DU TIMER");
                     System.out.println("Valeur de la bossbar = " + valBossbar);
                 }
@@ -154,16 +159,30 @@ public class Timer {
         }
     }
 
+    public static double getScoreTimer(){
+        return scoreTimer;
+    }
+
     private static void coffres() {
         int intervalle = Scoreboard.getIntervalleCoffres();
         if((MinutesRestantes == MinutesInit - intervalle) && (SecondesRestantes == 0)){
             Coffres.coffre1();
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.sendMessage(ChatColor.GOLD + "Les Mini-Défis ouvrent dans 15 min");
+                p.sendMessage(ChatColor.GOLD + "Les coordonnées :");
+                p.sendMessage(ChatColor.GOLD + "0 150 250 / 0 150 -250");
+            }
         }
         if((MinutesRestantes == MinutesInit - intervalle*2) && (SecondesRestantes == 0)){
             Minidefis.openMiniDefis();
         }
         if((MinutesRestantes == MinutesInit - intervalle*3) && (SecondesRestantes == 0)){
             Coffres.coffre2();
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.sendMessage(ChatColor.GOLD + "Les Défis ouvrent dans 15 min");
+                p.sendMessage(ChatColor.GOLD + "Les coordonnées :");
+                p.sendMessage(ChatColor.GOLD + "-250 100 0 / 250 100 0");
+            }
         }
         if((MinutesRestantes == MinutesInit - intervalle*4) && (SecondesRestantes == 0)){
             Arena.openDefis();

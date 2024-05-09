@@ -9,16 +9,23 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.material.Lever;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.Objects;
 
+import static me.dalek.battleroyale.commandes.Commandes.partieLancer;
 import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.defis.Minidefis.openSortie1;
 import static me.dalek.battleroyale.defis.Minidefis.openSortie2;
+import static me.dalek.battleroyale.timer.Timer.getScoreTimer;
 
 public class Events implements Listener {
 
@@ -34,6 +41,13 @@ public class Events implements Listener {
             if(sb.getPlayerTeam(eventEntity) != null && sb.getPlayerTeam(eventDamager) != null && sb.getPlayerTeam(eventEntity).getDisplayName().equals(sb.getPlayerTeam(eventDamager).getDisplayName())){
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public static void placeBlock(BlockPlaceEvent event){
+        if(event.getPlayer().getLocation().getY() >= 121 && getScoreTimer() == 0){
+            event.setCancelled(true);
         }
     }
 
