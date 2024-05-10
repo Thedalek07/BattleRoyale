@@ -214,28 +214,26 @@ public class Commandes implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("run")){
                 Timer.createTimer();
                 partieLancer = true;
-                for(Player p : Bukkit.getOnlinePlayers()) {
-                    System.out.println("LANCEMENT DE LA PARTIE !");
-                    p.teleport(new Location(p.getWorld(), 0 ,hauteur ,0));
-                    potions(p, PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1);
-                    Init.setGamerules();
-                    Init.resetPlayer();
-                    Init.resetWorld();
-                    Arena.closeDefis();
-                    Worldborder.phase1();
-                    Minidefis.closeMiniDefis();
-                    Config.initConfigPlayer(p);
-                    closeSortie1();
-                    closeSortie2();
-                    resetStatisitic();
-                    millisRun = System.currentTimeMillis();
-                    Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
-                    Team myTeam = sb.getPlayerTeam(p);
-                    for(Player player : Bukkit.getOnlinePlayers()){
-                        if(myTeam != null){ // leave d'une team
-                            myTeam.removePlayer(player);
-                        }
+                System.out.println("LANCEMENT DE LA PARTIE !");
+                Init.setGamerules();
+                Init.resetPlayer();
+                Init.resetWorld();
+                Arena.closeDefis();
+                Worldborder.phase1();
+                Minidefis.closeMiniDefis();
+                closeSortie1();
+                closeSortie2();
+                resetStatisitic();
+                millisRun = System.currentTimeMillis();
+                Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
+                for(Player player : Bukkit.getOnlinePlayers()){
+                    Team myTeam = sb.getPlayerTeam(player);
+                    if(myTeam != null){ // leave d'une team
+                        myTeam.removePlayer(player);
                     }
+                    player.teleport(new Location(player.getWorld(), 0 ,hauteur ,0));
+                    potions(player, PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1);
+                    Config.initConfigPlayer(player);
                 }
         }
 

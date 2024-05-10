@@ -35,8 +35,12 @@ Version 1.0.6 08/05/2024
     - Blocage de l'invitation si le joueur visé est mort
     - Ajout des sorties des Mini-Défis
 
-Version 1.0.7 09/05/2024
+Version 1.0.7 09/05/2024 (Version du Battle Royal 2 du 09/05/2024)
     - Ajout du despawn des mobs dans les défis
     - Ajout du cancel du placement de blocks en dessus de 120 blocs en fin de partie
     - Correction de l'autocompletion de la commande Revive
     - Ajout du glowing en fin de partie
+
+Version 1.0.8 10/05/2024
+    - Correction de la boucle sur la commande RUN
+
