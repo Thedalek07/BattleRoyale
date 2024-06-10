@@ -44,3 +44,8 @@ Version 1.0.7 09/05/2024 (Version du Battle Royal 2 du 09/05/2024)
 Version 1.0.8 10/05/2024
     - Correction de la boucle sur la commande RUN
 
+Version 1.0.9
+    - Correction du FriendlyFire (projectile)
+    - Bloquage du chat pour les personnes en spectateur
+    - Bloquage des commandes "Tell", "Whisper" et "Tellraw"
+    - Bloquage de la météo (Désactivation de la pluie)

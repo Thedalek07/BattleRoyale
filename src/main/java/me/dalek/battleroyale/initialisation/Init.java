@@ -18,7 +18,7 @@ public class Init {
     public static void setGamerules(){
         System.out.println("[INIT] GAMERULES");
         world.setGameRuleValue("doDaylightCycle", "true");
-        world.setGameRuleValue("doWeatherCycle", "true");
+        world.setGameRuleValue("doWeatherCycle", "false");
         world.setGameRuleValue("showDeathMessages", "false");
         world.setGameRuleValue("reducedDebugInfo", "true");
         world.setPVP(false);

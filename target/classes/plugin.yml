@@ -1,5 +1,5 @@
 name: BattleRoyale
-version: '1.0.7'
+version: '1.0.9'
 main: me.dalek.battleroyale.Main
 api-version: '1.19'
 commands:
@@ -48,5 +48,17 @@ commands:
     permission: op
   record:
     description: Sondage pour savoir si tout le monde à lancer le record.
+    usage: /<command>
+    permission: op
+  whisper:
+    description: Bloquage de la commande Whisper
+    usage: /<command>
+    permission: op
+  tell:
+    description: Bloquage de la commande Tell
+    usage: /<command>
+    permission: op
+  tellraw:
+    description: Bloquage de la commande Tellraw
     usage: /<command>
     permission: op
