@@ -25,8 +25,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import static me.dalek.battleroyale.context.Context.world;
-import static me.dalek.battleroyale.defis.Minidefis.closeSortie1;
-import static me.dalek.battleroyale.defis.Minidefis.closeSortie2;
+import static me.dalek.battleroyale.initialisation.Init.getListSpawn;
 import static me.dalek.battleroyale.initialisation.Init.resetStatisitic;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
 
@@ -45,28 +44,6 @@ public class Commandes implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
-        if ((command.getName().equalsIgnoreCase("revive")) && (sender instanceof Player)){
-            Player p = (Player) sender; // Joueur qui exécute la commande
-            if((args != null) && (args.length != 0)){ // Vérifie les arguments de la commande
-                Player r = Bukkit.getPlayer(args[0]); // Joueur en argument
-                if(p.getInventory().contains(Material.ECHO_SHARD)){ // Vérifie si le joueur possède une echo shard (Totem)
-                    if((r != null) && (r != p)) { // Vérifie si l'argument est bien le nom d'un joueur et si différend de lui meme
-                        if(r.getGameMode() == GameMode.SPECTATOR){ // Vérifie si le joueur cible est en spectateur
-                            // MESSAGES
-                            p.sendMessage(String.format(String.valueOf(MSG_PLAYER_REZ), r.getName()));
-                            r.sendMessage(String.format(String.valueOf(MSG_PLAYER_REZ_BY), p.getName()));
-
-                            r.teleport(p.getLocation()); // Téléporte le joueur cible sur le joueur qui execute la cmd
-                            r.setGameMode(GameMode.SURVIVAL); // Mets le joueur cible en survie
-
-                            removeItem(p, Material.ECHO_SHARD);
-
-                            soundsAll(Sound.ITEM_TOTEM_USE);
-                        }else{ send_Message(p, MSG_PLAYER_IN_LIFE); } // Joueur en vie
-                    }else{ send_Message(p, MSG_PLAYER_INVALIDE); } // Joueur invalide
-                }else{ send_Message(p, MSG_PLAYER_MANQUE_TOTEM); } // Il faut un totem
-            }else{ send_Message(p, MSG_PLAYER_ARGS_INVALIDE); } // Argument invalide
-        }
 
         if ((command.getName().equalsIgnoreCase("invite")) && (sender instanceof Player) && world.getPVP()){
                 Player p = (Player) sender; // Joueur qui exécute la commande
@@ -216,25 +193,22 @@ public class Commandes implements CommandExecutor {
                 partieLancer = true;
                 System.out.println("LANCEMENT DE LA PARTIE !");
                 Init.setGamerules();
-                Init.resetPlayer();
-                Init.resetWorld();
+                //Init.resetPlayer();
+                //Init.resetWorld();
                 Arena.closeDefis();
                 Worldborder.phase1();
                 Minidefis.closeMiniDefis();
-                closeSortie1();
-                closeSortie2();
                 resetStatisitic();
                 millisRun = System.currentTimeMillis();
                 Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
-                for(Player player : Bukkit.getOnlinePlayers()){
+                /*for(Player player : Bukkit.getOnlinePlayers()){
                     Team myTeam = sb.getPlayerTeam(player);
                     if(myTeam != null){ // leave d'une team
                         myTeam.removePlayer(player);
                     }
                     player.teleport(new Location(player.getWorld(), 0 ,hauteur ,0));
                     potions(player, PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1);
-                    Config.initConfigPlayer(player);
-                }
+                }*/
         }
 
         if ((command.getName().equalsIgnoreCase("synchro")) && (sender instanceof Player)){
@@ -249,6 +223,11 @@ public class Commandes implements CommandExecutor {
                 p.sendMessage(String.valueOf(MSG_PLAYER_RECORD_LANCER_TITLE));
                 messageCliquable(p, ChatColor.GREEN, "OUI", String.format(String.valueOf(MSG_PLAYER_RECORD_LANCER), p.getName()));
             }
+        }
+
+        if ((command.getName().equalsIgnoreCase("spawn")) && (sender instanceof Player) && args != null && args.length == 1){
+            int index = Integer.parseInt(args[0]);
+            ((Player) sender).teleport((getListSpawn().get(index)));
         }
 
         if (command.getName().equalsIgnoreCase("pause")){

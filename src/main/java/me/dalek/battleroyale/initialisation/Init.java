@@ -8,6 +8,9 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static me.dalek.battleroyale.context.Context.coCoffres;
 import static me.dalek.battleroyale.context.Context.world;
 import static org.bukkit.Bukkit.getPort;
@@ -15,13 +18,16 @@ import static org.bukkit.Bukkit.getWorlds;
 
 public class Init {
 
+    static List<Location> listSpawn = new ArrayList<>();
+
     public static void setGamerules(){
         System.out.println("[INIT] GAMERULES");
         world.setGameRuleValue("doDaylightCycle", "true");
         world.setGameRuleValue("doWeatherCycle", "false");
         world.setGameRuleValue("showDeathMessages", "false");
         world.setGameRuleValue("reducedDebugInfo", "true");
-        world.setPVP(false);
+        world.setGameRuleValue("doMobSpawning", "false");
+        world.setPVP(true);
     }
 
     public static void resetPlayer(){
@@ -67,6 +73,25 @@ public class Init {
                 p.removePotionEffect(PotionEffectType.SLOW_FALLING);
             }
         }
+    }
+
+    public static void pointSpawn(int nbPoint, int rayon){
+        double angle = ((2*Math.PI)/nbPoint);
+        listSpawn.add(new Location(world, 0, 100, 0));
+        Bukkit.getLogger().info("Angle = " + angle);
+        for(int i = 1 ; i <= nbPoint ; i++){
+            double angleOffset = angle * i;
+            int x = (int) (Math.cos(angleOffset) * rayon);
+            int z = (int) (Math.sin(angleOffset) * rayon);
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.sendMessage("Position n°" + i + " : " + x + " / " + z);
+            }
+            listSpawn.add(new Location(world, x, 100, z));
+        }
+    }
+
+    public static List<Location> getListSpawn(){
+        return listSpawn;
     }
 
     public static Location coChest(){

@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 import static me.dalek.battleroyale.context.Context.world;
+import static me.dalek.battleroyale.defis.Minidefis.initMiniDefis;
 
 public class Timer {
 
@@ -65,15 +66,6 @@ public class Timer {
                 scoreTimer = (MinutesRestantes*60) + SecondesRestantes;
                 double valBossbar = scoreTimer / (MinutesInit*60);
                 Timer.setProgress(valBossbar);
-
-                // PVP DESACTIVER PENDANT X MINUTES
-                if(MinutesRestantes == MinutesInit - dureePvp && SecondesRestantes == 0){
-                    world.setPVP(true);
-                    for(Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendMessage(String.valueOf(Messages.enum_Msg.MSG_PLAYER_PVP_ACTIF));
-                        p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 10, 1);
-                    }
-                }
 
                 // REMOVE EFFECT SI LE JOUEUR TOUCHE LE SOL
                 if(MinutesRestantes >= (MinutesInit - dureeEffect)-1){
@@ -175,6 +167,7 @@ public class Timer {
         }
         if((MinutesRestantes == MinutesInit - intervalle*2) && (SecondesRestantes == 0)){
             Minidefis.openMiniDefis();
+            initMiniDefis();
         }
         if((MinutesRestantes == MinutesInit - intervalle*3) && (SecondesRestantes == 0)){
             Coffres.coffre2();

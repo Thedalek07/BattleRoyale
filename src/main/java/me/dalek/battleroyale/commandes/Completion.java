@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+import static me.dalek.battleroyale.initialisation.Init.getListSpawn;
+
 public class Completion implements TabCompleter{
 
     @Override
@@ -27,6 +29,19 @@ public class Completion implements TabCompleter{
                 help.add("leave");
             }
             return help;
+        }
+
+        if (command.getName().equalsIgnoreCase("spawn")){
+            if(args.length == 1){
+                List<String> completionSpawn = new ArrayList<>();
+                int size = getListSpawn().size();
+                for(int i = 1 ; i <= size ; i++){
+                    completionSpawn.add(String.valueOf(i));
+                }
+                return completionSpawn;
+            } else {
+                return vide;
+            }
         }
 
         if (command.getName().equalsIgnoreCase("revive")){

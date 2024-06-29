@@ -44,8 +44,14 @@ Version 1.0.7 09/05/2024 (Version du Battle Royal 2 du 09/05/2024)
 Version 1.0.8 10/05/2024
     - Correction de la boucle sur la commande RUN
 
-Version 1.0.9
+Version 1.0.9 10/06/2024
     - Correction du FriendlyFire (projectile)
     - Bloquage du chat pour les personnes en spectateur
     - Bloquage des commandes "Tell", "Whisper" et "Tellraw"
     - Bloquage de la météo (Désactivation de la pluie)
+
+Version 1.1.0 29/06/2024
+    - Suppression de l'ancien Totem du sauveur
+    - Suppression de la phase PvP
+    - Ajout du spawn en cercle qui s'adapte en fonction du nombre de joueurs
+    - Ajout d'une commande pour ce tp dans aux différents spawn

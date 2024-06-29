@@ -3,10 +3,6 @@ version: '${project.version}'
 main: me.dalek.battleroyale.Main
 api-version: '1.19'
 commands:
-  revive:
-    description: Commande pour tuer un joueur
-    usage: /<command>
-    aliases: r
   invite:
     description: Permet d'inviter un joueur dans son équipe
     usage: /<command>
@@ -60,5 +56,9 @@ commands:
     permission: op
   tellraw:
     description: Bloquage de la commande Tellraw
+    usage: /<command>
+    permission: op
+  spawn:
+    description: Permet de ce tp dans le spanw
     usage: /<command>
     permission: op

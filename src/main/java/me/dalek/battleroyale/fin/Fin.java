@@ -7,7 +7,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
-import static me.dalek.battleroyale.config.Config.saveConfigAll;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
 
 public class Fin {
@@ -37,7 +36,6 @@ public class Fin {
                 p.sendTitle(ChatColor.GOLD + "FIN DE PARTIE !", winner + " a gagné !");
                 p.setGameMode(GameMode.SPECTATOR);
             }
-            saveConfigAll();
         } else if (nbPlayerSpectator >= 1 && nbPlayerSurvival > 1) {
             for(Player p : Bukkit.getOnlinePlayers()) {
                 org.bukkit.scoreboard.Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
@@ -50,7 +48,6 @@ public class Fin {
                             win.sendTitle(ChatColor.GOLD + "FIN DE PARTIE !", "L'équipe " + myTeam.getName() + " a gagnée !");
                             win.setGameMode(GameMode.SPECTATOR);
                         }
-                        saveConfigAll();
                         return;
                     }
                 }

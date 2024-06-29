@@ -2,6 +2,7 @@ package me.dalek.battleroyale;
 
 import me.dalek.battleroyale.commandes.Commandes;
 import me.dalek.battleroyale.commandes.Completion;
+import me.dalek.battleroyale.config.Config;
 import me.dalek.battleroyale.defis.Minidefis;
 import me.dalek.battleroyale.events.Events;
 import me.dalek.battleroyale.fin.Fin;
@@ -12,13 +13,17 @@ import me.dalek.battleroyale.morts.Morts;
 import me.dalek.battleroyale.scoreboard.Scoreboard;
 import me.dalek.battleroyale.timer.Timer;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.Objects;
 
 import static me.dalek.battleroyale.context.Context.world;
+import static me.dalek.battleroyale.defis.Minidefis.initMiniDefis;
+import static me.dalek.battleroyale.initialisation.Init.pointSpawn;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_INFO_PLUGIN;
 import static me.dalek.battleroyale.messages.Messages.msgConsole.MSG_CONSOLE_PLUGIN_RUN;
 
@@ -41,16 +46,21 @@ public final class Main extends JavaPlugin {
 
         getConfig().options().copyDefaults(true);
 
+
+
         init();
 
         // COMMANDES
-        String[] commandes = {"revive", "invite", "accept", "decline", "decline", "leave", "msg", "help", "run", "pause", "start", "synchro", "record"};
+        String[] commandes = {"invite", "accept", "decline", "decline", "leave", "msg", "help", "run", "pause", "start", "synchro", "record", "spawn"};
         initCommande(commandes);
         completionCmd(commandes);
+
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.sendMessage(String.valueOf(MSG_PLAYER_INFO_PLUGIN));
         }
+
+        pointSpawn(15, 490);
 
         // BOUCLES SCHEDULE
         BukkitScheduler scheduler = getServer().getScheduler();
@@ -64,12 +74,10 @@ public final class Main extends JavaPlugin {
         // FIN DE PARTIE
         scheduler.scheduleSyncRepeatingTask(this, Fin::finDePartie, 0L, 10L);
 
-        // MINI DEFI
-        scheduler.scheduleSyncRepeatingTask(this, Minidefis::getPlayer, 0L, 5L);
-
         // PAUSE
         scheduler.scheduleSyncRepeatingTask(this, Timer::getPause, 0L, 5L);
 
+        Config.initConfigPlayer();
     }
 
     private static void init(){
@@ -93,4 +101,5 @@ public final class Main extends JavaPlugin {
     public static Main getPlugin(){
         return plugin;
     }
+
 }

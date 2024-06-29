@@ -42,7 +42,7 @@ public class Messages {
         MSG_PLAYER_MORTS(ChatColor.DARK_RED + "%s est mort(e) !"),
         MSG_PLAYER_REDUCTION_WORLDBORDER(ChatColor.GOLD + "La worldborder se réduit de %d blocks !"),
         MSG_PLAYER_PVP_ACTIF(ChatColor.GOLD + "Le PvP est activé"),
-        MSG_PLAYER_INFO_PLUGIN(ChatColor.GOLD + "Plugin Battle Royale V" + Bukkit.getServer().getPluginManager().getPlugin("BattleRoyale").getDescription().getVersion() + " Propriété de Bioscar et Dalek \nFait par The_dalek"),
+        MSG_PLAYER_INFO_PLUGIN(ChatColor.GOLD + "Plugin Battle Royale V" + Bukkit.getServer().getPluginManager().getPlugin("BattleRoyale").getDescription().getVersion() + " \nPropriété de Bioscar et Dalek \nFait par The_dalek"),
         ;
 
 
