@@ -54,4 +54,10 @@ Version 1.1.0 29/06/2024
     - Suppression de l'ancien Totem du sauveur
     - Suppression de la phase PvP
     - Ajout du spawn en cercle qui s'adapte en fonction du nombre de joueurs
-    - Ajout d'une commande pour ce tp dans aux différents spawn
+    - Ajout d'une commande pour ce tp aux différents spawn
+
+Version 1.1.1 (21/10/2024)
+    - Totem du sauveur (totem par équipe)
+    - Ajout de la hauteur en fonction du sol
+    - Adaptation du spawn en fonction du nombre de joueurs
+    - Ajout de la position aléatoire lors du spawn

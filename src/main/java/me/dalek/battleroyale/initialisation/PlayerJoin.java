@@ -14,7 +14,7 @@ import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_JOIN_S
 public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        /*if(!Commandes.getPartieLancer()){
+        if(!Commandes.getPartieLancer() && !event.getPlayer().isOp()){
             Player p = event.getPlayer();
             p.sendMessage(String.format(String.valueOf(MSG_PLAYER_JOIN_SERVER), p.getName()));
             p.playSound(p, Sound.ENTITY_PLAYER_LEVELUP, 10, 1);
@@ -22,6 +22,6 @@ public class PlayerJoin implements Listener {
             if(!p.isOp()){
                 p.setGameMode(GameMode.ADVENTURE);
             }
-        }*/
+        }
     }
 }

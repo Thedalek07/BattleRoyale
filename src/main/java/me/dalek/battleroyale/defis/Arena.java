@@ -3,11 +3,10 @@ package me.dalek.battleroyale.defis;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Zombie;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.messages.Messages.msgConsole.MSG_CONSOLE_ARENE_OUVERTE;
@@ -20,144 +19,139 @@ public class Arena {
         System.out.println(MSG_CONSOLE_ARENE_OUVERTE);
 
         // OUVERTURE DE L'ARENE NUMERO 1
-        setBlock(261, 77, -5, Material.AIR);
-        setBlock(261, 77, -4, Material.AIR);
-        setBlock(261, 77, -3, Material.AIR);
-        setBlock(261, 76, -5, Material.AIR);
-        setBlock(261, 76, -4, Material.AIR);
-        setBlock(261, 76, -3, Material.AIR);
-        setBlock(261, 75, -5, Material.AIR);
-        setBlock(261, 75, -4, Material.AIR);
-        setBlock(261, 75, -3, Material.AIR);
-
-        setBlock(238, 72, -5, Material.AIR);
-        setBlock(238, 71, -5, Material.AIR);
-        setBlock(238, 70, -5, Material.AIR);
-        setBlock(238, 72, -4, Material.AIR);
-        setBlock(238, 71, -4, Material.AIR);
-        setBlock(238, 70, -4, Material.AIR);
-        setBlock(238, 72, -3, Material.AIR);
-        setBlock(238, 71, -3, Material.AIR);
-        setBlock(238, 70, -3, Material.AIR);
-
-        spawnVindicateur();
+        setBlock(-305, 60, 2, Material.REDSTONE_BLOCK);
+        setBlock(-305, 58, 2, Material.REDSTONE_BLOCK);
+        setBlock(-305, 60, 2, Material.AIR);
+        setBlock(-305, 58, 2, Material.AIR);
 
         // OUVERTURE DE L'ARENE NUMERO 2
-        setBlock(-234, 66, -6, Material.AIR);
-        setBlock(-234, 66, -5, Material.AIR);
-        setBlock(-234, 66, -4, Material.AIR);
-        setBlock(-234, 65, -6, Material.AIR);
-        setBlock(-234, 65, -5, Material.AIR);
-        setBlock(-234, 65, -4, Material.AIR);
-        setBlock(-234, 64, -6, Material.AIR);
-        setBlock(-234, 64, -5, Material.AIR);
-        setBlock(-234, 64, -4, Material.AIR);
+        setBlock(301, 57, 9, Material.REDSTONE_BLOCK);
+        setBlock(302, 57, 7, Material.REDSTONE_BLOCK);
+        setBlock(301, 57, 9, Material.AIR);
+        setBlock(302, 57, 7, Material.AIR);
 
-        setBlock(-257, 61, -6, Material.AIR);
-        setBlock(-257, 60, -6, Material.AIR);
-        setBlock(-257, 59, -6, Material.AIR);
-        setBlock(-257, 61, -5, Material.AIR);
-        setBlock(-257, 60, -5, Material.AIR);
-        setBlock(-257, 59, -5, Material.AIR);
-        setBlock(-257, 61, -4, Material.AIR);
-        setBlock(-257, 60, -4, Material.AIR);
-        setBlock(-257, 59, -4, Material.AIR);
-        spawnMagmaCube();
-        spawnExterminate();
+        // SKELETON LAINE ROUGE
+        spawnSkeleton(303, 57, 4);
+        spawnSkeleton(305, 57, 3);
+        spawnSkeleton(313, 57, 6);
+        spawnSkeleton(313, 57, 10);
+        spawnSkeleton(305, 57, 13);
+        spawnSkeleton(303, 57, 12);
+        spawnSkeleton(318, 57, 10);
+        spawnSkeleton(325, 57, 13);
+        spawnSkeleton(317, 57, 3);
+        spawnSkeleton(325, 57, 5);
+        spawnSkeleton(-287, 63, -2);
+        spawnSkeleton(-295, 63, -3);
+        spawnSkeleton(-287, 63, 7);
+        spawnSkeleton(-294, 63, 4);
+        spawnSkeleton(-299, 63, 0);
+        spawnSkeleton(-299, 63, 4);
+        spawnSkeleton(-307, 63, 7);
+        spawnSkeleton(-309, 63, 6);
+        spawnSkeleton(-307, 63, -2);
+        spawnSkeleton(-309, 63, -3);
 
-        mobsInferieurAreneUne();
+        spawnWhitherSkeleton(-287, 63, 0);
+        spawnWhitherSkeleton(-287, 63, -4);
+        spawnWhitherSkeleton(-294, 63, -2);
+        spawnWhitherSkeleton(-289, 63, 6);
+        spawnWhitherSkeleton(-289, 63, 8);
+        spawnWhitherSkeleton(-294, 63, 6);
+        spawnWhitherSkeleton(-294, 63, 2);
+        spawnWhitherSkeleton(-309, 63, -2);
+        spawnWhitherSkeleton(-307, 63, -3);
+        spawnWhitherSkeleton(-299, 63, 7);
+        spawnWhitherSkeleton(-299, 63, 2);
+        spawnWhitherSkeleton(-299, 63, -3);
+        spawnWhitherSkeleton(-309, 63, 7);
+        spawnWhitherSkeleton(-307, 63, 6);
+        spawnWhitherSkeleton(325, 57, 7);
+        spawnWhitherSkeleton(325, 57, 3);
+        spawnWhitherSkeleton(318, 57, 4);
+        spawnWhitherSkeleton(325, 57, 12);
+        spawnWhitherSkeleton(323, 57, 14);
+        spawnWhitherSkeleton(318, 57, 12);
+        spawnWhitherSkeleton(318, 57, 8);
+        spawnWhitherSkeleton(303, 57, 3);
+        spawnWhitherSkeleton(305, 57, 4);
+        spawnWhitherSkeleton(313, 57, 3);
+        spawnWhitherSkeleton(313, 57, 8);
+        spawnWhitherSkeleton(313, 57, 13);
+        spawnWhitherSkeleton(303, 57, 13);
+        spawnWhitherSkeleton(305, 57, 12);
+
+        spawnRavager(311, 64, 11);
+        spawnRavager(311, 64, 5);
+        spawnRavager(-301, 69, 5);
+        spawnRavager(-301, 69, -1);
+
     }
 
     public static void closeDefis(){
         // FERMETURE DE L'ARENE NUMERO 1
-        setBlock(261, 77, -5, Material.BARRIER);
-        setBlock(261, 77, -4, Material.BARRIER);
-        setBlock(261, 77, -3, Material.BARRIER);
-        setBlock(261, 76, -5, Material.BARRIER);
-        setBlock(261, 76, -4, Material.BARRIER);
-        setBlock(261, 76, -3, Material.BARRIER);
-        setBlock(261, 75, -5, Material.BARRIER);
-        setBlock(261, 75, -4, Material.BARRIER);
-        setBlock(261, 75, -3, Material.BARRIER);
-
-        setBlock(238, 72, -5, Material.BARRIER);
-        setBlock(238, 71, -5, Material.BARRIER);
-        setBlock(238, 70, -5, Material.BARRIER);
-        setBlock(238, 72, -4, Material.BARRIER);
-        setBlock(238, 71, -4, Material.BARRIER);
-        setBlock(238, 70, -4, Material.BARRIER);
-        setBlock(238, 72, -3, Material.BARRIER);
-        setBlock(238, 71, -3, Material.BARRIER);
-        setBlock(238, 70, -3, Material.BARRIER);
+        setBlock(-305, 60, 1, Material.REDSTONE_BLOCK);
+        setBlock(-305, 58, 1, Material.REDSTONE_BLOCK);
+        setBlock(-305, 60, 1, Material.AIR);
+        setBlock(-305, 58, 1, Material.AIR);
 
         // FERMETURE DE L'ARENE NUMERO 2
-        setBlock(-234, 66, -6, Material.BARRIER);
-        setBlock(-234, 66, -5, Material.BARRIER);
-        setBlock(-234, 66, -4, Material.BARRIER);
-        setBlock(-234, 65, -6, Material.BARRIER);
-        setBlock(-234, 65, -5, Material.BARRIER);
-        setBlock(-234, 65, -4, Material.BARRIER);
-        setBlock(-234, 64, -6, Material.BARRIER);
-        setBlock(-234, 64, -5, Material.BARRIER);
-        setBlock(-234, 64, -4, Material.BARRIER);
-
-        setBlock(-257, 61, -6, Material.BARRIER);
-        setBlock(-257, 60, -6, Material.BARRIER);
-        setBlock(-257, 59, -6, Material.BARRIER);
-        setBlock(-257, 61, -5, Material.BARRIER);
-        setBlock(-257, 60, -5, Material.BARRIER);
-        setBlock(-257, 59, -5, Material.BARRIER);
-        setBlock(-257, 61, -4, Material.BARRIER);
-        setBlock(-257, 60, -4, Material.BARRIER);
-        setBlock(-257, 59, -4, Material.BARRIER);
+        setBlock(302, 57, 9, Material.REDSTONE_BLOCK);
+        setBlock(301, 57, 7, Material.REDSTONE_BLOCK);
+        setBlock(302, 57, 9, Material.AIR);
+        setBlock(301, 57, 7, Material.AIR);
     }
 
     private static void setBlock(int x, int y, int z, Material block){
         world.getBlockAt(x, y, z).setType(block);
     }
 
-    private static void spawnVindicateur(){
-        for(int i = 0 ; i<5 ; i++){
-            LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, 242, 75 , -4), EntityType.VINDICATOR);
-            mob.setRemoveWhenFarAway(false);
-        }
+
+
+    private static void spawnSkeleton(int x, int y, int z){
+        Skeleton skeleton = (Skeleton) world.spawnEntity(new Location(world, x, y , z), EntityType.SKELETON);
+        skeleton.setRemoveWhenFarAway(false);
+        LivingEntity skeletonEntity = skeleton;
+        skeletonEntity.getEquipment().setHelmet(new ItemStack(Material.IRON_HELMET));
+        skeletonEntity.getEquipment().setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
+        skeletonEntity.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+        skeletonEntity.getEquipment().setBoots(new ItemStack(Material.IRON_BOOTS));
+        ItemStack skeletonbow = new ItemStack (Material.BOW, 1);
+        ItemMeta skeletonMeta = skeletonbow.getItemMeta();
+        skeletonMeta.addEnchant(Enchantment.ARROW_DAMAGE, 3, true);
+        skeletonbow.setItemMeta(skeletonMeta);
+        skeletonEntity.getEquipment().setItemInMainHand(skeletonbow);
     }
 
-    private static void spawnExterminate(){
-        for(int i = 0 ; i<2 ; i++){
-            Zombie exterminate = (Zombie) world.spawnEntity(new Location(world, 257, 75 , -4), EntityType.ZOMBIE);
-            exterminate.setCustomName(ChatColor.DARK_RED + "Exterminate");
-            exterminate.setPersistent(true);
-            LivingEntity zombie = exterminate;
-            zombie.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-            zombie.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-            zombie.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-            zombie.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-            zombie.getEquipment().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
-        }
+    private static void spawnWhitherSkeleton(int x, int y, int z){
+        WitherSkeleton skeleton = (WitherSkeleton) world.spawnEntity(new Location(world, x, y , z), EntityType.WITHER_SKELETON);
+        skeleton.setRemoveWhenFarAway(false);
+        LivingEntity skeletonEntity = skeleton;
+        skeletonEntity.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        skeletonEntity.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        skeletonEntity.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        skeletonEntity.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+        skeletonEntity.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_AXE));
     }
 
-    private static void spawnMagmaCube(){
-        for(int i = 0 ; i<3 ; i++){
-            LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, -253, 64 , -5), EntityType.MAGMA_CUBE);
-            mob.setRemoveWhenFarAway(false);
-        }
-        for(int i = 0 ; i<3 ; i++){
-            LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, -253, 64 , -5), EntityType.SLIME);
-            mob.setRemoveWhenFarAway(false);
-        }
+    private static void spawnRavager(int x, int y, int z){
+        Ravager ravager = (Ravager) world.spawnEntity(new Location(world, x, y , z), EntityType.RAVAGER);
+        ravager.setRemoveWhenFarAway(false);
+        Skeleton skeleton = (Skeleton) world.spawnEntity(new Location(world, x, y , z), EntityType.SKELETON);
+        skeleton.setRemoveWhenFarAway(false);
+        LivingEntity skeletonEntity = skeleton;
+        skeletonEntity.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        skeletonEntity.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        skeletonEntity.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        skeletonEntity.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+        ItemStack skeletonbow = new ItemStack (Material.BOW, 1);
+        ItemMeta skeletonMeta = skeletonbow.getItemMeta();
+        skeletonMeta.addEnchant(Enchantment.ARROW_DAMAGE, 5, true);
+        skeletonMeta.addEnchant(Enchantment.ARROW_FIRE, 2, true);
+        skeletonbow.setItemMeta(skeletonMeta);
+        skeletonEntity.getEquipment().setItemInMainHand(skeletonbow);
+        ravager.addPassenger(skeleton);
     }
 
-    private static void mobsInferieurAreneUne(){
-        for (int x = 240 ; x<=258 ; x= x+2){
-            summonSkeleton(x+0.5, 70, -9.5); // LIGNE 1
-            summonSkeleton(x+0.5, 70, 2.5); // LIGNE 2
-        }
-    }
 
-    private static void summonSkeleton(double x, double y, double z){
-        LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, x, y, z), EntityType.SKELETON);
-        mob.setInvulnerable(true);
-        mob.setRemoveWhenFarAway(false);
-    }
 }

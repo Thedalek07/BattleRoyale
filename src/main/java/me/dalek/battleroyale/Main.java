@@ -23,6 +23,7 @@ import java.util.Objects;
 
 import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.defis.Minidefis.initMiniDefis;
+import static me.dalek.battleroyale.initialisation.Init.createVoiceChannel;
 import static me.dalek.battleroyale.initialisation.Init.pointSpawn;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_INFO_PLUGIN;
 import static me.dalek.battleroyale.messages.Messages.msgConsole.MSG_CONSOLE_PLUGIN_RUN;
@@ -46,8 +47,6 @@ public final class Main extends JavaPlugin {
 
         getConfig().options().copyDefaults(true);
 
-
-
         init();
 
         // COMMANDES
@@ -55,12 +54,9 @@ public final class Main extends JavaPlugin {
         initCommande(commandes);
         completionCmd(commandes);
 
-
         for(Player p : Bukkit.getOnlinePlayers()){
             p.sendMessage(String.valueOf(MSG_PLAYER_INFO_PLUGIN));
         }
-
-        pointSpawn(15, 490);
 
         // BOUCLES SCHEDULE
         BukkitScheduler scheduler = getServer().getScheduler();
@@ -78,6 +74,9 @@ public final class Main extends JavaPlugin {
         scheduler.scheduleSyncRepeatingTask(this, Timer::getPause, 0L, 5L);
 
         Config.initConfigPlayer();
+
+        Bukkit.broadcastMessage("createVoiceChannel");
+        createVoiceChannel("Battle Royale 3");
     }
 
     private static void init(){

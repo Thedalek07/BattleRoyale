@@ -25,29 +25,20 @@ public class Minidefis {
         return mob;
     }
 
-    private static void summonSkeleton(int x, int y, int z, Material itemHand){
-        LivingEntity mob = (LivingEntity) world.spawnEntity(new Location(world, x+0.5, y, z+0.5), EntityType.WITHER_SKELETON);
-        mob.getEquipment().getItemInMainHand().setType(itemHand);
-        mob.setRemoveWhenFarAway(false);
-    }
 
     public static void openMiniDefis(){
         Bukkit.broadcastMessage(ChatColor.GOLD + "Les mini défis sont ouverts !");
-        setBlock(4, 50, 241, Material.AIR);
-        setBlock(4, 51, 241, Material.AIR);
-        setBlock(-3, 51, -243, Material.AIR);
-        setBlock(-3, 52, -243, Material.AIR);
+        setBlock(-3, 61, 193, Material.REDSTONE_BLOCK);
+        setBlock(-8, 59, -195, Material.REDSTONE_BLOCK);
+        setBlock(-3, 61, 193, Material.AIR);
+        setBlock(-8, 59, -195, Material.AIR);
     }
 
     public static void closeMiniDefis(){
-        setBlock(4, 50, 241, Material.BARRIER);
-        setBlock(4, 51, 241, Material.BARRIER);
-        setBlock(-4, 50, 241, Material.BARRIER);
-        setBlock(-4, 51, 241, Material.BARRIER);
-        setBlock(-3, 51, -243, Material.BARRIER);
-        setBlock(-3, 52, -243, Material.BARRIER);
-        setBlock(5, 51, -243, Material.BARRIER);
-        setBlock(5, 52, -243, Material.BARRIER);
+        setBlock(-1, 61, 193, Material.REDSTONE_BLOCK);
+        setBlock(-6, 59, -195, Material.REDSTONE_BLOCK);
+        setBlock(-1, 61, 193, Material.AIR);
+        setBlock(-6, 59, -195, Material.AIR);
     }
 
     private static void setBlock(int x, int y, int z, Material block){

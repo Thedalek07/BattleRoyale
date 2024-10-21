@@ -21,12 +21,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 import static me.dalek.battleroyale.context.Context.world;
+import static me.dalek.battleroyale.initialisation.Init.*;
 import static me.dalek.battleroyale.initialisation.Init.getListSpawn;
-import static me.dalek.battleroyale.initialisation.Init.resetStatisitic;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
 
 public class Commandes implements CommandExecutor {
@@ -40,7 +39,6 @@ public class Commandes implements CommandExecutor {
     public static boolean partieLancer = false;
     private static final HashMap<Player, Player> invites = new HashMap<>();
     private static final HashMap<String, Long> timeout = new HashMap<>();
-
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
@@ -189,26 +187,33 @@ public class Commandes implements CommandExecutor {
         }
 
         if (command.getName().equalsIgnoreCase("run")){
+                //pointSpawn(Bukkit.getOnlinePlayers().size(), 490);
+                pointSpawn(13, 490);
                 Timer.createTimer();
                 partieLancer = true;
                 System.out.println("LANCEMENT DE LA PARTIE !");
                 Init.setGamerules();
-                //Init.resetPlayer();
-                //Init.resetWorld();
+                Init.resetPlayer();
+                Init.resetWorld();
                 Arena.closeDefis();
                 Worldborder.phase1();
                 Minidefis.closeMiniDefis();
                 resetStatisitic();
                 millisRun = System.currentTimeMillis();
                 Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
-                /*for(Player player : Bukkit.getOnlinePlayers()){
+                int i = 1;
+                for(Player player : Bukkit.getOnlinePlayers()){
                     Team myTeam = sb.getPlayerTeam(player);
                     if(myTeam != null){ // leave d'une team
                         myTeam.removePlayer(player);
                     }
-                    player.teleport(new Location(player.getWorld(), 0 ,hauteur ,0));
+                    int id = new Random().nextInt(getListSpawn().size());
+                    Bukkit.broadcastMessage("ID = " + id + "/" + getListSpawn().size() + " -> " + getListSpawn().get(id).getX() + " " + getListSpawn().get(id).getY() + " " + getListSpawn().get(id).getZ());
+                    player.teleport(getListSpawn().get(id));
+                    removeListSpawn(getListSpawn().get(id));
                     potions(player, PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1);
-                }*/
+                    i++;
+                }
         }
 
         if ((command.getName().equalsIgnoreCase("synchro")) && (sender instanceof Player)){

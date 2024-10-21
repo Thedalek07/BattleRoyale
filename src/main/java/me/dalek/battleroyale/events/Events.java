@@ -24,8 +24,6 @@ import static me.dalek.battleroyale.timer.Timer.getScoreTimer;
 
 public class Events implements Listener {
 
-    private static final Location lever2 = new Location(world, -5, 51, 242);
-    private static final Location lever1 = new Location(world, 6, 52, -244);
 
     @EventHandler
     public void playerDamage(EntityDamageByEntityEvent event){
@@ -66,30 +64,12 @@ public class Events implements Listener {
     }
 
     @EventHandler
-    public void totemSauveur(EntityDamageEvent e){
-        if(e.getEntity() instanceof Player){
-            Player player = (Player) e.getEntity();
-            Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
-            Team team = sb.getPlayerTeam(player);
-            if(team != null && e.getFinalDamage() <= player.getHealth()){
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    if(!p.equals(player) && team.hasEntry(p.getName()) && p.getInventory().contains(Material.ECHO_SHARD)){
-                       p.getInventory().remove(Material.ECHO_SHARD);
-                       e.setCancelled(true);
-                       player.setHealth(20);
-                    }
-                }
-            }
-        }
-    }
-
-    @EventHandler
     public void onDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
             Team team = sb.getPlayerTeam(player);
-            if (team != null && player.getHealth() - event.getDamage() <= 0 && player.getInventory().getItemInOffHand().equals(Material.TOTEM_OF_UNDYING) && player.getInventory().getItemInMainHand().equals(Material.TOTEM_OF_UNDYING)) {
+            if (team != null && player.getHealth() - event.getDamage() <= 0) {
                 for(Player p : Bukkit.getOnlinePlayers()){
                     if(!p.equals(player) && team.hasEntry(p.getName()) && p.getInventory().contains(Material.ECHO_SHARD)){
                         event.setCancelled(true);

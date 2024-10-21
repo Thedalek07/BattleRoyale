@@ -25,7 +25,7 @@ public class Timer {
     private static BossBar Timer; // Bossbar représentant le timer
     private static Integer MinutesRestantes = 0; // nb de mintues restantes
     private static Integer SecondesRestantes = 0; // Nb de secondes restantes
-    private static Integer MinutesInit = 90; // Durée du timer
+    private static Integer MinutesInit = 60; // Durée du timer
     private static int intervalleCoffres = 15; // Intervalle entre chaque coffres et défis
     private static int dureePvp = 2; // Durée pendant laquelle le PvP est désactivé
     private static int dureeEffect = 5; // Durée durant laquelle le slowfalling est désactivé

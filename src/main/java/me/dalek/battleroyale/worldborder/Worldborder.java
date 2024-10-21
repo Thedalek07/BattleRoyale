@@ -26,17 +26,17 @@ public class Worldborder {
 
     public static void phase2(){
         System.out.println("[WORLDBORDER] PHASE 2");
-        worldBorder(900, 100);
+        worldBorder(850, 100);
     }
 
     public static void phase3(){
         System.out.println("[WORLDBORDER] PHASE 3");
-        worldBorder(800, 100);
+        worldBorder(700, 100);
     }
 
     public static void phase4(){
         System.out.println("[WORLDBORDER] PHASE 4");
-        worldBorder(500, 300);
+        worldBorder(400, 300);
     }
 
     public static void phase5(){
