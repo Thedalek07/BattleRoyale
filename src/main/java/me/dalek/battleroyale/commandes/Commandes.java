@@ -23,6 +23,9 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.*;
 
+import static me.dalek.battleroyale.BotDiscord.Channels.createVoiceChannel;
+import static me.dalek.battleroyale.BotDiscord.Channels.updateVoiceChannel;
+import static me.dalek.battleroyale.context.Context.nameVocalChannel;
 import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.initialisation.Init.*;
 import static me.dalek.battleroyale.initialisation.Init.getListSpawn;
@@ -33,7 +36,6 @@ public class Commandes implements CommandExecutor {
     private static final int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
     private static final int distanceMax = 100; // Distance MAX pour faire une demande d'invite
     private static final long timeoutInvite = 60000; // Timeout d'une invite
-    private static final int hauteur = 300; // hauteur du tp de début de partie
     private static final int dureeSlowFalling = 2000; // Durée de l'effet SlowFalling en début de partie
     private static long millisRun = 0;
     public static boolean partieLancer = false;
@@ -196,9 +198,9 @@ public class Commandes implements CommandExecutor {
                 Init.resetPlayer();
                 Init.resetWorld();
                 Arena.closeDefis();
-                Worldborder.phase1();
+            Worldborder.phase(1);
                 Minidefis.closeMiniDefis();
-                resetStatisitic();
+                resetStatistic();
                 millisRun = System.currentTimeMillis();
                 Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
                 int i = 1;
@@ -242,6 +244,18 @@ public class Commandes implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("start")){
             Timer.play();
             Timer.restartLoc();
+        }
+
+        if (command.getName().equalsIgnoreCase("open")){
+            if (sender instanceof Player && sender.isOp()){
+                createVoiceChannel();
+            }
+        }
+
+        if (command.getName().equalsIgnoreCase("update")){
+            if (sender instanceof Player && sender.isOp()){
+                updateVoiceChannel();
+            }
         }
 
         return true;

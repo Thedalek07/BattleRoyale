@@ -19,9 +19,7 @@ public class PlayerJoin implements Listener {
             p.sendMessage(String.format(String.valueOf(MSG_PLAYER_JOIN_SERVER), p.getName()));
             p.playSound(p, Sound.ENTITY_PLAYER_LEVELUP, 10, 1);
             p.teleport(spawnLobby);
-            if(!p.isOp()){
-                p.setGameMode(GameMode.ADVENTURE);
-            }
+            p.setGameMode(GameMode.ADVENTURE);
         }
     }
 }

@@ -39,12 +39,11 @@ public class Messages {
         MSG_PLAYER_COFFRE_DEUX(ChatColor.GOLD + "Le coffre 2 est apparu !"),
         MSG_PLAYER_ADMIN_ENTETE(ChatColor.DARK_RED + "ADMIN [%s]"),
         MSG_PLAYER_ADMIN_ENVOYE(ChatColor.GOLD + "Message envoyé à %s !"),
-        MSG_PLAYER_MORTS(ChatColor.DARK_RED + "%s est mort(e) !"),
+        MSG_PLAYER_MORTS("%s est mort(e) !"),
         MSG_PLAYER_REDUCTION_WORLDBORDER(ChatColor.GOLD + "La worldborder se réduit de %d blocks !"),
         MSG_PLAYER_PVP_ACTIF(ChatColor.GOLD + "Le PvP est activé"),
         MSG_PLAYER_INFO_PLUGIN(ChatColor.GOLD + "Plugin Battle Royale V" + Bukkit.getServer().getPluginManager().getPlugin("BattleRoyale").getDescription().getVersion() + " \nPropriété de Bioscar et Dalek \nFait par The_dalek"),
         ;
-
 
         private final String text;
 

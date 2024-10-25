@@ -11,7 +11,9 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
 
+import static me.dalek.battleroyale.BotDiscord.Channels.sendGeneralMessage;
 import static me.dalek.battleroyale.commandes.Commandes.getMillisRun;
+import static me.dalek.battleroyale.context.Context.idChannelDeadMessage;
 import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_MORTS;
 
@@ -26,11 +28,12 @@ public class Morts implements Listener {
         world.strikeLightningEffect(player.getLocation());
 
         // MESSAGE DE MORT
-        Bukkit.broadcastMessage(String.format(String.valueOf(MSG_PLAYER_MORTS), player.getName()));
+        String dead_message = ChatColor.DARK_RED + String.format(String.valueOf(MSG_PLAYER_MORTS), player.getName());
+        Bukkit.broadcastMessage(dead_message);
+        sendGeneralMessage(idChannelDeadMessage, dead_message);
 
         // PASSAGE EN SPECTATEUR
         player.setGameMode(GameMode.SPECTATOR);
-
 
         // ENREGISTREMENT DE LA CAUSE DE LA MORT
         long timeMort = (System.currentTimeMillis() - getMillisRun()) / 1000;

@@ -1,5 +1,5 @@
 name: BattleRoyale
-version: '1.1.1'
+version: '2.0.0'
 main: me.dalek.battleroyale.Main
 api-version: '1.19'
 commands:
@@ -60,5 +60,13 @@ commands:
     permission: op
   spawn:
     description: Permet de ce tp dans le spanw
+    usage: /<command>
+    permission: op
+  open:
+    description: Permet de crée le vocal discord
+    usage: /<command>
+    permission: op
+  update:
+    description: Permet de mettre à jour les permissions du salon vocal
     usage: /<command>
     permission: op

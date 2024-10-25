@@ -56,8 +56,15 @@ Version 1.1.0 29/06/2024
     - Ajout du spawn en cercle qui s'adapte en fonction du nombre de joueurs
     - Ajout d'une commande pour ce tp aux différents spawn
 
-Version 1.1.1 (21/10/2024)
+Version 1.1.1 21/10/2024
     - Totem du sauveur (totem par équipe)
     - Ajout de la hauteur en fonction du sol
     - Adaptation du spawn en fonction du nombre de joueurs
     - Ajout de la position aléatoire lors du spawn
+
+Version 2.0.0 25/10/2024
+    - Ajout de la création de vocal Discord (requete au bot) via la commande /open
+    - Ajout de la génération d'une image des statistiques (pas encore totalement implémenté
+    - Ajout de l'envoie des messages de morts dans le discord
+    - Ajout de la commande /update pour mettre à jour les permissions du vocal
+    - Correction du bug du Scoreboard qui clignoté

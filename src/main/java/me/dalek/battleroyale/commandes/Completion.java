@@ -12,68 +12,58 @@ import java.util.List;
 
 import static me.dalek.battleroyale.initialisation.Init.getListSpawn;
 
-public class Completion implements TabCompleter{
+public class Completion implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        String commandName = command.getName().toLowerCase();
+        List<String> completions = new ArrayList<>();
 
-        List<String> vide = new ArrayList<>();
-
-        if (command.getName().equalsIgnoreCase("help")){
-            List<String> help = new ArrayList<>();
-            if(args.length == 1){
-                help.add("revive");
-                help.add("invite");
-                help.add("accept");
-                help.add("decline");
-                help.add("leave");
-            }
-            return help;
-        }
-
-        if (command.getName().equalsIgnoreCase("spawn")){
-            if(args.length == 1){
-                List<String> completionSpawn = new ArrayList<>();
-                int size = getListSpawn().size();
-                for(int i = 1 ; i <= size ; i++){
-                    completionSpawn.add(String.valueOf(i));
+        switch (commandName) {
+            case "help":
+                if (args.length == 1) {
+                    completions.add("revive");
+                    completions.add("invite");
+                    completions.add("accept");
+                    completions.add("decline");
+                    completions.add("leave");
                 }
-                return completionSpawn;
-            } else {
-                return vide;
-            }
-        }
+                break;
 
-        if (command.getName().equalsIgnoreCase("revive")){
-            List<String> playerMorts = new ArrayList<>();
-            if(args.length == 1){
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    if(p.getGameMode().equals(GameMode.SPECTATOR)){
-                        playerMorts.add(p.getName());
+            case "spawn":
+                if (args.length == 1) {
+                    for (int i = 1; i <= getListSpawn().size(); i++) {
+                        completions.add(String.valueOf(i));
                     }
                 }
-            }
-            return playerMorts;
-        }
+                break;
 
-        switch (command.getName()){
+            case "revive":
+                if (args.length == 1) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.getGameMode() == GameMode.SPECTATOR) {
+                            completions.add(p.getName());
+                        }
+                    }
+                }
+                break;
+
             case "decline":
             case "leave":
+            case "open":
+            case "update":
             case "accept":
             case "run":
             case "start":
             case "pause":
-                if(args.length >= 1){ return vide; }
-                break;
+                if (args.length >= 1) return completions; // Empty list for these commands
+
             case "invite":
             case "msg":
-                if(args.length >= 2){ return vide; }
+                if (args.length >= 2) return completions; // Empty list for these commands
                 break;
         }
 
-
-
-
-        return null;
+        return completions.isEmpty() ? null : completions;
     }
 }
