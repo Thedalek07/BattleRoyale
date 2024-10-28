@@ -77,7 +77,9 @@ public class Events implements Listener {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 900, 1));
                         player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 100, 1));
                         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 800, 0));
-
+                        for(Player pParticule : Bukkit.getOnlinePlayers()){
+                            pParticule.spawnParticle(Particle.TOTEM, player.getLocation(), 500);
+                        }
                         ItemStack totem = new ItemStack(Material.ECHO_SHARD);
                         p.getInventory().removeItem(totem);
 

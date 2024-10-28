@@ -1,5 +1,6 @@
 package me.dalek.battleroyale.initialisation;
 
+import me.dalek.battleroyale.scoreboard.ScoreboardManager;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -18,6 +19,8 @@ import java.util.List;
 
 import static javax.sql.rowset.spi.SyncFactory.getLogger;
 import static me.dalek.battleroyale.context.Context.*;
+import static me.dalek.battleroyale.scoreboard.ScoreboardManager.SetStatusChallenge;
+import static me.dalek.battleroyale.scoreboard.ScoreboardManager.createScoreboard;
 import static org.bukkit.Bukkit.getPort;
 import static org.bukkit.Bukkit.getWorlds;
 
@@ -33,6 +36,8 @@ public class Init {
         world.setGameRule(GameRule.REDUCED_DEBUG_INFO, true);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
         world.setGameRule(GameRule.DO_INSOMNIA, false);
+        world.setGameRule(GameRule.KEEP_INVENTORY, false);
+        world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
         world.setPVP(true);
     }
 
@@ -46,7 +51,9 @@ public class Init {
             p.setFoodLevel(20);
             p.getInventory().clear();
             p.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10));
+            p.setGlowing(false);
         }
+        SetStatusChallenge(ScoreboardManager.challenge.coffre1);
     }
 
     public static void resetWorld(){
@@ -56,25 +63,7 @@ public class Init {
         world.setTime(1000);
         world.setStorm(false);                          // Met le soleil (enleve la pluie)
         coCoffres.getBlock().setType(Material.AIR);
-    }
-
-    public static void resetStatistic() {
-        Statistic[] statsToReset = {
-                Statistic.DEATHS,
-                Statistic.SWIM_ONE_CM,
-                Statistic.WALK_ONE_CM,
-                Statistic.SPRINT_ONE_CM,
-                Statistic.PLAYER_KILLS,
-                Statistic.DAMAGE_TAKEN,
-                Statistic.DAMAGE_DEALT,
-                Statistic.TALKED_TO_VILLAGER
-        };
-
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            for (Statistic stat : statsToReset) {
-                p.setStatistic(stat, 0); // Réinitialiser chaque statistique à 0
-            }
-        }
+        world.getWorldBorder().setSize(1000);
     }
 
     public static void beaconShop(){

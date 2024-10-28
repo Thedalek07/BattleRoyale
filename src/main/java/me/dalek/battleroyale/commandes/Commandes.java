@@ -30,10 +30,11 @@ import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.initialisation.Init.*;
 import static me.dalek.battleroyale.initialisation.Init.getListSpawn;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
+import static me.dalek.battleroyale.statistiques.Stats.resetStatistic;
 
 public class Commandes implements CommandExecutor {
 
-    private static final int sizeTeamMax = 3; // Nombre de joueurs MAX par équipe.
+    private static final int sizeTeamMax = 2; // Nombre de joueurs MAX par équipe.
     private static final int distanceMax = 100; // Distance MAX pour faire une demande d'invite
     private static final long timeoutInvite = 60000; // Timeout d'une invite
     private static final int dureeSlowFalling = 2000; // Durée de l'effet SlowFalling en début de partie
@@ -189,8 +190,7 @@ public class Commandes implements CommandExecutor {
         }
 
         if (command.getName().equalsIgnoreCase("run")){
-                //pointSpawn(Bukkit.getOnlinePlayers().size(), 490);
-                pointSpawn(13, 490);
+                pointSpawn(Bukkit.getOnlinePlayers().size(), 490);
                 Timer.createTimer();
                 partieLancer = true;
                 System.out.println("LANCEMENT DE LA PARTIE !");
@@ -198,23 +198,20 @@ public class Commandes implements CommandExecutor {
                 Init.resetPlayer();
                 Init.resetWorld();
                 Arena.closeDefis();
-            Worldborder.phase(1);
                 Minidefis.closeMiniDefis();
+                Worldborder.phase(1);
                 resetStatistic();
                 millisRun = System.currentTimeMillis();
                 Scoreboard sb = Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard();
-                int i = 1;
                 for(Player player : Bukkit.getOnlinePlayers()){
                     Team myTeam = sb.getPlayerTeam(player);
                     if(myTeam != null){ // leave d'une team
                         myTeam.removePlayer(player);
                     }
                     int id = new Random().nextInt(getListSpawn().size());
-                    Bukkit.broadcastMessage("ID = " + id + "/" + getListSpawn().size() + " -> " + getListSpawn().get(id).getX() + " " + getListSpawn().get(id).getY() + " " + getListSpawn().get(id).getZ());
                     player.teleport(getListSpawn().get(id));
                     removeListSpawn(getListSpawn().get(id));
                     potions(player, PotionEffectType.SLOW_FALLING, dureeSlowFalling, 1);
-                    i++;
                 }
         }
 

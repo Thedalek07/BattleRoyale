@@ -10,6 +10,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 import static me.dalek.battleroyale.BotDiscord.Channels.sendGeneralMessage;
 import static me.dalek.battleroyale.commandes.Commandes.getMillisRun;
@@ -28,9 +29,10 @@ public class Morts implements Listener {
         world.strikeLightningEffect(player.getLocation());
 
         // MESSAGE DE MORT
-        String dead_message = ChatColor.DARK_RED + String.format(String.valueOf(MSG_PLAYER_MORTS), player.getName());
-        Bukkit.broadcastMessage(dead_message);
-        sendGeneralMessage(idChannelDeadMessage, dead_message);
+        String dead_message = String.format(String.valueOf(MSG_PLAYER_MORTS), player.getName());
+        Bukkit.broadcastMessage(ChatColor.DARK_RED + dead_message);
+
+        CompletableFuture.runAsync(() -> sendGeneralMessage(idChannelDeadMessage, dead_message));
 
         // PASSAGE EN SPECTATEUR
         player.setGameMode(GameMode.SPECTATOR);

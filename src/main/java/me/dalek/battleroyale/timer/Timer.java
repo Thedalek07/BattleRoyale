@@ -3,6 +3,7 @@ package me.dalek.battleroyale.timer;
 import me.dalek.battleroyale.coffres.Coffres;
 import me.dalek.battleroyale.defis.Arena;
 import me.dalek.battleroyale.defis.Minidefis;
+import me.dalek.battleroyale.scoreboard.ScoreboardManager;
 import me.dalek.battleroyale.worldborder.Worldborder;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -11,26 +12,34 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
+import static me.dalek.battleroyale.Main.getPlugin;
 import static me.dalek.battleroyale.defis.Minidefis.initMiniDefis;
+import static me.dalek.battleroyale.initialisation.Init.slowFalling;
+import static me.dalek.battleroyale.scoreboard.ScoreboardManager.SetStatusChallenge;
 
 public class Timer {
 
     private static BossBar timer; // BossBar représentant le timer
     private static int minutesRestantes = 0; // nb de minutes restantes
     private static int secondesRestantes = 0; // Nb de secondes restantes
-    private static final int MINUTES_INIT = 60; // Durée du timer
+    private static final int MINUTES_INIT = 90; // Durée du timer
+    private static final int intervalleCoffres = 15;
+    private static int minutesChallenges = 0;
     private static final int DUREE_PVP = 2; // Durée pendant laquelle le PvP est désactivé
     private static boolean pause = false;
     private static boolean statutLoc = false;
     private static double scoreTimer = 0;
     private static final HashMap<Player, Location> positions = new HashMap<>();
     private static final HashMap<Player, Double> vies = new HashMap<>();
+    private static int numberStart = 0;
 
     public static void createTimer() {
-        System.out.println("[TIMER] CREATE");
+        numberStart++;
+        System.out.println("[TIMER] CREATE | Nombre de démarrage : " + numberStart);
         secondesRestantes = 1;
         timer = Bukkit.createBossBar(MINUTES_INIT + ":00", BarColor.BLUE, BarStyle.SOLID);
         timer.setVisible(true);
@@ -39,6 +48,11 @@ public class Timer {
             timer.addPlayer(joueur);
         }
         minutesRestantes = MINUTES_INIT;
+        minutesChallenges = intervalleCoffres;
+    }
+
+    public static void addPlayer(Player p){
+        timer.addPlayer(p);
     }
 
     public static void decompteSeconde() {
@@ -46,12 +60,22 @@ public class Timer {
             if (secondesRestantes-- <= 0) {
                 secondesRestantes = 59;
                 minutesRestantes--;
+                minutesChallenges--;
+            }
+
+            if(minutesChallenges == - 1){
+                minutesChallenges = intervalleCoffres - 1;
+            }
+
+            if (minutesRestantes >= MINUTES_INIT - 2){
+                slowFalling();
             }
 
             // Affiche le timer
             timer.setTitle(String.format("%d:%02d", minutesRestantes, secondesRestantes));
             scoreTimer = (minutesRestantes * 60) + secondesRestantes;
-            timer.setProgress(scoreTimer / (MINUTES_INIT * 60));
+            double progression = Math.max(0.0, Math.min(1.0, scoreTimer / (MINUTES_INIT * 60)));
+            timer.setProgress(progression);
 
             handleWorldBorder();
             coffres();
@@ -85,7 +109,7 @@ public class Timer {
                 p.setGlowing(true);
             }
         }
-        System.out.println("FIN DU TIMER");
+        System.out.println("[TIMER] FIN DU TIMER");
     }
 
     public static void restartLoc() {
@@ -130,24 +154,31 @@ public class Timer {
     }
 
     private static void coffres() {
-        int intervalle = getIntervalleCoffres();
         for (int i = 1; i <= 4; i++) {
-            if (minutesRestantes == MINUTES_INIT - (intervalle * i) && secondesRestantes == 0) {
+            if (minutesRestantes == MINUTES_INIT - (intervalleCoffres * i) && secondesRestantes == 0) {
                 switch (i) {
                     case 1:
                         Coffres.coffre1();
                         sendCoordinates("Les Mini-Défis ouvrent dans 15 min", "0 150 250 / 0 150 -250");
+                        SetStatusChallenge(ScoreboardManager.challenge.miniDefis);
+                        Bukkit.getLogger().info("[TIMER] Coffre 1");
                         break;
                     case 2:
                         Minidefis.openMiniDefis();
                         initMiniDefis();
+                        SetStatusChallenge(ScoreboardManager.challenge.coffre2);
+                        Bukkit.getLogger().info("[TIMER] Mini défis");
                         break;
                     case 3:
                         Coffres.coffre2();
+                        SetStatusChallenge(ScoreboardManager.challenge.arene);
                         sendCoordinates("Les Défis ouvrent dans 15 min", "-250 100 0 / 250 100 0");
+                        Bukkit.getLogger().info("[TIMER] Coffre 2");
                         break;
                     case 4:
                         Arena.openDefis();
+                        SetStatusChallenge(ScoreboardManager.challenge.none);
+                        Bukkit.getLogger().info("[TIMER] Défis Arenes");
                         break;
                 }
             }
@@ -170,13 +201,12 @@ public class Timer {
         return secondesRestantes;
     }
 
-    public static int getMinutesInit() {
-        return MINUTES_INIT;
+    public static int getMinutesChallenges(){
+        return minutesChallenges;
     }
 
-    public static int getIntervalleCoffres() {
-        // Intervalle entre chaque coffres et défis
-        return 15;
+    public static int getMinutesInit() {
+        return MINUTES_INIT;
     }
 
     public static void pause() {

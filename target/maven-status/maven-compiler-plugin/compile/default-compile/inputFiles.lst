@@ -1,8 +1,9 @@
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\context\Context.java
-C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\scoreboard\ScoreboardPlayers.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\morts\Morts.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\events\Events.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\commandes\Commandes.java
+C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\statistiques\Stats.java
+C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\scoreboard\ScoreboardManager.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\timer\Timer.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\initialisation\PlayerJoin.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\Maps\ExportMaps.java
@@ -15,6 +16,7 @@ C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\BotDiscord\TableToImage.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\commandes\Completion.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\config\Config.java
+C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\statistiques\PlayerStats.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\BotDiscord\Channels.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\fin\Fin.java
 C:\Users\LEBRAT_E\Documents\PROJETS_PLUGINS\BattleRoyale\src\main\java\me\dalek\battleroyale\coffres\Coffres.java

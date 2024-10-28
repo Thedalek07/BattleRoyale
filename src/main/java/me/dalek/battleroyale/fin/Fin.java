@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
+import static me.dalek.battleroyale.BotDiscord.TableToImage.CreateTableScore;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.*;
 
 public class Fin {
@@ -25,7 +26,7 @@ public class Fin {
             }
         }
 
-        if (nbPlayerSpectator > 1 && nbPlayerSurvival == 1) {
+        if (nbPlayerSpectator >= 1 && nbPlayerSurvival == 1) {
             announceWinner(winner);
         } else if (nbPlayerSpectator >= 1 && nbPlayerSurvival > 1) {
             announceTeamVictory(nbPlayerSurvival);
@@ -39,6 +40,7 @@ public class Fin {
             p.sendTitle(ChatColor.GOLD + "FIN DE PARTIE !", winner + " a gagné !", 10, 70, 20);
             p.setGameMode(GameMode.SPECTATOR);
         }
+        CreateTableScore();
     }
 
     private static void announceTeamVictory(int nbPlayerSurvival) {
@@ -51,6 +53,7 @@ public class Fin {
                     win.sendTitle(ChatColor.GOLD + "FIN DE PARTIE !", "L'équipe " + myTeam.getName() + " a gagné !", 10, 70, 20);
                     win.setGameMode(GameMode.SPECTATOR);
                 }
+                CreateTableScore();
                 return;
             }
         }

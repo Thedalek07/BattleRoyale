@@ -78,10 +78,16 @@ public class Arena {
     }
 
     private static <T extends LivingEntity> void spawnEntity(Class<T> entityType, int x, int y, int z) {
-        T entity = (T) world.spawnEntity(new Location(world, x, y, z), EntityType.valueOf(entityType.getSimpleName().toUpperCase()));
+        String entityName = entityType.getSimpleName().toUpperCase();
+        if (entityName.equals("WITHERSKELETON")) {
+            entityName = "WITHER_SKELETON"; // Correction pour WitherSkeleton
+        }
+
+        T entity = (T) world.spawnEntity(new Location(world, x, y, z), EntityType.valueOf(entityName));
         entity.setRemoveWhenFarAway(false);
         equipEntity(entity);
     }
+
 
     private static void equipEntity(LivingEntity entity) {
         if (entity instanceof Skeleton) {

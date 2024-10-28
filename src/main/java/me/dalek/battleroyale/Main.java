@@ -9,7 +9,8 @@ import me.dalek.battleroyale.fin.Fin;
 import me.dalek.battleroyale.initialisation.Lobby;
 import me.dalek.battleroyale.initialisation.PlayerJoin;
 import me.dalek.battleroyale.morts.Morts;
-import me.dalek.battleroyale.scoreboard.ScoreboardPlayers;
+import me.dalek.battleroyale.scoreboard.ScoreboardManager;
+import me.dalek.battleroyale.statistiques.Coordinates;
 import me.dalek.battleroyale.timer.Timer;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -23,6 +24,8 @@ import static me.dalek.battleroyale.context.Context.world;
 import static me.dalek.battleroyale.initialisation.Init.beaconShop;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_INFO_PLUGIN;
 import static me.dalek.battleroyale.messages.Messages.msgConsole.MSG_CONSOLE_PLUGIN_RUN;
+import static me.dalek.battleroyale.scoreboard.ScoreboardManager.createScoreboard;
+import static me.dalek.battleroyale.scoreboard.ScoreboardManager.initCoGerard;
 
 
 public final class Main extends JavaPlugin {
@@ -52,13 +55,15 @@ public final class Main extends JavaPlugin {
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.sendMessage(String.valueOf(MSG_PLAYER_INFO_PLUGIN));
+            createScoreboard(p);
+            p.setGlowing(false);
         }
 
         // BOUCLES SCHEDULE
         BukkitScheduler scheduler = getServer().getScheduler();
 
         // SCOREBOARD
-        scheduler.scheduleSyncRepeatingTask(this, ScoreboardPlayers::updateScoreboard, 0L, 10L);
+        scheduler.scheduleSyncRepeatingTask(this, ScoreboardManager::updateScoreboard, 0L, 10L);
 
         // TIMER
         scheduler.scheduleSyncRepeatingTask(this, Timer::decompteSeconde, 0L, 20L);
@@ -69,12 +74,16 @@ public final class Main extends JavaPlugin {
         // PAUSE
         scheduler.scheduleSyncRepeatingTask(this, Timer::getPause, 0L, 5L);
 
+        // COORDONNEES
+        Bukkit.getScheduler().runTaskTimer(this, Coordinates::logPlayerCoordinates, 0L, 20L);
+
         Config.initConfigPlayer();
-        CreateTableScore();
+        //CreateTableScore();
 
         ExportMaps mapExporter = new ExportMaps(getDataFolder() + "/map_data.json");
         mapExporter.exportMapData();
         beaconShop();
+        initCoGerard();
     }
 
     private static void init(){

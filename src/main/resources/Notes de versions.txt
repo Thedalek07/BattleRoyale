@@ -64,7 +64,14 @@ Version 1.1.1 21/10/2024
 
 Version 2.0.0 25/10/2024
     - Ajout de la création de vocal Discord (requete au bot) via la commande /open
-    - Ajout de la génération d'une image des statistiques (pas encore totalement implémenté
-    - Ajout de l'envoie des messages de morts dans le discord
+    - Ajout de la génération d'une image des statistiques (pas encore totalement implémenté)
+    - Ajout de l'envoi des messages de morts dans le discord
     - Ajout de la commande /update pour mettre à jour les permissions du vocal
     - Correction du bug du Scoreboard qui clignoté
+
+Version 2.0.1 28/10/2024 (Version du Battle Royal 3 du 28/10/2024)
+    - Ajout des gamerules Advancement, KeepInventory
+    - Ajout de la suppression de Glowing au début de partie et à l'initialisation
+    - Correction du bug de latence lors d'une mort (gestion asynchrone de la requete http)
+
+

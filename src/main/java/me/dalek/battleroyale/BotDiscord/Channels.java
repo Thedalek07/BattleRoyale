@@ -66,6 +66,7 @@ public class Channels {
             // Handle the response based on the code
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 Bukkit.broadcastMessage(ChatColor.GREEN + "BOT DISCORD : " + responseBody);
+                sendGeneralMessage("1300041578932342834", "Le salon vocal est ouvert !");
             } else {
                 Bukkit.broadcastMessage(ChatColor.RED + "BOT DISCORD : " + responseBody);
             }

@@ -1,17 +1,12 @@
 package me.dalek.battleroyale.worldborder;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
-
 import static me.dalek.battleroyale.context.Context.world;
-import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_INIVTE_ACCEPT_SENDER;
 import static me.dalek.battleroyale.messages.Messages.enum_Msg.MSG_PLAYER_REDUCTION_WORLDBORDER;
-import static org.bukkit.Bukkit.getServer;
 
 public class Worldborder {
 
@@ -47,6 +42,7 @@ public class Worldborder {
         int timeWb = 600;
         wB.setSize(size, timeWb);
         broadcastReduction(size, reductionBlocks);
+        Bukkit.getLogger().info("[WORLDBORDER] Size :" + size + " / reduction de " + reductionBlocks + " blocks");
         playBorderSound();
     }
 
